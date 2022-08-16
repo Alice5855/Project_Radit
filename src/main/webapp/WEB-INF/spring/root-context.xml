@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<!-- log4jdbc를 이용하는 경우 jdbc driver와 url 정보를 수정해야함
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:orcl"></property>
+		-->
+		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+		<property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:orcl"></property>
+		<property name="username" value="mini_admin"></property>
+		<property name="password" value="mini_admin"></property>
+	</bean>
+	
+	<!-- HikariCP configuration -->
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig"/>
+	</bean>
+	
+	<!-- Spring에서 sqlSessionFactiory를 등록하는 작업은 SqlSessionFactoryBean을 이용 -->
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<!-- Page 469 [transaction] added #transactionManager bean -->
+	<bean id="transactionManager" 
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	
+	<!-- Page 469 [transaction] added tx annotation driven -->
+	<tx:annotation-driven/>
+	
+	<mybatis-spring:scan base-package="org.zerock.mapper"/>
+	
+	<context:component-scan base-package="org.zerock.sample" />
+	<context:component-scan base-package="org.zerock.service" />
+	
+	<!-- Page 455. Namespaces에서 aop와 하단 line 추가함 -->
+	<context:annotation-config></context:annotation-config>
+	<context:component-scan base-package="org.zerock.aop" />
+	<!-- component-scan으로 LogAdvice가 bean으로 등록됨 -->
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	<!-- aop:aspectj-autoproxy로 LogAdvice에 설정한 @Before가 동작함 -->
+	
+	<task:annotation-driven/>
+	<!-- quartz library 사용하기 위한 task tag -->
+	<context:component-scan base-package="org.zerock.task" />
+	<!-- FileCheckTask class가 bean으로 인식되어 정상 작동하도록 context 추가 -->
+	
+</beans>

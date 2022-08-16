@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:security="http://www.springframework.org/schema/security"
+   xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- Changed context a bit (page610) -->
+	<bean id="customAccessDenied" class="org.zerock.security.CustomAccessDeniedHandler"></bean>
+	<!--
+	<bean id="customLoginSuccess" class="org.zerock.security.CustomLoginSuccessHandler"></bean>
+	-->
+	<!-- 로그인 성공 시 redirect 위치 변경 -->
+	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+	<!--
+	<bean id="customPasswordEncoder" class="org.zerock.security.CustomNoOpPasswordEncoder" />
+	-->
+	<!-- BCrypt Password Encoder 사용 위해 주석처리됨 -->
+	<bean id="customUserDetailsService" class="org.zerock.security.CustomUserDetailsService"></bean>
+	<!-- MemberMapper type의 instance를 주입받아 기능을 구현하는 UserDetailsService -->
+	
+	<security:http>
+		<security:intercept-url pattern="/sample/all" access="permitAll"/>
+		<security:intercept-url pattern="/sample/member" access="hasRole('ROLE_MEMBER')"/>
+		<security:intercept-url pattern="/sample/admin" access="hasRole('ROLE_ADMIN')"/>
+		<!--
+		<security:form-login login-page="/customLogin" authentication-success-handler-ref="customLoginSuccess"/>
+		-->
+		<!-- form-login page를 설정하지 않는 경우 spring security에서 기본적으로
+			log in page를 제공함. login-page를 설정할 때에는 반드시 GetMapping
+			으로 설정해야 함 -->
+		<security:form-login login-page="/customLogin" />
+		<!--
+		<security:logout logout-url="/customLogout" invalidate-session="true"/>
+		-->
+		<!-- 
+		<security:access-denied-handler error-page="/accessError"/>
+		-->
+		<!-- Handler를 error page를 class를 등록한 bean으로 변경 -->
+		<security:access-denied-handler ref="customAccessDenied"/>
+		<!--
+		<security:csrf disabled="true"/>
+		-->
+		<!-- name=_csrf, value=random value. CSRF 토큰으로 특정 값의 토큰을
+			발행하여 사전 검증하는 절차를 거침. post 방식의 경우에는 기본적으로 CSRF 토큰을
+			사용한다 -->
+		<!-- Cross-Site Request Forgery : 사이트간 요청 위조. Server에서 받아들이
+			는 정보가 사전 조건을 검증하지 않는다는 취약점을 이용한 공격방식 -->
+		<security:remember-me data-source-ref="dataSource" token-validity-seconds="604800"/>
+		<!-- Page678 : remember-me cookie 설정. root-context의 mybatis에서
+			정의한 dataSource(book_ex DB) 별도의 설정이 없는 경우 remember-me 라는
+			이름의 Cookie를 발행한다  -->
+		
+		<security:logout logout-url="/customLogout" invalidate-session="true" delete-cookies="remember-me, JSESSIONID"/>
+		<!-- Page681 : Log out 시 remember-me Cookie 삭제 
+			Tomcat에서 기본적으로 발행되는 JSESSIONID cookie 가 있는데,
+			반드시 필요한 것은 아니지만 함께 삭제해줌 -->
+	</security:http>
+	
+	<security:authentication-manager>
+		
+	</security:authentication-manager>
+	
+	<!-- Page621 -->
+	<security:authentication-manager>
+		<security:authentication-provider user-service-ref="customUserDetailsService">
+			<!-- user-service-ref로 UserDetailsService를 추가. 속성 추가 적용시
+				하단의 jdbc-user-service를 주석처리하여야 충돌이 일어나지 않음 -->
+			
+			<!-- Page646 : root-context.xml에 dataSource bean이 등록되어
+				있는지를 확인 -->
+			<!--
+			<security:jdbc-user-service data-source-ref="dataSource"/>
+			-->
+			<!--
+			<security:jdbc-user-service data-source-ref="dataSource"
+				users-by-username-query="select userid, userpw, enabled from tbl_member where userid = ? "
+				authorities-by-username-query="select userid, auth from tbl_member_auth where userid = ? " />
+			-->
+			<security:password-encoder ref="bcryptPasswordEncoder"/>
+			<!--
+			<security:password-encoder ref="customPasswordEncoder"/>
+			-->
+			
+			<!--
+			<security:user-service>
+				<security:user name="member" password="{noop}member" authorities="ROLE_MEMBER"/>
+			-->
+				<!-- {noop} : Use string without encoding -->
+				<!-- Spring security version 5부터는 PasswordEncoder를
+					사용하도록 변경됨. test를 위한 용도로 noop을 사용함 -->
+				<!--
+				<security:user name="admin" password="{noop}admin" authorities="ROLE_MEMBER, ROLE_ADMIN"/>
+				-->
+				<!-- Logout test는 devtools(f12)에서 Application-Cookies
+					tab에서 cookie clear로 수행 -->
+			<!--
+			</security:user-service>
+			-->
+		</security:authentication-provider>
+	</security:authentication-manager>
+	
+</beans>
