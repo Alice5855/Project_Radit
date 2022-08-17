@@ -54,8 +54,8 @@ public class BoardServiceTests {
 	
 	@Test
 	public void testGet() {
-		long testbno = 13L;
-		log.info(service.get(testbno));
+		long testB_number = 1L;
+		log.info(service.get(testB_number));
 	}
 	
 	@Test
@@ -67,7 +67,7 @@ public class BoardServiceTests {
 	
 	@Test
 	public void testModify() {
-		BoardVO board = service.get(1L);
+		BoardVO board = service.get(6L);
 		if (board == null) {
 			return;
 		} else {

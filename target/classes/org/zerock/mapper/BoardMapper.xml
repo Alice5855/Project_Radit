@@ -59,7 +59,7 @@
 		]]>
 	</select>
 	
-	<select id="getListPaging">
+	<select id="getListPaging" resultType="org.zerock.domain.BoardVO">
 		<![CDATA[
 			select b_number, b_title, b_text, u_email, b_regDate, b_updateDate from 
 			(select /*+ index_desc(BOARD_TABLE pk_board_b_number) */ 
@@ -75,13 +75,5 @@
 			where rn > (#{pageNum} - 1) * #{amount}
 		]]>
 	</select>
-	<!-- 
-	<select id="getTotalCount" resultType="int">
-		select count(*) from BOARD_TABLE
-		where
-		<include refid="criteria"/>
-		b_number > 0
-	</select>
-	-->
-	
+		
 </mapper>
