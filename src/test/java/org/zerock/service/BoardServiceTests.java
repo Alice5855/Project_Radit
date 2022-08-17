@@ -36,12 +36,12 @@ public class BoardServiceTests {
 	@Test
 	public void testRegister() {
 		BoardVO board = new BoardVO();
-		board.setTitle("Newly entired Title");
-		board.setContent("Newly entried Context");
-		board.setWriter("Carter");
+		board.setB_title("Newly entired Title");
+		board.setB_text("Newly entried Context");
+		board.setU_email("Carter");
 		
 		service.register(board);
-		log.info("Newly entried number : " + board.getBno());
+		log.info("Newly entried number : " + board.getB_number());
 	}
 	
 	// board 글 목록 가져오는 getList() method test
@@ -71,7 +71,7 @@ public class BoardServiceTests {
 		if (board == null) {
 			return;
 		} else {
-			board.setTitle("Newly modified title");
+			board.setB_title("Newly modified title");
 		}
 		log.info("MODIFY RESULT : " + service.modify(board));
 		// modify() method가 게시물을 성공적으로 변경했을 때 true를 반환
