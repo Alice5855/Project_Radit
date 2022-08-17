@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.zerock.mapper.UserMapper">
-	<insert id="insert">
+	<insert id="regist">
 		insert into user_table values(#{u_Email}, #{u_Name}, #{u_pw}, #{u_Address} , #{u_gender}, #{u_profile_path})
 <!-- 		insert into user_table(u_Email, u_Name, u_pw, u_Address,u_profile_path) values('테스트이메일', '테스트이름', '테스트비번', '테스트주소' , '테성', '테경') -->
 	</insert>
 	<!-- Primary Key의 값을 알 필요가 없는 경우. insert query만 실행 -->
 	
-	<delete id="delete">
+	<delete id="deleteAccount">
 		delete from user_table where u_Email = #{u_Email}
 	</delete>
 	
@@ -20,5 +20,7 @@
 	<select id="read" resultType="org.zerock.domain.UserVO">
 		select * from user_table where u_Email = #{u_Email}
 	</select>
+	
+	
 	
 </mapper>

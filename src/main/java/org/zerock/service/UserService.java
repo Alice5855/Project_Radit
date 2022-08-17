@@ -6,13 +6,13 @@ import org.zerock.domain.UserVO;
 
 public interface UserService {
 	
-	public void register(UserVO user);
+	public void regist(UserVO user);
 	
-	public boolean modify(UserVO user);
+	public boolean update(UserVO user);
 	
-	public boolean remove(String u_Email);
+	public boolean deleteAccount(String u_Email);
 	
-	public UserVO get(String u_Email);
+	public UserVO getINFO(String u_Email);
 	
 
 }

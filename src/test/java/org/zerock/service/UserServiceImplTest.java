@@ -28,43 +28,43 @@ public class UserServiceImplTest {
 	
 	
 	
-//	@Test
-//	public void testRegister() {
-//		log.info("시작");
-//		UserVO user = new UserVO();
-//		log.info("중간");
-//		user.setU_Email("junit@test.net");
-//		user.setU_Name("Test123");
-//		user.setU_pw("junit0817");
-//		user.setU_Address("junit0817");
-//		user.setU_gender("0817");
-//		user.setU_profile_path("junit이미지0817");
-//		userService.register(user);
-//		log.info(user + " 로그 찍어보기 ");
-//	}
+	@Test
+	public void testRegister() {
+		log.info("시작");
+		UserVO user = new UserVO();
+		log.info("중간");
+		user.setU_Email("권한테스트에미일");
+		user.setU_Name("오후9시");
+		user.setU_pw("ㅋㅋㅋ");
+		user.setU_Address("큭크긐ㄱ");
+		user.setU_gender("키키킥");
+		user.setU_profile_path("junit이미지0817");
+		userService.regist(user);
+		log.info(user + " 로그 찍어보기 ");
+	}
 
 //	@Test
 //	public void testGet() {
 //		fail("Not yet implemented");
 //	}
 
-	@Test
-	public void testModify() {
-		UserVO user = userService.get("junit@test.net");
-		if (user == null) {
-			return;
-		} else {
-			user.setU_Address("junit수정테스트0817_두번째");;
-		}
-		
-		log.info("수정 결과 : " + userService.modify(user));
-		
-		
-	}
-
+//	@Test
+//	public void testModify() {
+//		UserVO user = userService.getINFO("0817오후1시.net");
+//		if (user == null) {
+//			return;
+//		} else {
+//			user.setU_Address("0817오후1시 2022동");;
+//		}
+//		
+//		log.info("수정 결과 : " + userService.update(user));
+//		
+//		
+//	}
+//
 	@Test
 	public void testRemove() {
-		log.info("삭제 결과 : " + userService.remove("testEmail"));
+		log.info("삭제 결과 : " + userService.deleteAccount("test1@test.com"));
 	}
 
 

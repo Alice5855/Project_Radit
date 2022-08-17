@@ -14,31 +14,31 @@ public class UserServiceImpl implements UserService {
 	
 	private UserMapper usermapper;
 	
-	public void register(UserVO user) {
+	public void regist(UserVO user) {
 		log.info(user + " 로그 찍어보기 ");
-		usermapper.insert(user);
+		usermapper.regist(user);;
 		
 	
 	}
 
 	@Override
-	public UserVO get(String u_Email) {
+	public UserVO getINFO(String u_Email) {
 		log.info("get=====" + u_Email );
 		return usermapper.read(u_Email) ;
 	}
 
 	@Override
-	public boolean modify(UserVO user) {
+	public boolean update(UserVO user) {
 		log.info(user + "수정하기");
 		boolean modifyResult =  usermapper.update(user) == 1;
 		return modifyResult;
 	}
 
 	@Override
-	public boolean remove(String u_Email) {
+	public boolean deleteAccount(String u_Email) {
 		log.info(u_Email + "삭제수구븜");
 		
-		return usermapper.delete(u_Email) == 1;
+		return usermapper.deleteAccount(u_Email) == 1;
 	}
 
 
