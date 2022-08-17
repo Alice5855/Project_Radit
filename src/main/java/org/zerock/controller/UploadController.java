@@ -131,7 +131,7 @@ public class UploadController {
 		    uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1);
 		    log.info("Uploaded file name ===== " + uploadFileName);
 		    
-		    attachDTO.setFileName(uploadFileName);
+		    attachDTO.setB_fileName(uploadFileName);
 		    // Added (page517)
 		    
 		    UUID uuid = UUID.randomUUID();
@@ -146,14 +146,12 @@ public class UploadController {
 		    	File saveFile = new File(uploadPath, uploadFileName);
 				multipartFile.transferTo(saveFile);
 				
-				attachDTO.setUuid(uuid.toString());
-				attachDTO.setUploadPath(getFolder());
+				attachDTO.setB_uuid(uuid.toString());
+				attachDTO.setB_uploadPath(getFolder());
 				// Added (page517)
 				
 				// Image type인지를 검증
-				if (checkImageType(saveFile)) {
-					attachDTO.setImage(true);
-					// Added (page517)
+				//if (checkImageType(saveFile)) {
 					
 					FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "sthmb_" + uploadFileName));
 					
@@ -162,7 +160,7 @@ public class UploadController {
 					// 100 x 100 size 'sthmb_filename' 의 thumbnail file 생성
 					 
 					thumbnail.close();
-				}
+				//}
 				list.add(attachDTO);
 				// Added (page517)
 			} catch (Exception e) {
@@ -172,6 +170,7 @@ public class UploadController {
 	    return new ResponseEntity<List<AttachFileDTO>>(list, HttpStatus.OK);
     } // uploadAjaxPost
 	
+	/*
 	// file type이 image인지를 검증
 	private boolean checkImageType(File file) {
 		try {
@@ -182,6 +181,7 @@ public class UploadController {
 		}
 		return false;
 	}
+	*/
 	
 	// Page 526 Thumbnail data transfer
 	@GetMapping("/display")

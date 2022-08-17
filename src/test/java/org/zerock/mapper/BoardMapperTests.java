@@ -27,7 +27,7 @@ public class BoardMapperTests {
 	// note the underscore after onMethod.
 	@Setter (onMethod_ = @Autowired)
 	private BoardMapper mapper;
-	
+	/*
 	@Test
 	public void testGetList() {
 		try {
@@ -46,13 +46,13 @@ public class BoardMapperTests {
 			fail(e.getMessage());
 		}
 	}
-	
+	*/
 	@Test
 	public void testInsert() {
 		BoardVO board = new BoardVO();
-		board.setTitle("First new title");
-		board.setContent("First new context");
-		board.setWriter("Randolph");
+		board.setU_email("test@test.com");
+		board.setB_title("First new title");
+		board.setB_text("First new context");
 		
 		mapper.insert(board);
 		log.info(board);
@@ -61,9 +61,9 @@ public class BoardMapperTests {
 	@Test
 	public void testInsertSelectKey() {
 		BoardVO board = new BoardVO();
-		board.setTitle("First new title with Select Key");
-		board.setContent("First new context with Select Key");
-		board.setWriter("Randolph");
+		board.setU_email("test@test.com");
+		board.setB_title("First new title with Select Key");
+		board.setB_text("First new context with Select Key");
 		
 		mapper.insertSelectKey(board);
 		log.info(board);
@@ -71,24 +71,24 @@ public class BoardMapperTests {
 	
 	@Test
 	public void testRead() {
-		BoardVO board = mapper.read(7L);
+		BoardVO board = mapper.read(2L);
 		log.info(board);
 	}
 	
 	@Test
 	public void testDelete() {
-		log.info("DELETE COUNT : " + mapper.delete(8L));
+		log.info("DELETE COUNT : " + mapper.delete(3L));
 	}
 	
 	@Test
 	public void testUpdate() {
 		BoardVO board = new BoardVO();
 		// 실행 전 bno 유효성 검사
-		board.setBno(5L);
+		board.setB_number(4L);
 		
-		board.setTitle("First modified title");
-		board.setContent("First modified context");
-		board.setWriter("Carter");
+		board.setB_title("First modified title");
+		board.setB_text("First modified context");
+		board.setU_email("test@test.com");
 		
 		int count = mapper.update(board);
 		
@@ -97,9 +97,9 @@ public class BoardMapperTests {
 
 	@Test
 	public void testPaging() {
-		Criteria cri = new Criteria(3, 10);
+		Criteria cri = new Criteria();
 		// you can use setPageNum(), amount() method
-		List<BoardVO> list = mapper.getListWithPaging(cri);
+		List<BoardVO> list = mapper.getListPaging(cri);
 		list.forEach(board -> log.info(board));
 	}
 	
@@ -116,7 +116,7 @@ public class BoardMapperTests {
 		cri.setType("TC");
 		// page 338. 다중 검색 (title or content)
 		
-		List<BoardVO> list = mapper.getListWithPaging(cri);
+		List<BoardVO> list = mapper.getListPaging(cri);
 		list.forEach(board -> log.info(board));
 	}
 }

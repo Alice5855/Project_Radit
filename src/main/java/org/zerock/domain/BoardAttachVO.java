@@ -4,11 +4,9 @@ import lombok.Data;
 
 @Data
 public class BoardAttachVO {
-	private String uuid;
-	private String uploadPath;
-	private String fileName;
-	private boolean fileType;
-	// Columns from spring_study(user book_ex) tbl_attach DB
+	private String b_uuid;
+	private String b_uploadPath;
+	private String b_fileName;
 	
-	private Long bno; // FK from tbl_board
+	private Long b_number; // FK from tbl_board
 }

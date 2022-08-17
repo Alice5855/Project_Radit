@@ -83,7 +83,7 @@ public class BoardController {
 			board.getAttachList().forEach(attach -> log.info(attach));
 		}
 		service.register(board);
-		ratt.addFlashAttribute("result", board.getBno());
+		ratt.addFlashAttribute("result", board.getB_number());
 		return "redirect:/board/list";
 	}
 	
@@ -198,13 +198,13 @@ public class BoardController {
    
 		attachList.forEach(attach -> {
 			try {        
-				Path file  = Paths.get("C:\\Uploaded\\" + attach.getUploadPath() + "\\" + attach.getUuid() + "_" + attach.getFileName());
+				Path file  = Paths.get("C:\\Uploaded\\" + attach.getB_uploadPath() + "\\" + attach.getB_uuid() + "_" + attach.getB_fileName());
    
 				Files.deleteIfExists(file);
    
 				if(Files.probeContentType(file).startsWith("image")) {
    
-					Path thumbNail = Paths.get("C:\\Uploaded\\" + attach.getUploadPath() + "\\sthumb_" + attach.getUuid() + "_" + attach.getFileName());
+					Path thumbNail = Paths.get("C:\\Uploaded\\" + attach.getB_uploadPath() + "\\sthumb_" + attach.getB_uuid() + "_" + attach.getB_fileName());
              
 					Files.delete(thumbNail);
 				}

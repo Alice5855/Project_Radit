@@ -24,7 +24,6 @@ public class PageDTO {
 		if (realEnd < this.endPage) {
 			this.endPage = realEnd;
 		}
-		// Check Math_ceil_Page304.java out
 		
 		this.prev = this.startPage > 1;
 		this.next = this.endPage < realEnd;
