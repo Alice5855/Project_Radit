@@ -20,12 +20,12 @@ public class UserServiceImpl implements UserService {
 		
 	
 	}
-//
-//	@Override
-//	public UserVO get(String u_Email) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+
+	@Override
+	public UserVO get(String u_Email) {
+		log.info("get=====" + u_Email );
+		return usermapper.read(u_Email) ;
+	}
 
 	@Override
 	public boolean modify(UserVO user) {

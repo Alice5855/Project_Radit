@@ -1,5 +1,6 @@
 package org.zerock.service;
 
+import org.springframework.stereotype.Service;
 import org.zerock.domain.UserVO;
 
 
@@ -11,7 +12,7 @@ public interface UserService {
 	
 	public boolean remove(String u_Email);
 	
-//	public UserVO get(String u_Email);
+	public UserVO get(String u_Email);
 	
 
 }

@@ -16,4 +16,9 @@
 		update user_table set u_Name = #{u_Name}, u_pw = #{u_pw}, u_Address = #{u_Address},u_gender=#{u_gender},u_profile_path = #{u_profile_path} where u_Email = #{u_Email}
 
 	</update>
+	
+	<select id="read" resultType="org.zerock.domain.UserVO">
+		select * from user_table where u_Email = #{u_Email}
+	</select>
+	
 </mapper>
