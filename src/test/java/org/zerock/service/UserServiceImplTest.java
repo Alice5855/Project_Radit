@@ -28,20 +28,20 @@ public class UserServiceImplTest {
 	
 	
 	
-	@Test
-	public void testRegister() {
-		log.info("시작");
-		UserVO user = new UserVO();
-		log.info("중간");
-		user.setU_Email("권한테스트에미일");
-		user.setU_Name("오후9시");
-		user.setU_pw("ㅋㅋㅋ");
-		user.setU_Address("큭크긐ㄱ");
-		user.setU_gender("키키킥");
-		user.setU_profile_path("junit이미지0817");
-		userService.regist(user);
-		log.info(user + " 로그 찍어보기 ");
-	}
+//	@Test
+//	public void testRegister() {
+////		log.info("시작");
+//		UserVO user = new UserVO();
+////		log.info("중간");
+//		user.setU_Email("20220818@test.com");
+//		user.setU_Name("오전10시");
+//		user.setU_pw("test");
+//		user.setU_Address("대충 주소");
+//		user.setU_gender("남성");
+//		user.setU_profile_path("대충 이미지 uuid");
+//		userService.regist(user);
+//		log.info(user + " 로그 찍어보기 ");
+//	}
 
 //	@Test
 //	public void testGet() {
@@ -50,23 +50,45 @@ public class UserServiceImplTest {
 
 //	@Test
 //	public void testModify() {
-//		UserVO user = userService.getINFO("0817오후1시.net");
+//		UserVO user = userService.getINFO("20220818@test.com");
 //		if (user == null) {
 //			return;
 //		} else {
-//			user.setU_Address("0817오후1시 2022동");;
+//			user.setU_Address("테스트로 바뀌는 주소");;
 //		}
 //		
 //		log.info("수정 결과 : " + userService.update(user));
 //		
 //		
 //	}
-//
-	@Test
-	public void testRemove() {
-		log.info("삭제 결과 : " + userService.deleteAccount("test1@test.com"));
-	}
 
+	@Test
+	public void testdeleteAccount() {
+		try {
+			userService.deleteAccount("junitTest@test.com");
+		} catch (Exception e) {
+			fail(e.getMessage());
+		} 
+		
+		
+	}
+	
+	
+	
+	
+	
+
+	@Test
+	public void testAuthUpdate() {
+		UserVO user = userService.getINFO("권한테스트에미일");
+		if(user == null) {
+			return;
+		}else {
+			userService.AuthUpdate(user);
+		}
+		
+		log.info("수정 결과 : " + user);
+	}
 
 
 }

@@ -26,12 +26,11 @@ import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-// web 연계 추가. ServletContext를 이용하기 위함
 @ContextConfiguration({
 	"file:src/main/webapp/WEB-INF/spring/root-context.xml",
 	"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"
 	})
-// Web 연계 추가. WebApplicationContext를 사용하기 위함
+
 @Log4j
 public class UserControllerTests {
 	
@@ -49,7 +48,6 @@ public class UserControllerTests {
 	@Test
 	public void testRegist() {
 		String resultPage;
-		log.info("try전 까지는 되겠지 ㅋㅋ");
 		try {
 			resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/user/regist")
 					.param("u_Email", "controller@test.test")
@@ -75,11 +73,11 @@ public class UserControllerTests {
 		try {
 			resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/user/update")
 					.param("u_Email", "controller@test.test")
-					.param("u_Name", "뻑뎃쉿 ㅋㅋ~")
-					.param("u_pw", "fuckthatshitzz")
-					.param("u_Address", "컨트롤러테스트구행복한동")
-					.param("u_gender", "컨트롤러")
-					.param("u_profile_path", "엌ㅋㅋㅋㅋㅋ")
+					.param("u_Name", "컨트롤러테스트수정이름")
+					.param("u_pw", "컨테")
+					.param("u_Address", "행복한곳에살아요")
+					.param("u_gender", "여성")
+					.param("u_profile_path", "대충이미지")
 					
 					).andReturn().getModelAndView().getViewName();
 			log.info(resultPage);
@@ -91,12 +89,24 @@ public class UserControllerTests {
 	
 	@Test
 	public void testRemove() {
-		// MockMvc를 이용하여 parameter를 전달 할 때에는 문자열로만 처리할 수 있음
-		// bno는 원래 long type이지만 "3"으로 전달함
 		String resultPage;
 		try {
 			resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/user/deleteAccount")
 					.param("u_Email", "controller@test.test")
+					).andReturn().getModelAndView().getViewName();
+			log.info(resultPage);
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testAuthUpdate() {
+		String resultPage;
+		
+		try {
+			resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/user/Auth")
+					.param("u_Email", "20220818@test.com")
 					).andReturn().getModelAndView().getViewName();
 			log.info(resultPage);
 		} catch (Exception e) {

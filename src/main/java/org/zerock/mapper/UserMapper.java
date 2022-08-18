@@ -16,5 +16,7 @@ public interface UserMapper {
 	
 	public UserVO read(String u_Email);
 	
+	public int AuthUpdate(UserVO user);
+	
 	
 }

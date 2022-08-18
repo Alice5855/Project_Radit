@@ -58,6 +58,14 @@ public class UserController {
 		// Criteria에 새로 생성한 method 사용(page 581)
 	}
 	
+	@PostMapping("/Auth")
+	public String AuthUpdate(UserVO user) {
+		log.info("권한 부여");
+		userService.AuthUpdate(user);
+		
+		return "/board/list";
+	}
+	
 	
 	
 	
