@@ -1,7 +1,5 @@
 package org.zerock.mapper;
 
-import static org.junit.Assert.fail;
-
 import java.util.List;
 
 import org.junit.Test;
@@ -71,23 +69,22 @@ public class BoardMapperTests {
 	
 	@Test
 	public void testRead() {
-		BoardVO board = mapper.read(2L);
+		BoardVO board = mapper.read(12L);
 		log.info(board);
 	}
 	
 	@Test
 	public void testDelete() {
-		log.info("DELETE COUNT : " + mapper.delete(3L));
+		log.info("DELETE COUNT : " + mapper.delete(5L));
 	}
 	
 	@Test
 	public void testUpdate() {
 		BoardVO board = new BoardVO();
-		// 실행 전 bno 유효성 검사
-		board.setB_number(4L);
+		board.setB_number(6L);
 		
-		board.setB_title("First modified title");
-		board.setB_text("First modified context");
+		board.setB_title("Modified title");
+		board.setB_text("Modified context");
 		board.setU_email("test@test.com");
 		
 		int count = mapper.update(board);
@@ -98,23 +95,15 @@ public class BoardMapperTests {
 	@Test
 	public void testPaging() {
 		Criteria cri = new Criteria();
-		// you can use setPageNum(), amount() method
 		List<BoardVO> list = mapper.getListPaging(cri);
 		list.forEach(board -> log.info(board));
 	}
 	
-	// Criteria의 keyword와 type을 지정하여 검색이 되는지 확인
 	@Test
 	public void testSearch() {
 		Criteria cri = new Criteria();
-		// Criteria의 parameter가 없는 경우 기본값인 pagenum 1, amount 10
-		cri.setKeyword("test");
-		// cri.setType("");
-		// page 337. type이 공란인 경우 검색조건이 없게 됨(검색되지 않음)
-		// cri.setType("T");
-		// page 337. 단일 검색 (title)
+		cri.setKeyword("modified");
 		cri.setType("TC");
-		// page 338. 다중 검색 (title or content)
 		
 		List<BoardVO> list = mapper.getListPaging(cri);
 		list.forEach(board -> log.info(board));

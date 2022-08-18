@@ -32,48 +32,41 @@ public class BoardServiceTests {
 		}
 	}
 	
-	// 등록 작업 register() method test
 	@Test
 	public void testRegister() {
 		BoardVO board = new BoardVO();
 		board.setB_title("Newly entired Title");
 		board.setB_text("Newly entried Context");
-		board.setU_email("Carter");
+		board.setU_email("test@test.com");
 		
 		service.register(board);
 		log.info("Newly entried number : " + board.getB_number());
 	}
 	
-	// board 글 목록 가져오는 getList() method test
 	@Test
 	public void testGetList() {
-		// service.getList().forEach(board -> log.info(board));
-		// ㄴ> before make Criteria
-		service.getList(new Criteria(2, 10)).forEach(board -> log.info(board));
+		service.getList(new Criteria(1, 10)).forEach(board -> log.info(board));
 	}
 	
 	@Test
 	public void testGet() {
-		long testB_number = 1L;
+		long testB_number = 14L;
 		log.info(service.get(testB_number));
 	}
 	
 	@Test
 	public void testRemove() {
-		// bno 유효성 검사
-		log.info("REMOVE RESULT : " + service.remove(2L));
-		// remove() method가 게시물을 성공적으로 삭제했을 때 true를 반환
+		log.info("REMOVE RESULT : " + service.remove(6L));
 	}
 	
 	@Test
 	public void testModify() {
-		BoardVO board = service.get(6L);
+		BoardVO board = service.get(7L);
 		if (board == null) {
 			return;
 		} else {
 			board.setB_title("Newly modified title");
 		}
 		log.info("MODIFY RESULT : " + service.modify(board));
-		// modify() method가 게시물을 성공적으로 변경했을 때 true를 반환
 	}
 }

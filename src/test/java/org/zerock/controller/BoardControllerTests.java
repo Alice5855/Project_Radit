@@ -116,7 +116,7 @@ public class BoardControllerTests {
 			fail(e.getMessage());
 		}
 	}
-	// fk인 u_email이 존재하기 때문에 
+	// fk인 u_email이 존재하기 때문에 test를 위해서는 u_email을 Controller에서 받아야함
 	
 	@Test
 	public void testPaging() {

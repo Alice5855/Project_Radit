@@ -51,7 +51,7 @@
     <header class="py-3 mb-3 border-bottom">
 		<div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1fr 2fr;">
 			<div class="dropdown">
-				<a href="#" class="d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+				<a href="#" class="d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none" aria-expanded="false">
 					<!-- Logo -->
 					<svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
 				</a>
@@ -69,8 +69,10 @@
 						<img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
 					</a>
 					<ul class="dropdown-menu text-small shadow">
+						<!-- c:if not logged in -->
+						<li><a class="dropdown-item" href="#">Sign in/Sign up</a></li>
+						<!-- c:if logged in -->
 						<li><a class="dropdown-item" href="#">UserSettings</a></li>
-						<li><a class="dropdown-item" href="#">Profile</a></li>
 						<li><hr class="dropdown-divider"></li>
 						<li><a class="dropdown-item" href="#">Sign out</a></li>
 					</ul>

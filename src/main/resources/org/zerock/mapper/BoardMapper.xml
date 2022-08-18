@@ -26,14 +26,14 @@
 	
 	
 	<insert id="insert">
-		insert into BOARD_TABLE(b_number, b_title, b_text, u_email) values(BOARD_SEQ.nextval, #{b_title}, #{b_text}, #{u_email})
+		insert into BOARD_TABLE(b_number, b_title, b_text, u_email, b_regDate, b_updateDate) values(BOARD_SEQ.nextval, #{b_title}, #{b_text}, #{u_email}, sysdate, sysdate)
 	</insert>
 	
 	<insert id="insertSelectKey">
 		<selectKey keyProperty="b_number" order="BEFORE" resultType="long">
 			select BOARD_SEQ.nextval from dual
 		</selectKey>
-		insert into BOARD_TABLE(b_number, b_title, b_text, u_email) values(#{b_number}, #{b_title}, #{b_text}, #{u_email})
+		insert into BOARD_TABLE(b_number, b_title, b_text, u_email, b_regdate, b_updatedate) values(#{b_number}, #{b_title}, #{b_text}, #{u_email}, sysdate, sysdate)
 	</insert>
 	
 	<select id="read" resultType="org.zerock.domain.BoardVO">

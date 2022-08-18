@@ -47,9 +47,9 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public BoardVO get(Long bno) {
-		log.info("get ===== " + bno + " from board");
-		return mapper.read(bno);
+	public BoardVO get(Long b_number) {
+		log.info("get ===== " + b_number + " from board");
+		return mapper.read(b_number);
 	}
 
 	// 첨부 file과 게시글의 수정이 함께 이루어지도록 Transactional 적용
