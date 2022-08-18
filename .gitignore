@@ -1,4 +1,4 @@
 
 .classpath
 .settings/*
-target/m2e-wtp/*
+target/*

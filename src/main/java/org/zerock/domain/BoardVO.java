@@ -7,12 +7,12 @@ import lombok.Data;
 
 @Data
 public class BoardVO {
-	private long bno;
-	private String title;
-	private String content;
-	private String writer;
-	private Date regDate;
-	private Date updateDate;
+	private long b_number;
+	private String b_title;
+	private String b_text;
+	private String u_email;
+	private Date b_regDate;
+	private Date b_updateDate;
 	
 	// Page 481. 게시물이 가진 댓글의 숫자를 count하는 replyCnt column을 DB에 추가함
 	private int replyCnt;

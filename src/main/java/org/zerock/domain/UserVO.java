@@ -11,5 +11,8 @@ public class UserVO {
 	private String u_Address;
 	private String u_gender;
 	private String u_profile_path;
+	
+	//권한
+	private String u_Auth;
 
 }

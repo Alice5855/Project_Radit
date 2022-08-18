@@ -64,9 +64,9 @@ public class BoardControllerTests {
 		String resultPage;
 		try {
 			resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/board/register")
-					.param("title", "Newly entried title")
-					.param("content", "Newly entried content")
-					.param("writer", "Randolph")
+					.param("b_title", "Newly entried title")
+					.param("b_text", "Newly entried content")
+					.param("u_email", "test@test.com")
 					).andReturn().getModelAndView().getViewName();
 			log.info(resultPage);
 		} catch (Exception e) {
@@ -79,7 +79,7 @@ public class BoardControllerTests {
 	public void testGet() {
 		try {
 			log.info(mockMvc.perform(MockMvcRequestBuilders.get("/board/get")
-					.param("bno", "11")).andReturn()
+					.param("b_number", "5")).andReturn()
 					.getModelAndView().getModelMap());
 		} catch (Exception e) {
 			fail(e.getMessage());
@@ -91,10 +91,10 @@ public class BoardControllerTests {
 		String resultPage;
 		try {
 			resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/board/modify")
-					.param("bno", "7")
-					.param("title", "Newly entried title via controller")
-					.param("content", "Newly entried content via controller")
-					.param("writer", "Carter")
+					.param("b_number", "7")
+					.param("b_title", "Newly entried title via controller")
+					.param("b_text", "Newly entried content via controller")
+					.param("u_email", "test@test.com")
 					).andReturn().getModelAndView().getViewName();
 			log.info(resultPage);
 		} catch (Exception e) {
@@ -109,19 +109,20 @@ public class BoardControllerTests {
 		String resultPage;
 		try {
 			resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/board/remove")
-					.param("bno", "3")
+					.param("b_number", "4")
 					).andReturn().getModelAndView().getViewName();
 			log.info(resultPage);
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
 	}
+	// fk인 u_email이 존재하기 때문에 test를 위해서는 u_email을 Controller에서 받아야함
 	
 	@Test
 	public void testPaging() {
 		try {
 			log.info(mockMvc.perform(MockMvcRequestBuilders.get("/board/list")
-					.param("pageNum", "2")
+					.param("pageNum", "1")
 					.param("amount", "10"))
 					.andReturn().getModelAndView().getModelMap()
 					);

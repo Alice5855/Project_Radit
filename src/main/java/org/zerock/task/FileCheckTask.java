@@ -53,12 +53,12 @@ public class FileCheckTask {
 
 		// ready for check file in directory with database file list
 		List<Path> fileListPaths = fileList.stream()
-				.map(vo -> Paths.get("C:\\Uploaded", vo.getUploadPath(), vo.getUuid() + "_" + vo.getFileName()))
+				.map(vo -> Paths.get("C:\\Uploaded", vo.getB_uploadPath(), vo.getB_uuid() + "_" + vo.getB_fileName()))
 				.collect(Collectors.toList());
 
 		// image file has thumnail file
-		fileList.stream().filter(vo -> vo.isFileType() == true)
-				.map(vo -> Paths.get("C:\\Uploaded", vo.getUploadPath(), "sthmb_" + vo.getUuid() + "_" + vo.getFileName()))
+		fileList.stream()
+				.map(vo -> Paths.get("C:\\Uploaded", vo.getB_uploadPath(), "sthmb_" + vo.getB_uuid() + "_" + vo.getB_fileName()))
 				.forEach(p -> fileListPaths.add(p));
 
 		log.warn("===========================================");
