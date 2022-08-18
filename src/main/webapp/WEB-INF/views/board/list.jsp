@@ -36,18 +36,16 @@
                                 <c:forEach items="${list}" var="board">
                                 <!-- BoardController.java의 37행 참고. model에 추가한 'list' attribute를 불러 온 것 -->
                                 	<tr>
-                                		<td><c:out value="${board.bno}" /></td>
+                                		<td><c:out value="${board.b_number}" /></td>
                                 		<td>
                                 			<!-- Added .move -->
-                                			<a class="move" href='<c:out value="${board.bno}" />'>
-                                				<c:out value="${board.title}" />
-                                				<b>[<c:out value="${board.replyCnt}"/>]</b>
-                                				<!-- replycnt column 추가된 후 code -->
+                                			<a class="move" href='<c:out value="${board.b_number}" />'>
+                                				<c:out value="${board.b_title}" />
                                 			</a>
                                 		</td>
-                                		<td><c:out value="${board.writer}" /></td>
-                                		<td><fmt:formatDate pattern="yyyy/MM/dd" value="${board.regDate}"/></td>
-                                		<td><fmt:formatDate pattern="yyyy/MM/dd" value="${board.updateDate}"/></td>
+                               			<td><c:out value="${board.u_email}" /></td>
+                                		<td><fmt:formatDate pattern="yyyy/MM/dd" value="${board.b_regDate}"/></td>
+                                		<td><fmt:formatDate pattern="yyyy/MM/dd" value="${board.b_updateDate}"/></td>
                                 	</tr>
                                 </c:forEach>
                             </table>

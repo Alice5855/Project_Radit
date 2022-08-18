@@ -5,33 +5,31 @@
 <mapper namespace="org.zerock.mapper.BoardAttachMapper">
 
 	<insert id="insert">
-		insert into tbl_attach (uuid, uploadpath, filename,
-		filetype, bno)
-		values (#{uuid}, #{uploadPath}, #{fileName},
-		#{fileType}, #{bno} )
+		insert into ATTACH_TABLE (b_uuid, b_uploadpath, b_filename, b_number)
+		values (#{b_uuid}, #{b_uploadPath}, #{b_fileName}, #{b_number} )
 	</insert>
 
 	<delete id="delete">
 
-		delete from tbl_attach where uuid = #{uuid}
+		delete from ATTACH_TABLE where b_uuid = #{b_uuid}
 
 	</delete>
 
-	<select id="findByBno"
+	<select id="findByB_number"
 		resultType="org.zerock.domain.BoardAttachVO">
-		select * from tbl_attach where bno = #{bno}
+		select * from ATTACH_TABLE where b_number = #{b_number}
 	</select>
 
 	<delete id="deleteAll">
 
-		delete tbl_attach where bno = #{bno}
+		delete ATTACH_TABLE where b_number = #{b_number}
 
 	</delete>
 
 	<select id="getOldFiles"
 		resultType="org.zerock.domain.BoardAttachVO">
 
-		select * from tbl_attach where uploadpath = to_char(sysdate -1 ,'yyyy\mm\dd')
+		select * from ATTACH_TABLE where b_uploadpath = to_char(sysdate -1 ,'yyyy\mm\dd')
 
 	</select>
 </mapper>

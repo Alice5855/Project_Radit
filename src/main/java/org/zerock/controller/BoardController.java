@@ -74,7 +74,7 @@ public class BoardController {
 	
 	// Page712 added need of authentication
 	// Only Logged in user can access
-	@PreAuthorize("isAuthenticated()")
+	//@PreAuthorize("isAuthenticated()")
 	@PostMapping("/register")
 	public String register(BoardVO board, RedirectAttributes ratt) {
 		log.info("register ===== " + board);
@@ -83,7 +83,7 @@ public class BoardController {
 			board.getAttachList().forEach(attach -> log.info(attach));
 		}
 		service.register(board);
-		ratt.addFlashAttribute("result", board.getBno());
+		ratt.addFlashAttribute("result", board.getB_number());
 		return "redirect:/board/list";
 	}
 	
@@ -112,13 +112,13 @@ public class BoardController {
 	 * public void get(@RequestParam("bno") Long bno, Model m) ...
 	 */
 	@GetMapping({"/get", "/modify"})
-	public void get(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, Model m) {
+	public void get(@RequestParam("b_number") Long b_number, @ModelAttribute("cri") Criteria cri, Model m) {
 		// @ModelAttribute : 자동으로 모델에 데이터를 지정한 이름으로 담아줌
 		// 어노테이션 없이도 parameter는 객체를 통해 전달이 되지만 명시적 지정을 위해
 		// 어노테이션을 사용
 		// log.info("get ===== " + bno);
-		log.info("get or modify ===== " + bno);
-		m.addAttribute("board", service.get(bno));
+		log.info("get or modify ===== " + b_number);
+		m.addAttribute("board", service.get(b_number));
 	}
 	// BoardController의 get() method에는 bno 값을 명시적으로 처리하는
 	// @RequestParam을 이용함(파라미터명과 변수명을 기준으로 동작하기 때문에 생략 가능)
@@ -127,7 +127,7 @@ public class BoardController {
 	// Page712 added need of authentication
 	// Only if author of entry is username can access to modify
 	// #board.writer : BoardVO(board)의 writer를 명시하여 검증절차
-	@PreAuthorize("principal.username == #board.writer")
+	// @PreAuthorize("principal.username == #board.writer")
 	// update의 경우 BoardVO parameter로 내용을 설정하고 BoardService를 호출
 	@PostMapping("/modify")
 	public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri, RedirectAttributes ratt) {
@@ -149,20 +149,22 @@ public class BoardController {
 	// Page712 added need of authentication
 	// Only if author of entry is username can access to remove
 	// Parameter로 writer를 받아 검증절차
-	@PreAuthorize("principal.username == #writer")
+	// @PreAuthorize("principal.username == #writer")
 	// remove()로 삭제 처리 한 후 RedirectAttributes로 list페이지로 이동시킴
 	@PostMapping("/remove")
-	public String remove(@RequestParam("writer") String writer, @RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, RedirectAttributes ratt) {
+	// public String remove(@RequestParam("u_email") String u_email, @RequestParam("b_number") Long b_number, @ModelAttribute("cri") Criteria cri, RedirectAttributes ratt) {
+	// Gotta use this code *AFTER* security added
+	public String remove(@RequestParam("b_number") Long b_number, @ModelAttribute("cri") Criteria cri, RedirectAttributes ratt) {
 		// RequestParam은 view의 form data가 submit될 때에 전송된 data의 key값을
 		// 기준으로 value값을 받아오는 것. @RequestParam("writer")의 writer는
 		// form-data의 writer와 맞아야 하고, @PreAuthorize에서 검증을 위한 #writer
 		// 는 form-data의 remove의 parameter로 받아온 writer의 *변수명*과 맞아야한다 
-		log.info("remove ===== " + bno);
+		log.info("remove ===== " + b_number);
 		
-		List<BoardAttachVO> attachList = service.getAttachList(bno);
+		List<BoardAttachVO> attachList = service.getAttachList(b_number);
 		// Added(page581)
 		
-		if (service.remove(bno)) {
+		if (service.remove(b_number)) {
 			deleteFiles(attachList);
 			// Added(page581)
 			
@@ -198,13 +200,13 @@ public class BoardController {
    
 		attachList.forEach(attach -> {
 			try {        
-				Path file  = Paths.get("C:\\Uploaded\\" + attach.getUploadPath() + "\\" + attach.getUuid() + "_" + attach.getFileName());
+				Path file  = Paths.get("C:\\Uploaded\\" + attach.getB_uploadPath() + "\\" + attach.getB_uuid() + "_" + attach.getB_fileName());
    
 				Files.deleteIfExists(file);
    
 				if(Files.probeContentType(file).startsWith("image")) {
    
-					Path thumbNail = Paths.get("C:\\Uploaded\\" + attach.getUploadPath() + "\\sthumb_" + attach.getUuid() + "_" + attach.getFileName());
+					Path thumbNail = Paths.get("C:\\Uploaded\\" + attach.getB_uploadPath() + "\\sthumb_" + attach.getB_uuid() + "_" + attach.getB_fileName());
              
 					Files.delete(thumbNail);
 				}

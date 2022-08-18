@@ -41,15 +41,15 @@ public class BoardServiceImpl implements BoardService {
 		}
 		
 		board.getAttachList().forEach(attach -> {
-			attach.setBno(board.getBno());
+			attach.setB_number(board.getB_number());
 			attachMapper.insert(attach);
 		});
 	}
 
 	@Override
-	public BoardVO get(Long bno) {
-		log.info("get ===== " + bno + " from board");
-		return mapper.read(bno);
+	public BoardVO get(Long b_number) {
+		log.info("get ===== " + b_number + " from board");
+		return mapper.read(b_number);
 	}
 
 	// 첨부 file과 게시글의 수정이 함께 이루어지도록 Transactional 적용
@@ -58,11 +58,11 @@ public class BoardServiceImpl implements BoardService {
 	public boolean modify(BoardVO board) {
 		log.info("Modify ===== Modify entry " + board);
 		
-		attachMapper.deleteAll(board.getBno());
+		attachMapper.deleteAll(board.getB_number());
 		boolean modifyResult = mapper.update(board) == 1;
 		if (modifyResult && board.getAttachList() != null && board.getAttachList().size() > 0) {
 			board.getAttachList().forEach(attach -> {
-				attach.setBno(board.getBno());
+				attach.setB_number(board.getB_number());
 				attachMapper.insert(attach);
 			});
 		}
@@ -98,7 +98,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<BoardVO> getList(Criteria cri) {
 		log.info("getList ===== Entry List from board with paging " + cri);
-		return mapper.getListWithPaging(cri);
+		return mapper.getListPaging(cri);
 	}
 
 	@Override
@@ -110,7 +110,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<BoardAttachVO> getAttachList(Long bno) {
 		log.info("get Attach list in ===== [bno]" + bno);
-		return attachMapper.findByBno(bno);
+		return attachMapper.findByB_number(bno);
 	}
 
 }
