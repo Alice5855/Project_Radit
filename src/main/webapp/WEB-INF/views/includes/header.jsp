@@ -16,7 +16,6 @@
     <meta name="author" content="">
 
     <title>Welcome to Radit</title>
-
     <!-- Bootstrap Core CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
 	
@@ -43,10 +42,57 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style type="text/css">
+    	#SignUPModal{
+    		display:none;
+    		position: fixed;
+    		margin-left: 50%;
+    		margin-top: 15%;
+    		
+    	}
+    </style>
 
 </head>
 
 <body>
+	
+	<section id="SignUPModal">
+		<form action="/user/regist" method="post">
+				<p>
+					Email : <br />
+					<input id="title_box" type="text" name="u_Email" value="${Param.u_Email}">
+				</p>
+				<p>
+					NickName : <br />
+						<input id="Name_box" name="u_Name" value="${Param.u_Name}">
+				</p>				
+				<p>
+					Password : <br />
+					<input id="Password_box" type="password" name="u_pw" value="${Param.u_pw}">
+				</p>				
+				<p>
+					Address : <br />
+					<input id="Address_box" name="u_Address" value="${Param.u_Address}">
+				</p>				
+				<p>
+					Gender : <br />
+					<input id="Gender_box" name="u_gender" value="${Param.u_gender}">
+				</p>				
+				<p>
+					ProfileImage : <br />
+					<input id="Profile_box" name="u_profile_path" value="${Param.u_profile_path}">
+				</p>				
+							
+				<button type="submit">회원가입</button>
+				<button type="button" class="ModalClose" onclick="javascript:history.go(-1);">취소</button>		
+		
+		</form>
+		
+	 </section>
+	 <div id="ModalBG">
+	 
+	 </div>
+	 
 
     <header class="py-3 mb-3 border-bottom">
 		<div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1fr 2fr;">
@@ -70,11 +116,12 @@
 					</a>
 					<ul class="dropdown-menu text-small shadow">
 						<!-- c:if not logged in -->
-						<li><a class="dropdown-item" href="#">Sign in/Sign up</a></li>
+						<li><a class="dropdown-item signIn" href="#">Sign in</a></li>
+						<li><a class="dropdown-item signUp" href="#">Sign up</a></li>
 						<!-- c:if logged in -->
-						<li><a class="dropdown-item" href="#">UserSettings</a></li>
+						<li><a class="dropdown-item userUpdate" href="#">UserSettings</a></li>
 						<li><hr class="dropdown-divider"></li>
-						<li><a class="dropdown-item" href="#">Sign out</a></li>
+						<li><a class="dropdown-item SignOut" href="#">Sign out</a></li>
 					</ul>
 				</div>
 			</div>
@@ -112,4 +159,33 @@
 <!-- js contextpath ctx -->
 <script type="text/javascript" charset="utf-8">
 	sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
+</script>
+<script type="text/javascript">
+	$(document).ready(function () {
+		$(".signUp").on("click", function () {
+			$("#SignUPModal").css("display", "block");
+			$("#ModalBG").css("background-color", "rgba(0,0,0,0.5)");
+			$("#ModalBG").css("width", "100%");
+			$("#ModalBG").css("height", "100%");
+		});
+		
+		
+		
+		$(".ModalClose").on("click" , function () {
+			$("#SignInModal").css("display", "none");
+			$("#ModalBG").css("display", "none");
+		})
+		
+		
+// 		$(".SignInSuccess").on("click", function(e){
+		    
+// 		    e.preventDefault();
+// 		    $("form").submit();
+		    
+// 		  });
+
+
+		
+		
+	});
 </script>

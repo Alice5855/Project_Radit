@@ -1,8 +1,11 @@
 package org.zerock.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.zerock.domain.UserVO;
 import org.zerock.service.UserService;
 
@@ -30,13 +33,15 @@ public class UserController {
 //		ratt.addFlashAttribute("result", user.getU_Email());
 //		return "redirect:/board/list";
 //	}
+	
+	
 	@PostMapping("/regist")
 	public String regist(UserVO user) {
 		log.info("회원가입 ===== " + user);
 		// adding file upload feature
 		
 		userService.regist(user);
-		return null;
+		return "/board/list";
 	}
 	
 	@PostMapping("/update")
