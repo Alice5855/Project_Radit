@@ -94,7 +94,7 @@ public class UploadController {
 	// originally returns nothing (void)
 	
 	// page724 첨부파일의 등록, 삭제(post)는 로그인한 사용자만 가능하도록 제한 
-	@PreAuthorize("isAuthenticated()")
+	// @PreAuthorize("isAuthenticated()")
 	@PostMapping(value = "/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseEntity<List<AttachFileDTO>> uploadAjaxPost(MultipartFile[] uploadFile) {
@@ -300,7 +300,7 @@ public class UploadController {
 	// (try문의 nested if문)
 	
 	// page724 첨부파일의 등록, 삭제(post)는 로그인한 사용자만 가능하도록 제한 
-	@PreAuthorize("isAuthenticated()")
+	// @PreAuthorize("isAuthenticated()")
 	@PostMapping("/deleteFile")
 	@ResponseBody
 	public ResponseEntity<String> deleteFile(String fileName, String type) {

@@ -105,27 +105,25 @@
 					        	<input type="hidden" name="keyword" value="<c:out value='${pageMaker.cri.keyword}'/>">
 					        </form>
                             
-                            <%--
+                            
                             <!-- Button trigger modal -->
-                            <div class="pull-left">
-                            	<div class="col-lg-12">
-		                            <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-		                                Modal Test Button
-		                            </button>
-	                            </div>
-                            </div>
+							<button type="button" id="modalToggle" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+							  Launch demo modal
+							</button>
                             <!-- FOR TEST ONLY delete this button when publish -->
-                            --%>
+                            
                             
                             <!-- Modal -->
-				            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				            <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
             					<div class="modal-dialog">
 					        		<div class="modal-content">
 					                	<div class="modal-header">
-						                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                   						</div>
-					                <div class="modal-body">처리가 완료되었습니다.</div>
+						                <div class="modal-body">
+											<%@include file="get.jsp" %>
+										</div>
 						                <div class="modal-footer">
 						                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 						                    <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
@@ -144,7 +142,7 @@
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
-            
+
 <script type="text/javascript">
    	// 새로운 게시물 번호는 Board Controller의 addFlashAttribute()
    	// method로 저장되었기 때문에 한번도 사용된 적이 없다면 사용자가 
@@ -158,7 +156,7 @@
 			return sessionStorage.getItem("contextpath");
 		};
 		// header.jsp 최하단 (385행) 참고. JS에서 contextpath 사용하는 법
-		
+		/*
 		var result = "<c:out value='${result}' />";
 		// BoardController의  addAttribute() method로 추가된 result
 		
@@ -184,6 +182,13 @@
 //			self.location = ctx + "/board/register";
 //		})
 		// ${context} 사용하기 위해 inline으로 처리함. 21행 참고
+		*/
+		
+		var modalTrigger = $("#modalToggle")
+		
+		modalTrigger.on("click", function(e){
+			
+		})
 		
 		var actionForm = $("#actionForm");
 		$(".paginate_button a").on("click", function(e) {
@@ -195,7 +200,7 @@
 		
 		$('.move').on("click", function(e) {
 			e.preventDefault();
-			actionForm.append("<input type='hidden' name='bno' value='" + $(this).attr("href") + "'>");
+			actionForm.append("<input type='hidden' name='b_number' value='" + $(this).attr("href") + "'>");
 			actionForm.attr("action", ctx + "/board/get");
 			actionForm.submit();
 		});

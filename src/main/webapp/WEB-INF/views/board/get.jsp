@@ -86,23 +86,23 @@
       <div class="panel-body">
 
         <div class="form-group">
-          <label>Bno</label> <input class="form-control" name='bno' value='<c:out value="${board.bno}" />' readonly="readonly">
+          <label>b_number</label> <input class="form-control" name='b_number' value='<c:out value="${board.b_number}" />' readonly="readonly">
         </div>
 
         <div class="form-group">
-          <label>Title</label> <input class="form-control" name='title' value='<c:out value="${board.title}" />' readonly="readonly">
+          <label>Title</label> <input class="form-control" name='b_title' value='<c:out value="${board.b_title}" />' readonly="readonly">
         </div>
 
         <div class="form-group">
           <label>Text area</label>
-          <textarea class="form-control" rows="3" name='content' readonly="readonly"><c:out value="${board.content}" /></textarea>
+          <textarea class="form-control" rows="3" name='b_text' readonly="readonly"><c:out value="${board.b_text}" /></textarea>
         </div>
 
         <div class="form-group">
           <label>Writer</label>
-          <input class="form-control" name='writer' value='<c:out value="${board.writer}" />' readonly="readonly">
+          <input class="form-control" name='u_email' value='<c:out value="${board.u_email}" />' readonly="readonly">
         </div>
-        
+        <%--
         <!-- author가 로그인 된 userid와 일치하는 경우에만 Modify 되도록 함 -->
         <sec:authentication property="principal" var="pinfo"/>
 
@@ -111,24 +111,25 @@
 	        	<button data-oper='modify' class="btn btn-default">Modify</button>
 	        </c:if>
         </sec:authorize>
+        --%>
 
 		<!-- 
-		<button data-oper='modify' class="btn btn-default" onclick="location.href='${context}/board/modify?bno=<c:out value="${board.bno}" />'">Modify</button>
+		<button data-oper='modify' class="btn btn-default" onclick="location.href='${context}/board/modify?b_number=<c:out value="${board.b_number}" />'">Modify</button>
 		-->
 		<%--
 		<button data-oper='list' class="btn btn-info" onclick="location.href='${context}/board/list'">List</button>
 		--%>
 		<button data-oper='list' class="btn btn-info">List</button>
 		
-		
+		<!-- 
 		<form id='operForm' action="${context}/board/modify" method="get">
-			<input type='hidden' id='bno' name='bno' value='<c:out value="${board.bno}"/>'>
+			<input type='hidden' id='b_number' name='b_number' value='<c:out value="${board.b_number}"/>'>
 			<input type='hidden' id='pageNum' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
 			<input type='hidden' id='amount' name='amount' value='<c:out value="${cri.amount}"/>'>
-			<!-- 345 page code added -->
 			<input type='hidden' id='type' name='type' value='<c:out value="${cri.type}"/>'>
 			<input type='hidden' id='keyword' name='keyword' value='<c:out value="${cri.keyword}"/>'>
 		</form>
+		-->
 		<!-- 317 page -->
 
       </div>
@@ -181,9 +182,11 @@
 				<i class="fa fa-comments fa-fw"></i> Reply
 				<!-- Page718 authentication으로 Log in 한 회원만 새 댓글을 쓸
 					수 있도록 함 -->
+				<%--
 				<sec:authorize access="isAuthenticated()">
 					<button id="addReplyBtn" class="btn btn-default btn-xs pull-right">New Reply</button>
 				</sec:authorize>
+				--%>
 			</div>
 			
 			<!-- /.panel-heading -->
@@ -219,7 +222,7 @@
 	</div>
 </div>
 <!-- /.row -->
-
+<%--
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
@@ -255,13 +258,14 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+--%>
 
 <script type="text/javascript" src="${context}/resources/js/reply.js"></script>
-
+<%--
 <script type="text/javascript">
 	// page 415 reply event handler
 	$(document).ready(function() {
-		var bnoValue = '<c:out value="${board.bno}"/>';
+		var b_numberValue = '<c:out value="${board.b_number}"/>';
 		var replyUL = $(".chat");
 		
 		showList(1);
@@ -270,7 +274,7 @@
 		function showList(page) {
 			console.log("show list : " + page);
 			// getList(param, callback, error). error function은 지정되지 않음
-			replyService.getList({bno: bnoValue, page: page || 1},
+			replyService.getList({b_number: b_numberValue, page: page || 1},
 				function(replyCnt, list){
 				// paging 처리를 위해 callback 함수에 parameter replyCnt 추가
 					console.log("replyCnt : " + replyCnt);
@@ -415,7 +419,7 @@
 			var reply = {
 					reply: modalInputReply.val(),
 					replyer: modalInputReplyer.val(),
-					bno: bnoValue
+					b_number: b_numberValue
 				};
 			replyService.add(reply, function(result){
 				alert(result);
@@ -526,7 +530,7 @@
 	});
 	// document.ready function
 </script>
-
+--%>
 <!--
 <script type="text/javascript">
 /*
@@ -539,11 +543,11 @@
 	console.log("=======================");
 	console.log("JS REPLY TEST")
 	
-	var bnoValue = '<c:out value="${board.bno}"/>';
+	var b_numberValue = '<c:out value="${board.b_number}"/>';
 */
 /*
 	replyService.add(
-			{reply: "JS Test", replyer: "Randolph", bno: bnoValue},
+			{reply: "JS Test", replyer: "Randolph", b_number: b_numberValue},
 			// reply
 			function (result) {
 				alert("Result: " + result);
@@ -552,7 +556,7 @@
 	);
 */
 /*
-	replyService.getList({bno:bnoValue, page:1}, function(list){
+	replyService.getList({b_number:b_numberValue, page:1}, function(list){
 		for(var i = 0, len = list.length || 0; i < len; i++){
 			console.log(list[i]);
 		}
@@ -576,14 +580,14 @@
 /*
 	replyService.update({
 		rno: 11,
-		bno: bnoValue,
+		b_number: b_numberValue,
 		reply: "Modify test via javascript"
 	}, function(result){
 		alert("Successfully modified reply");
 	});
 */
 	/* update(reply, callback, error)
-	 * reply에 rno, bno, reply속성값을 대입하여 callback 함수인 function(result)
+	 * reply에 rno, b_number, reply속성값을 대입하여 callback 함수인 function(result)
 	 * 를 유효성 검증 이후 실행. error scenario는 생성하지 않음
 	 */
 	 
@@ -609,14 +613,14 @@
 		
 		$("button[data-oper='modify']").on("click", function(e) {
 			operForm.attr("action", ctx + "/board/modify").submit();
-			// 수정 버튼 클릭 시 bno값을 같이 전달하고 form tag를 submit 처리
+			// 수정 버튼 클릭 시 b_number값을 같이 전달하고 form tag를 submit 처리
 		});
 		// button 클릭 시 #operForm form tag를 전송
 		
 		$("button[data-oper='list']").on("click", function(e) {
 			// js에서 속성을 명시할 때 [] 사용
-			operForm.find("#bno").remove();
-			// list로 이동 시 form tag 내의 #bno 삭제?
+			operForm.find("#b_number").remove();
+			// list로 이동 시 form tag 내의 #b_number 삭제?
 			operForm.attr("action", ctx + "/board/list");
 			operForm.submit();
 		});
@@ -627,22 +631,23 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		(function(){
-			var bno = '<c:out value="${board.bno}"/>';
+			var b_number = '<c:out value="${board.b_number}"/>';
 			
-		    $.getJSON("/board/getAttachList", {bno: bno}, function(arr){
+		    $.getJSON("/board/getAttachList", {b_number: b_number}, function(arr){
 				console.log(arr);
 				
 				var str = "";
 			    
 				$(arr).each(function(i, attach){
 					//image type
-					if(attach.fileType){
-						var fileCallPath = encodeURIComponent(attach.uploadPath + "/sthmb_" + attach.uuid + "_" + attach.fileName);
+					// if(attach.fileType){
+						var fileCallPath = encodeURIComponent(attach.b_uploadPath + "\\sthmb_" + attach.b_uuid + "_" + attach.b_fileName);
 						
-						str += "<li data-path='" + attach.uploadPath + "' data-uuid='" + attach.uuid + "' data-filename='" + attach.fileName + "' data-type='" + attach.fileType + "' ><div>";
+						str += "<li data-path='" + attach.b_uploadPath + "' data-uuid='" + attach.b_uuid + "' data-filename='" + attach.b_fileName + "' ><div>";
 						str += "<img src='/display?fileName=" + fileCallPath + "'>";
 						str += "</div>";
 						str += "</li>";
+					/*
 					} else {
 						str += "<li data-path='" + attach.uploadPath + "' data-uuid='" + attach.uuid + "' data-filename='" + attach.fileName + "' data-type='" + attach.fileType + "' ><div>";
 						str += "<span> " + attach.fileName + "</span><br/>";
@@ -650,6 +655,7 @@
 						str += "</div>";
 						str += "</li>";
 					}
+					*/
 				});
 				
 				$(".uploadResult ul").html(str);
