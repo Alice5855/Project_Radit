@@ -5,50 +5,50 @@
 <c:set var ="context"><%=request.getContextPath()%></c:set>
 
 <%@include file="../includes/header.jsp" %>
-
+<style>
+	#title {
+		font-size: 2rem;
+	}
+	#date {
+		font-size: 0.5rem;
+	}
+</style>
+<div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Tables</h1>
+                    <h1>/r/Radit</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="panel panel-default">
-                    	<!-- Added New entry button -->
-                        <div class="panel-heading">
-                            Board List Page
-                            <button id="regBtn" class="btn btn-default btn-xs pull-right" type="button" onclick="location.href='${context}/board/register'">Register New Entry</button>
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <table width="100%" class="table table-striped table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>#번호</th>
-                                        <th>제목</th>
-                                        <th>작성자</th>
-                                        <th>작성일</th>
-                                        <th>수정일</th>
-                                    </tr>
-                                </thead>
-                                <c:forEach items="${list}" var="board">
+                    <button id="regBtn" class="btn btn-secondary btn-sm float-end mb-3 me-1" type="button" onclick="location.href='${context}/board/register'">Register New Entry</button>
+                </div>
+                <!-- /.panel-heading -->
+                        <c:forEach items="${list}" var="board">
+                        <div class="container p-3" id="custom-cards">
+                        	<div class="row align-items-stretch g-4">
+                        		<div class="card h-100 overflow-hidden rounded-4 shadow-lg">
                                 <!-- BoardController.java의 37행 참고. model에 추가한 'list' attribute를 불러 온 것 -->
-                                	<tr>
-                                		<td><c:out value="${board.b_number}" /></td>
-                                		<td>
+                                	<div class="card-content position-relative">
+                                		<p style="display : none;"><c:out value="${board.b_number}" /></p>
+                                		<p id="title" class="fw-bold mt-3 mb-2 ms-5">
                                 			<!-- Added .move -->
-                                			<a class="move" href='<c:out value="${board.b_number}" />'>
+                                			<a class="move" href='<c:out value="${board.b_number}" />' style="text-decoration: none;">
                                 				<c:out value="${board.b_title}" />
                                 			</a>
-                                		</td>
-                               			<td><c:out value="${board.u_email}" /></td>
-                                		<td><fmt:formatDate pattern="yyyy/MM/dd" value="${board.b_regDate}"/></td>
-                                		<td><fmt:formatDate pattern="yyyy/MM/dd" value="${board.b_updateDate}"/></td>
-                                	</tr>
-                                </c:forEach>
-                            </table>
+                                		</p>
+                                		<img src='/display?fileName=<c:out value="${board.b_img}" />' />
+                               			<p class="text-end"><c:out value="${board.u_email}" /></p>
+                               			<p class="ms-2"><c:out value="${board.b_text}" /></p>
+                                		<p id="date" class="text-end text-muted"><fmt:formatDate pattern="yyyy/MM/dd" value="${board.b_regDate}"/></p>
+                                		<p id="date" class="text-end text-muted"><fmt:formatDate pattern="yyyy/MM/dd" value="${board.b_updateDate}"/></p>
+                                	</div>
+                                </div>
+                            </div>
+                        </div>
+                        </c:forEach>
                             <!-- /.table-responsive -->
                             
                             <div class="row">
@@ -144,7 +144,7 @@
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
-
+</div>
 <script type="text/javascript">
    	// 새로운 게시물 번호는 Board Controller의 addFlashAttribute()
    	// method로 저장되었기 때문에 한번도 사용된 적이 없다면 사용자가 

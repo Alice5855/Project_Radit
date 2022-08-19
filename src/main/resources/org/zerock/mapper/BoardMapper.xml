@@ -75,5 +75,17 @@
 			where rn > (#{pageNum} - 1) * #{amount}
 		]]>
 	</select>
+	
+	<select id="getU_nameFromU_Email" resultType="string">
+		<![CDATA[
+			select u_name from user_table where u_email=#{u_email}
+		]]>
+	</select>
+
+	<update id="setBoardImage">
+		<![CDATA[
+			update Board_table set b_image = #{image} where b_number = ${b_number}
+		]]>
+	</update>
 		
 </mapper>

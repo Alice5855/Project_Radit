@@ -27,4 +27,7 @@ public interface BoardService {
 	
 	// 첨부 파일을 불러오기 위한 List
 	public List<BoardAttachVO> getAttachList(Long b_number);
+	
+	public String getU_nameFromU_Email(String u_email);
+	public void setBoardImage(Long b_number, String image);
 }

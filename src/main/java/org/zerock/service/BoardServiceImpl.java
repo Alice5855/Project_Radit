@@ -113,4 +113,16 @@ public class BoardServiceImpl implements BoardService {
 		return attachMapper.findByB_number(b_number);
 	}
 
+	
+	@Override
+	public String getU_nameFromU_Email(String u_email) {
+		log.info("get U_name from U_email");
+		return mapper.getU_nameFromU_Email(u_email);
+	}
+
+	@Override
+	public void setBoardImage(Long b_number, String image) {
+		mapper.setBoardImage(b_number, image);
+	}
+	
 }

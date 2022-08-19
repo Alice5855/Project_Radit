@@ -1,8 +1,10 @@
 package org.zerock.controller;
 
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -52,7 +54,7 @@ public class BoardController {
 	 * 		m.addAttribute("list", service.getList());
 	 * }
 	 */
-	
+	/*
 	@GetMapping("/list")
 	public void list(Criteria cri, Model m) {
 		log.info("list ===== " + cri);
@@ -62,6 +64,46 @@ public class BoardController {
 		m.addAttribute("pageMaker", new PageDTO(cri, total));
 		// pageMaker라는 이름의 pageDTO 객체를 Model의 속성으로 추가
 		// 교재 page 324
+	}
+	*/
+	@GetMapping("/list")
+	public void list(Criteria cri, Model m) {
+	    List<BoardVO> boardVOList = new ArrayList<BoardVO>();
+	    boardVOList = service.getList(cri);
+	    for (BoardVO boardVO : boardVOList) {
+	    	boardVO.setU_email(getBoardWriter(boardVO));
+   
+	    	if(service.getAttachList(boardVO.getB_number()) != null) {
+	    		// String 이미지패스이름통짜변수 = 경로 + sthmb_ + uuid + 파일이름
+	    		String boardPathSthmbUuidFileName = "";
+	    		boardPathSthmbUuidFileName += service.getAttachList(boardVO.getB_number()).get(0).getB_uploadPath();
+	    		boardPathSthmbUuidFileName += "/sthmb_";
+	    		boardPathSthmbUuidFileName += service.getAttachList(boardVO.getB_number()).get(0).getB_uuid();
+	    		boardPathSthmbUuidFileName += "_";
+	    		boardPathSthmbUuidFileName += service.getAttachList(boardVO.getB_number()).get(0).getB_fileName();
+	    		try {
+	    			String encodedFileName = URLEncoder.encode(boardPathSthmbUuidFileName, "UTF-8")
+								    					.replaceAll("\\+", "%20")
+								                        .replaceAll("\\%21", "!")
+								                        .replaceAll("\\%27", "'")
+								                        .replaceAll("\\%28", "(")
+								                        .replaceAll("\\%29", ")")
+								                        .replaceAll("\\%7E", "~");
+	    			boardVO.setB_img(encodedFileName);
+	    		} catch(Exception e) {
+	    			e.printStackTrace();
+	    		}
+	    	}
+	    }
+	    m.addAttribute("list", boardVOList);
+		int total = service.getTotal(cri);
+		log.info("total ===== " + total);
+		m.addAttribute("pageMaker", new PageDTO(cri, total));
+    }
+    
+    public String getBoardWriter(BoardVO boardVO) {
+
+		return service.getU_nameFromU_Email(boardVO.getU_email());
 	}
 	
 	// 첨부 파일 list를 읽어오기 위한 method
@@ -78,6 +120,9 @@ public class BoardController {
 	@PostMapping("/register")
 	public String register(BoardVO board, RedirectAttributes ratt) {
 		log.info("register ===== " + board);
+		
+		service.register(board); // 첨부파일 데이터, 게시물 데이터 다 있음.
+		
 		// adding file upload feature
 		if (board.getAttachList() != null) {
 			board.getAttachList().forEach(attach -> log.info(attach));
