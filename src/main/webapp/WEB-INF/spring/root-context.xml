@@ -44,6 +44,7 @@
 	</bean>
 	
 	
+	
 	<!-- Page 469 [transaction] added tx annotation driven -->
 	<tx:annotation-driven/>
 	
@@ -51,6 +52,7 @@
 	
 	<context:component-scan base-package="org.zerock.sample" />
 	<context:component-scan base-package="org.zerock.service" />
+	<context:component-scan base-package="org.zerock.dao" />
 	
 	<!-- Page 455. Namespaces에서 aop와 하단 line 추가함 -->
 	<context:annotation-config></context:annotation-config>
