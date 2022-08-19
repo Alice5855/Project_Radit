@@ -16,6 +16,7 @@
     <meta name="author" content="">
 
     <title>Welcome to Radit</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <!-- Bootstrap Core CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
 	
@@ -61,7 +62,7 @@
 				<p>
 					Email : <br />
 <%-- 					<input id="title_box" type="text" name="u_Email" value="${Param.u_Email}">  --%>
-					<input type="email" placeholder="이메일" name="u_Email" id="mail" maxlength="30" value="${Param.u_Email}">
+					<input type="email" placeholder="Email" name="u_Email" id="mail" maxlength="30" value="${Param.u_Email}">
 					<div id="error_mail" class="result-email result-check"></div>
 					
 				</p>
@@ -84,8 +85,8 @@
 					Gender : <br />
 <%-- 				<input id="Gender_box" name="u_gender" value="${Param.u_gender}"> --%>
 				  	<select name= "u_gender">
-				  		<option value="male">male
-				  		<option value="female">female
+				  		<option value="Male">Male
+				  		<option value="Female">Female
 				  		<option value="Non-Binary">Non-Binary
 				  	
 				  	</select>
@@ -96,7 +97,7 @@
 				</p>				
 							
 				<button type="submit">회원가입</button>
-				<button type="button" class="ModalClose" onclick="javascript:history.go(-1);">취소</button>		
+				<button type="button" class="ModalClose" onclick="">취소</button>		
 		
 		</form>
 		
@@ -167,73 +168,29 @@
 --%>
 
 <!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
 <!-- js contextpath ctx -->
 <script type="text/javascript" charset="utf-8">
 	sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
 </script>
-<script type="text/javascript">
-	$(document).ready(function () {
-		$(".signUp").on("click", function () {
-			$("#SignUPModal").css("display", "block");
-			$("#ModalBG").css("background-color", "rgba(0,0,0,0.5)");
-			$("#ModalBG").css("width", "100%");
-			$("#ModalBG").css("height", "100%");
-		});
-		
-		
-		
-		$(".ModalClose").on("click" , function () {
-			$("#SignInModal").css("display", "none");
-			$("#ModalBG").css("display", "none");
-		})
-		
-		
-// 		$(".SignInSuccess").on("click", function(e){
-		    
-// 		    e.preventDefault();
-// 		    $("form").submit();
-		    
-// 		  });
-
-
-		
-		
-	});
-</script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
-<script>
-window.onload = function(){
-    document.getElementById("address_kakao").addEventListener("click", function(){
-        new daum.Postcode({
-            oncomplete: function(data) { 
-                document.getElementById("address_kakao").value = data.address; 
-                document.querySelector("input[name=address_detail]").focus(); 
-            }
-        }).open();
-    });
-}
-</script>
-
-
+<script src="/resources/js/UserRegist.js"></script>
 <script type="text/javascript">
-function email_check( email ) {    
-    var regex=/([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-    return (email != '' && email != 'undefined' && regex.test(email)); 
-}
+$(".signUp").on("click", function () {
+	$("#SignUPModal").css("display", "block")
 
-$("input[type=email]").blur(function(){
-  var email = $(this).val();
-  if( email == '' || email == 'undefined') return;
-  if(! email_check(email) ) {
-  	$(".result-email").text('이메일 형식으로 적어주세요');
-    $(this).focus();
-    return false;
-  }else {
-	$(".result-email").text('');
-  }
+})
+
+
+
+$(".ModalClose").on("click" , function () {
+	$("#SignUPModal").css("display", "none")
+	
 });
 
+
+
+
 </script>
+
 
