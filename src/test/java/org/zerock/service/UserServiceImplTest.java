@@ -28,20 +28,20 @@ public class UserServiceImplTest {
 	
 	
 	
-//	@Test
-//	public void testRegister() {
-////		log.info("시작");
-//		UserVO user = new UserVO();
-////		log.info("중간");
-//		user.setU_Email("20220818@test.com");
-//		user.setU_Name("오전10시");
-//		user.setU_pw("test");
-//		user.setU_Address("대충 주소");
-//		user.setU_gender("남성");
-//		user.setU_profile_path("대충 이미지 uuid");
-//		userService.regist(user);
-//		log.info(user + " 로그 찍어보기 ");
-//	}
+	@Test
+	public void testRegister() {
+//		log.info("시작");
+		UserVO user = new UserVO();
+//		log.info("중간");
+		user.setU_Email("0819@test.com");
+		user.setU_Name("오전22시");
+		user.setU_pw("test");
+		user.setU_Address("대충 주소");
+		user.setU_gender("남성");
+		user.setU_profile_path("대충 이미지 uuid");
+		userService.regist(user);
+		log.info(user + " 로그 찍어보기 ");
+	}
 
 //	@Test
 //	public void testGet() {
@@ -78,17 +78,6 @@ public class UserServiceImplTest {
 	
 	
 
-	@Test
-	public void testAuthUpdate() {
-		UserVO user = userService.getINFO("권한테스트에미일");
-		if(user == null) {
-			return;
-		}else {
-			userService.AuthUpdate(user);
-		}
-		
-		log.info("수정 결과 : " + user);
-	}
 
 
 }

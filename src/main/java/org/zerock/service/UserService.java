@@ -14,6 +14,5 @@ public interface UserService {
 	
 	public UserVO getINFO(String u_Email);
 	
-	public boolean AuthUpdate(UserVO user);
 
 }

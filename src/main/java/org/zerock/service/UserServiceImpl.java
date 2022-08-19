@@ -41,12 +41,7 @@ public class UserServiceImpl implements UserService {
 		return usermapper.deleteAccount(u_Email) == 1;
 	}
 
-	@Override
-	public boolean AuthUpdate(UserVO user) {
-		log.info("권한 부여" + user);
-		boolean AuthResult = usermapper.AuthUpdate(user) == 1;
-		return AuthResult;
-	}
+
 
 
 
