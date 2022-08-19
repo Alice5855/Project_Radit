@@ -60,7 +60,10 @@
 		<form action="/user/regist" method="post">
 				<p>
 					Email : <br />
-					<input id="title_box" type="text" name="u_Email" value="${Param.u_Email}">
+<%-- 					<input id="title_box" type="text" name="u_Email" value="${Param.u_Email}">  --%>
+					<input type="email" placeholder="이메일" name="u_Email" id="mail" maxlength="30" value="${Param.u_Email}">
+					<div id="error_mail" class="result-email result-check"></div>
+					
 				</p>
 				<p>
 					NickName : <br />
@@ -72,11 +75,20 @@
 				</p>				
 				<p>
 					Address : <br />
-					<input id="Address_box" name="u_Address" value="${Param.u_Address}">
+<%-- 					<input id="Address_box" name="u_Address" value="${Param.u_Address}"> --%>
+						<input type="text" id="address_kakao" name="u_Address" readonly ="readonly" value="${Param.u_Address}"/>
+						<input id="Address_box" name="u_Address" value="${Param.u_Address}" placeholder="better address">
+						
 				</p>				
 				<p>
 					Gender : <br />
-					<input id="Gender_box" name="u_gender" value="${Param.u_gender}">
+<%-- 				<input id="Gender_box" name="u_gender" value="${Param.u_gender}"> --%>
+				  	<select name= "u_gender">
+				  		<option value="male">male
+				  		<option value="female">female
+				  		<option value="Non-Binary">Non-Binary
+				  	
+				  	</select>
 				</p>				
 				<p>
 					ProfileImage : <br />
@@ -189,3 +201,39 @@
 		
 	});
 </script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+<script>
+window.onload = function(){
+    document.getElementById("address_kakao").addEventListener("click", function(){
+        new daum.Postcode({
+            oncomplete: function(data) { 
+                document.getElementById("address_kakao").value = data.address; 
+                document.querySelector("input[name=address_detail]").focus(); 
+            }
+        }).open();
+    });
+}
+</script>
+
+
+<script type="text/javascript">
+function email_check( email ) {    
+    var regex=/([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    return (email != '' && email != 'undefined' && regex.test(email)); 
+}
+
+$("input[type=email]").blur(function(){
+  var email = $(this).val();
+  if( email == '' || email == 'undefined') return;
+  if(! email_check(email) ) {
+  	$(".result-email").text('이메일 형식으로 적어주세요');
+    $(this).focus();
+    return false;
+  }else {
+	$(".result-email").text('');
+  }
+});
+
+</script>
+
