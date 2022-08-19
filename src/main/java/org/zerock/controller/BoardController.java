@@ -3,6 +3,7 @@ package org.zerock.controller;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -56,13 +57,27 @@ public class BoardController {
 	@GetMapping("/list")
 	public void list(Criteria cri, Model m) {
 		log.info("list ===== " + cri);
-		m.addAttribute("list", service.getList(cri));
+		
+		List<BoardVO> boardVOList = new ArrayList<BoardVO>();
+		boardVOList = service.getList(cri);
+		for (BoardVO boardVO : boardVOList) {
+			boardVO.setU_email(getBoardWriter(boardVO));
+		}
+		
+		m.addAttribute("list", boardVOList);
 		int total = service.getTotal(cri);
 		log.info("total ===== " + total);
 		m.addAttribute("pageMaker", new PageDTO(cri, total));
 		// pageMaker라는 이름의 pageDTO 객체를 Model의 속성으로 추가
 		// 교재 page 324
 	}
+	
+	
+	public String getBoardWriter(BoardVO boardVO) {
+		
+		return service.getU_nameFromU_Email(boardVO.getU_email());
+	}
+	
 	
 	// 첨부 파일 list를 읽어오기 위한 method
 	@GetMapping(value="/getAttachList", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -78,11 +93,25 @@ public class BoardController {
 	@PostMapping("/register")
 	public String register(BoardVO board, RedirectAttributes ratt) {
 		log.info("register ===== " + board);
+		service.register(board); // 첨부파일 데이터, 게시물 데이터 다 있음.
 		// adding file upload feature
 		if (board.getAttachList() != null) {
 			board.getAttachList().forEach(attach -> log.info(attach));
 		}
-		service.register(board);
+
+		 
+		/*zzzzzzzzzzzz*/
+	
+//		String str = null;
+//		str += board.getAttachList().get(0).getB_uploadPath();
+//		str += board.getAttachList().get(0).getB_uuid();
+//		str += board.getAttachList().get(0).getB_fileName();
+		
+		// 쿼리에 필요한거 : bno
+		
+//		service.setBoardImage(board.getB_number(), str);
+		
+		
 		ratt.addFlashAttribute("result", board.getB_number());
 		return "redirect:/board/list";
 	}

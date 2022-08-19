@@ -86,24 +86,22 @@
 
         <form role="form" action="${context}/board/register" method="post">
         <!-- Page714 CSRF Token을 hidden input으로 추가함 -->
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+<%--         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> --%>
         
           <div class="form-group">
-            <label>Title</label> <input class="form-control" name='title'>
+            <label>Title</label> <input class="form-control" name='b_title'>
           </div>
 
           <div class="form-group">
             <label>Text area</label>
-            <textarea class="form-control" rows="3" name='content'></textarea>
+            <textarea class="form-control" rows="3" name='b_text'></textarea>
           </div>
 
           <div class="form-group">
             <label>Writer</label> 
           	<!-- Added value and ro for log in feature -->
-          	<!--
-            <input class="form-control" name='writer'>
-            -->
-            <input class="form-control" name='writer' value='<sec:authentication property="principal.username" />' readonly="readonly">
+            <input class="form-control" name='u_email'>
+<%--             <input class="form-control" name='writer' value='<sec:authentication property="principal.username" />' readonly="readonly"> --%>
           </div>
           <button type="submit" class="btn btn-default">Submit</button>
           <button type="reset" class="btn btn-default" onclick="javascript:history.go(-1);">Cancel</button>
@@ -221,9 +219,9 @@
 				url: '/uploadAjaxAction',
 				processData: false, 
 				contentType: false,
-				beforeSend: function(xhr){
-					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-				},
+// 				beforeSend: function(xhr){
+// 					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+// 				},
 				// csrf token을 data 전송 전에 header로 전송
 				data: formData,
 				type: 'POST',
@@ -284,9 +282,9 @@
 			
 			$.ajax({
 				url: '/deleteFile',
-				beforeSend: function(xhr){
-					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-				},
+// 				beforeSend: function(xhr){
+// 					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+// 				},
 				// csrf token을 data 전송 전에 header로 전송
 				data: {fileName: targetFile, type:type},
 				dataType:'text',

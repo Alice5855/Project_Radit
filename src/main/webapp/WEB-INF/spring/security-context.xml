@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	<!-- Changed context a bit (page610) -->
-	<bean id="customAccessDenied" class="org.zerock.security.CustomAccessDeniedHandler"></bean>
+<!-- 	<bean id="customAccessDenied" class="org.zerock.security.CustomAccessDeniedHandler"></bean> -->
 	<!--
 	<bean id="customLoginSuccess" class="org.zerock.security.CustomLoginSuccessHandler"></bean>
 	-->
@@ -36,7 +36,7 @@
 		<security:access-denied-handler error-page="/accessError"/>
 		-->
 		<!-- Handler를 error page를 class를 등록한 bean으로 변경 -->
-		<security:access-denied-handler ref="customAccessDenied"/>
+<!-- 		<security:access-denied-handler ref="customAccessDenied"/> -->
 		<!--
 		<security:csrf disabled="true"/>
 		-->

@@ -13,6 +13,8 @@ public interface BoardService {
 	// bno값으로 특정 게시물 정보를 가져옴
 	public BoardVO get(Long b_number);
 	
+	public String getU_nameFromU_Email(String u_email);
+	
 	public boolean modify(BoardVO board);
 	
 	public boolean remove(Long b_number);
@@ -27,4 +29,6 @@ public interface BoardService {
 	
 	// 첨부 파일을 불러오기 위한 List
 	public List<BoardAttachVO> getAttachList(Long b_number);
+	
+	public void setBoardImage(Long b_number, String image);
 }

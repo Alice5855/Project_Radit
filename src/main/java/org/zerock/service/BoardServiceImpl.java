@@ -33,7 +33,8 @@ public class BoardServiceImpl implements BoardService {
 	@Transactional
 	@Override
 	public void register(BoardVO board) {
-		log.info("registered ===== to " + board);
+		log.info("글작성~~~~ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ ===== to " + board);
+		
 		mapper.insertSelectKey(board);
 		
 		if(board.getAttachList() == null || board.getAttachList().size() <= 0) {
@@ -44,6 +45,11 @@ public class BoardServiceImpl implements BoardService {
 			attach.setB_number(board.getB_number());
 			attachMapper.insert(attach);
 		});
+
+		
+//		BoardAttachVO boardAttachVO = new BoardAttachVO();
+//		boardAttachVO = attachMapper.findByB_number(board.getB_number());
+		
 	}
 
 	@Override
@@ -113,4 +119,14 @@ public class BoardServiceImpl implements BoardService {
 		return attachMapper.findByB_number(bno);
 	}
 
+	@Override
+	public String getU_nameFromU_Email(String u_email) {
+		log.info("get U_name from U_email");
+		return mapper.getU_nameFromU_Email(u_email);
+	}
+
+	@Override
+	public void setBoardImage(Long b_number, String image) {
+		mapper.setBoardImage(b_number, image);
+	}
 }
