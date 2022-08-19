@@ -245,7 +245,7 @@
          $(uploadResultArr).each(function(i, obj){
             // true : image
             //if(obj.image){
-               var fileCallPath = encodeURIComponent(obj.b_uploadPath + "\\sthmb_" + obj.b_uuid + "_" + obj.b_fileName);
+               var fileCallPath = encodeURIComponent(obj.b_uploadPath + "/sthmb_" + obj.b_uuid + "_" + obj.b_fileName);
                
                // str += "<li><div>";
                // Page563 : 첨부 file 정보를 tag로 함께 전달

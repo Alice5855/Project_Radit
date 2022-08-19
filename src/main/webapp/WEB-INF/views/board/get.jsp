@@ -86,7 +86,7 @@
       <div class="panel-body">
 
         <div class="form-group">
-          <label>b_number</label> <input class="form-control" name='b_number' value='<c:out value="${board.b_number}" />' readonly="readonly">
+          <label>Number</label> <input class="form-control" name='b_number' value='<c:out value="${board.b_number}" />' readonly="readonly">
         </div>
 
         <div class="form-group">
@@ -121,7 +121,6 @@
 		--%>
 		<button data-oper='list' class="btn btn-info">List</button>
 		
-		<!-- 
 		<form id='operForm' action="${context}/board/modify" method="get">
 			<input type='hidden' id='b_number' name='b_number' value='<c:out value="${board.b_number}"/>'>
 			<input type='hidden' id='pageNum' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
@@ -129,7 +128,7 @@
 			<input type='hidden' id='type' name='type' value='<c:out value="${cri.type}"/>'>
 			<input type='hidden' id='keyword' name='keyword' value='<c:out value="${cri.keyword}"/>'>
 		</form>
-		-->
+		
 		<!-- 317 page -->
 
       </div>
@@ -141,7 +140,7 @@
   <!-- end panel -->
 </div>
 <!-- /.row -->
-<div class='bigPictureWrapper d-flex'>
+<div class='bigPictureWrapper'>
 	<div class='bigPicture d-flex'>
 		
 	</div>
@@ -531,74 +530,6 @@
 	// document.ready function
 </script>
 --%>
-<!--
-<script type="text/javascript">
-/*
-	$(document).ready(function() {
-		console.log(replyService);
-		// variable from reply.js
-	});
-*/
-/*
-	console.log("=======================");
-	console.log("JS REPLY TEST")
-	
-	var b_numberValue = '<c:out value="${board.b_number}"/>';
-*/
-/*
-	replyService.add(
-			{reply: "JS Test", replyer: "Randolph", b_number: b_numberValue},
-			// reply
-			function (result) {
-				alert("Result: " + result);
-			}
-			// callback
-	);
-*/
-/*
-	replyService.getList({b_number:b_numberValue, page:1}, function(list){
-		for(var i = 0, len = list.length || 0; i < len; i++){
-			console.log(list[i]);
-		}
-	});
-*/
-	// function(list)가 getList 함수의 callback 함수가 된다. reply.js 참고
-/*
-	replyService.remove(10, function(count){
-		console.log(count);
-		
-		if (count === 'Success') {
-			alert("Successfully removed");
-		}
-	}, function(error){
-		alert("Error occurred. reply is not exist or synthetic error");
-	});
-*/
-	// if (count === 'string')에 들어가는 문자열은 ReplyController의 81행의 log
-	// 문구와 일치해야 한다. log의 text를 검증하여 alert를 띄우는 방식이기 때문
-
-/*
-	replyService.update({
-		rno: 11,
-		b_number: b_numberValue,
-		reply: "Modify test via javascript"
-	}, function(result){
-		alert("Successfully modified reply");
-	});
-*/
-	/* update(reply, callback, error)
-	 * reply에 rno, b_number, reply속성값을 대입하여 callback 함수인 function(result)
-	 * 를 유효성 검증 이후 실행. error scenario는 생성하지 않음
-	 */
-	 
-/*
-	 replyService.get(21, function(data){
-		 console.log(data);
-	 });
-	 // simple as that
-*/	 
-</script>
--->
 
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -641,7 +572,7 @@
 				$(arr).each(function(i, attach){
 					//image type
 					// if(attach.fileType){
-						var fileCallPath = encodeURIComponent(attach.b_uploadPath + "\\sthmb_" + attach.b_uuid + "_" + attach.b_fileName);
+						var fileCallPath = encodeURIComponent(attach.b_uploadPath + "/sthmb_" + attach.b_uuid + "_" + attach.b_fileName);
 						
 						str += "<li data-path='" + attach.b_uploadPath + "' data-uuid='" + attach.b_uuid + "' data-filename='" + attach.b_fileName + "' ><div>";
 						str += "<img src='/display?fileName=" + fileCallPath + "'>";
@@ -671,12 +602,14 @@
 			
 			var path = encodeURIComponent(liObj.data("path")+"/" + liObj.data("uuid")+"_" + liObj.data("filename"));
 			
-			if(liObj.data("type")){
+			// if(liObj.data("type")){
 				showImage(path.replace(new RegExp(/\\/g),"/"));
+			/*
 			} else {
 				//download 
 				self.location ="/download?fileName="+path
 			}
+			*/
 		});
 		
 		function showImage(fileCallPath){

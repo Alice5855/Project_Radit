@@ -122,7 +122,9 @@
 						                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                   						</div>
 						                <div class="modal-body">
+						                <%-- 
 											<%@include file="get.jsp" %>
+										--%>
 										</div>
 						                <div class="modal-footer">
 						                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
