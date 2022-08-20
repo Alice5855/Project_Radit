@@ -39,7 +39,13 @@
                                 				<c:out value="${board.b_title}" />
                                 			</a>
                                 		</p>
-                                		<img src='/display?fileName=<c:out value="${board.b_img}" />' />
+                                		 
+                                		<c:if test= "${not empty board.b_img}">
+                                		
+                                			<img src='/display?fileName=<c:out value="${board.b_img}" />' />
+                                		
+                                		</c:if>
+                                		
                                			<p class="text-end"><c:out value="${board.u_email}" /></p>
                                			<p class="ms-2"><c:out value="${board.b_text}" /></p>
                                 		<p id="date" class="text-end text-muted"><fmt:formatDate pattern="yyyy/MM/dd" value="${board.b_regDate}"/></p>

@@ -73,7 +73,7 @@ public class BoardController {
 	    for (BoardVO boardVO : boardVOList) {
 	    	boardVO.setU_email(getBoardWriter(boardVO));
    
-	    	if(service.getAttachList(boardVO.getB_number()) != null) {
+	    	if(!service.getAttachList(boardVO.getB_number()).isEmpty()) {
 	    		// String 이미지패스이름통짜변수 = 경로 + sthmb_ + uuid + 파일이름
 	    		String boardPathSthmbUuidFileName = "";
 	    		boardPathSthmbUuidFileName += service.getAttachList(boardVO.getB_number()).get(0).getB_uploadPath();
@@ -121,7 +121,6 @@ public class BoardController {
 	public String register(BoardVO board, RedirectAttributes ratt) {
 		log.info("register ===== " + board);
 		
-		service.register(board); // 첨부파일 데이터, 게시물 데이터 다 있음.
 		
 		// adding file upload feature
 		if (board.getAttachList() != null) {

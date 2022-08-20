@@ -38,6 +38,7 @@ public class BoardControllerTests {
 	
 	// @Before : 모든 test 전에 매번 실행 되는 method
 	@Before
+	@Test
 	public void setup() {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
 	}
