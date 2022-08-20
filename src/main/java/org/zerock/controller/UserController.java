@@ -1,11 +1,9 @@
 package org.zerock.controller;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.resource.HttpResource;
 import org.zerock.domain.UserVO;
 import org.zerock.service.UserService;
 
@@ -39,8 +37,8 @@ public class UserController {
 	public String regist(UserVO user) {
 		log.info("회원가입 ===== " + user);
 		// adding file upload feature
-		
 		userService.regist(user);
+		
 		return "/board/list";
 	}
 	
@@ -63,16 +61,8 @@ public class UserController {
 		// Criteria에 새로 생성한 method 사용(page 581)
 	}
 	
-	@PostMapping("/Auth")
-	public String AuthUpdate(UserVO user) {
-		log.info("권한 부여");
-		userService.AuthUpdate(user);
-		
-		return "/board/list";
-	}
+
 	
-	
-	
-	
+
 	
 }

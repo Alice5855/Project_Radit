@@ -51,11 +51,11 @@
 							<fieldset>
 								<div class="form-group">
 									<input class="form-control" placeholder="User ID"
-										name="username" type="text" autofocus>
+										name="u_Email" type="text" value="${u_Email}"   autofocus>
 								</div>
 								<div class="form-group">
 									<input class="form-control" placeholder="Password"
-										name="password" type="password" value="">
+										name="u_pw" type="password" value="${u_pw} ">
 								</div>
 								<div class="checkbox">
 									<label> <input name="remember-me" type="checkbox">Remember Me
