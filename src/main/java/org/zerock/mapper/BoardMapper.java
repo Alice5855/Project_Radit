@@ -16,5 +16,5 @@ public interface BoardMapper {
 	public int getTotalCount(Criteria cri);
 	
 	public String getU_nameFromU_Email(String u_email);
-	public void setBoardImage(Long b_number);
+	public void setBoardImage(Long b_number, String image);
 }

@@ -72,6 +72,28 @@ public class BoardController {
 	    boardVOList = service.getList(cri);
 	    for (BoardVO boardVO : boardVOList) {
 	    	boardVO.setU_email(getBoardWriter(boardVO));
+   
+	    	if(!service.getAttachList(boardVO.getB_number()).isEmpty()) {
+	    		// String 이미지패스이름통짜변수 = 경로 + sthmb_ + uuid + 파일이름
+	    		String boardPathSthmbUuidFileName = "";
+	    		boardPathSthmbUuidFileName += service.getAttachList(boardVO.getB_number()).get(0).getB_uploadPath();
+	    		boardPathSthmbUuidFileName += "/sthmb_";
+	    		boardPathSthmbUuidFileName += service.getAttachList(boardVO.getB_number()).get(0).getB_uuid();
+	    		boardPathSthmbUuidFileName += "_";
+	    		boardPathSthmbUuidFileName += service.getAttachList(boardVO.getB_number()).get(0).getB_fileName();
+	    		try {
+	    			String encodedFileName = URLEncoder.encode(boardPathSthmbUuidFileName, "UTF-8")
+								    					.replaceAll("\\+", "%20")
+								                        .replaceAll("\\%21", "!")
+								                        .replaceAll("\\%27", "'")
+								                        .replaceAll("\\%28", "(")
+								                        .replaceAll("\\%29", ")")
+								                        .replaceAll("\\%7E", "~");
+	    			boardVO.setB_img(encodedFileName);
+	    		} catch(Exception e) {
+	    			e.printStackTrace();
+	    		}
+	    	}
 	    }
 	    m.addAttribute("list", boardVOList);
 		int total = service.getTotal(cri);
@@ -142,21 +164,6 @@ public class BoardController {
 		log.info("get or modify ===== " + b_number);
 		m.addAttribute("board", service.get(b_number));
 	}
-	
-	
-	// Get content from Modal WIP
-	
-	// *TESTING* Json mapping for get from modal
-	@GetMapping(value="/getModal", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
-	@ResponseBody
-	public ResponseEntity<BoardVO> getModal(Long b_number) {
-		log.info("getModal ===== " + b_number);
-		return new ResponseEntity<BoardVO>(service.get(b_number), HttpStatus.OK);
-	}
-
-	// Get content from Modal WIP
-	
-	
 	// BoardController의 get() method에는 b_number 값을 명시적으로 처리하는
 	// @RequestParam을 이용함(파라미터명과 변수명을 기준으로 동작하기 때문에 생략 가능)
 	// view로 게시물을 전달하기 위하여 Model을 Parameter로 지정

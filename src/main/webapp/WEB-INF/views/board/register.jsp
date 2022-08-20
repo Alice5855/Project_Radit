@@ -180,18 +180,18 @@
          formObj.append(str).submit();
       }); // submit button on click
       
-      var regex = new RegExp("(.*?)\.(jpg|jpeg|gif|png|bmp|webp)$");
+      var regex = new RegExp("(.*?)\.(exe|sh|zip|alz|7z|rar)$");
       // 보안상의 이유로 첨부파일의 확장자를 제한
       var maxSize = 5242880; // 5MB
       
       function checkExtension(fileName, fileSize) {
-         if(fileSize >= (maxSize * 4)) { // Up to 20MB
-            alert("업로드 파일은 20MB를 초과할 수 없습니다");
+         if(fileSize >= maxSize) {
+            alert("Exeeded max size");
             return false;
          }
-         if(!regex.test(fileName)){
+         if(regex.test(fileName)){
             // RegEx(정규표현식)으로 file의 이름을 검증
-            alert("올바르지 않은 유형의 파일입니다");
+            alert("Invalid type");
             return false;
          }
          return true;

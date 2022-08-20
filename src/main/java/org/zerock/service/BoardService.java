@@ -29,5 +29,5 @@ public interface BoardService {
 	public List<BoardAttachVO> getAttachList(Long b_number);
 	
 	public String getU_nameFromU_Email(String u_email);
-	public void setBoardImage(Long b_number);
+	public void setBoardImage(Long b_number, String image);
 }

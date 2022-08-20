@@ -155,7 +155,7 @@ public class UploadController {
 					
 					FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "sthmb_" + uploadFileName));
 					
-					Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 400, 400);
+					Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 100, 100);
 					// createThumbnail(InputStream, OutputStream, width, height)
 					// 100 x 100 size 'sthmb_filename' 의 thumbnail file 생성
 					 
