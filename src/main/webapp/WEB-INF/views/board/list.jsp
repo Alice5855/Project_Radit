@@ -39,10 +39,10 @@
                                 				<c:out value="${board.b_title}" />
                                 			</a>
                                 		</p>
-                                		 
+                                		
                                 		<c:if test= "${not empty board.b_img}">
                                 		
-                                			<img src='/display?fileName=<c:out value="${board.b_img}" />' />
+                                			<img id="thmbImg" src='/display?fileName=<c:out value="${board.b_img}" />'/>
                                 		
                                 		</c:if>
                                 		
@@ -131,6 +131,14 @@
 						                <%-- 
 											<%@include file="get.jsp" %>
 										--%>
+										<div class="b_Modal">
+										<!-- 
+											<p id="title"></p>
+											<p>Content (text, img, video)</p>
+											<p>Author (board.u_email)</p>
+											<p id="date">regDate</p>
+											<p id="date">updateDate</p>
+										-->
 										</div>
 						                <div class="modal-footer">
 						                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -151,13 +159,47 @@
             </div>
             <!-- /.row -->
 </div>
+<%--
+<script type="text/javascript">
+	(function (){
+		var thmbImgSrc = $('#thmbImg').attr("src")
+		var thmbSplit = thmbImgSrc.substring(thmbImgSrc.lastIndexOf('=') + 1);
+		console.log(thmbSplit);
+		var thmbEncode = encodeURIComponent(thmbSplit);
+		console.log(thmbEncode);
+	
+		$('#thmbImg').setAttribute('src', '/display?fileName=' + thmbEncode);
+	})();
+</script>
+--%>
 <script type="text/javascript">
    	// 새로운 게시물 번호는 Board Controller의 addFlashAttribute()
    	// method로 저장되었기 때문에 한번도 사용된 적이 없다면 사용자가 
    	// "/board/list"를 호출하거나 새로고침을 통해 호출하는 경우 내용을 갖지 않게
    	// 됨. addFlashAttribute() method로는 일회성 data만 생성하므로
    	// 이를 이용해 경고창이나 modal등을 보여주는 방식으로 처리할 수 있음
+		var imgSelector = document.querySelectorAll("#thmbImg");
+		
 	$(document).ready(function() {
+			
+		console.log(thmbEncode);
+		for (var i = 0; i < imgSelector.length; i++) {
+			var thmbImgSrc = imgSelector[i].getAttribute("src")
+		
+			var thmbSplit = thmbImgSrc.substring(thmbImgSrc.lastIndexOf('=') + 1);
+		
+			var thmbUploadPath = thmbSplit.split(('/'));
+			
+			console.log(thmbUploadPath[1]);
+			
+			var thmbEncode = encodeURIComponent(thmbSplit);
+			var thmbEncodeU = encodeURIComponent(thmbUploadPath[0]);
+			var thmbEncodeF = thmbUploadPath[1];
+			
+			console.log(imgSelector[i]);
+			imgSelector[i].setAttribute('src', '/display?fileName=' + thmbEncodeU + "%2Fsthmb_" + thmbEncodeF);
+		};
+		
 		var ctx = getContextPath();
 		
 		function getContextPath() {
@@ -194,9 +236,8 @@
 		
 		var modalTrigger = $("#modalToggle")
 		
-		modalTrigger.on("click", function(e){
-			
-		})
+		var b_modal = $(".b_Modal") 
+		
 		
 		var actionForm = $("#actionForm");
 		$(".paginate_button a").on("click", function(e) {
@@ -206,11 +247,39 @@
 			actionForm.submit(); // actionForm을 commit하여 기능 작동하도록 함
 		});
 		
+		// Get content from Modal WIP
+		
 		$('.move').on("click", function(e) {
 			e.preventDefault();
+			$.getJSON("/board/getModal", {b_number: $(this).attr("href")}, function(arr){
+				console.log(arr);
+				
+				var str = "";
+			    
+				$(arr).each(function(i, entry){
+						
+						str += "<p>" + entry.b_number + "</p>";
+						str += "<p>" + entry.b_email + "</p>";
+						str += "<p>" + entry.b_title + "</p>";
+						str += "<p>" + entry.b_text + "</p>";
+						str += "<p>" + entry.b_img + "</p>";
+						str += "<p>" + entry.b_video + "</p>";
+						str += "<p>" + entry.b_regDate + "</p>";
+						str += "<p>" + entry.b_updateDate + "</p>";
+				});
+				
+				$("div.getModal").html(str);
+			    
+			}); // getjson
+			b_modal.modal("show");
+			
+			// Get content from Modal WIP
+			
+			/*
 			actionForm.append("<input type='hidden' name='b_number' value='" + $(this).attr("href") + "'>");
-			actionForm.attr("action", ctx + "/board/get");
+			actionForm.attr("action", ctx + "/board/getModal");
 			actionForm.submit();
+			*/
 		});
 		
 		var searchForm = $("#searchForm");

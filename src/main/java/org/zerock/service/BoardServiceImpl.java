@@ -44,6 +44,8 @@ public class BoardServiceImpl implements BoardService {
 			attach.setB_number(board.getB_number());
 			attachMapper.insert(attach);
 		});
+		
+		mapper.setBoardImage(board.getB_number());
 	}
 
 	@Override
@@ -121,8 +123,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public void setBoardImage(Long b_number, String image) {
-		mapper.setBoardImage(b_number, image);
+	public void setBoardImage(Long b_number) {
+		mapper.setBoardImage(b_number);
 	}
 	
 }
