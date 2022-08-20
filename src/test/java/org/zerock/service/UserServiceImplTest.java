@@ -33,8 +33,8 @@ public class UserServiceImplTest {
 //		log.info("시작");
 		UserVO user = new UserVO();
 //		log.info("중간");
-		user.setU_Email("0819@test.com");
-		user.setU_Name("오전22시");
+		user.setU_Email("어 씨발 성공했어 ㅋㅋ");
+		user.setU_Name("좆까 그냥 ㅋㅋ~");
 		user.setU_pw("test");
 		user.setU_Address("대충 주소");
 		user.setU_gender("남성");
@@ -62,16 +62,16 @@ public class UserServiceImplTest {
 //		
 //	}
 
-	@Test
-	public void testdeleteAccount() {
-		try {
-			userService.deleteAccount("junitTest@test.com");
-		} catch (Exception e) {
-			fail(e.getMessage());
-		} 
-		
-		
-	}
+//	@Test
+//	public void testdeleteAccount() {
+//		try {
+//			userService.deleteAccount("junitTest@test.com");
+//		} catch (Exception e) {
+//			fail(e.getMessage());
+//		} 
+//		
+//		
+//	}
 	
 	
 	
