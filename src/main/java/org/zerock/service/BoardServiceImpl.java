@@ -16,24 +16,24 @@ import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
-@Service // 계층 구조상 business 영역을 담당하는 객체임을 명시
-@AllArgsConstructor // 모든 parameter를 이용하는 생성자를 자동 생성
+@Service // 계층 구조?? business ?�역?? ?�당?�는 객체?�을 명시
+@AllArgsConstructor // 모든 parameter�? ?�용?�는 ?�성?��? ?�동 ?�성
 public class BoardServiceImpl implements BoardService {
 
-	// Spring 4.3 이상에서는 단일 parameter를 갖는 생성자의 경우 자동 처리됨
-	// (Parameter를 자동 주입)
+	// Spring 4.3 ?�상?�서?? ?�일 parameter�? 갖는 ?�성?�의 경우 ?�동 처리??
+	// (Parameter�? ?�동 주입)
 	// @Setter(onMethod_ = @Autowired)
 	private BoardMapper mapper;
 	
 	@Setter(onMethod_ = @Autowired)
 	private BoardAttachMapper attachMapper;
 	
-	// tbl_board에 게시글과 tbl_attach에 file upload가 함께 이루어져야 하기 때문에
-	// Transactional화
+	// tbl_board?? 게시글�? tbl_attach?? file upload가 ?�께 ?�루?�져?? ?�기 ?�문??
+	// Transactional??
 	@Transactional
 	@Override
 	public void register(BoardVO board) {
-		log.info("글작성~~~~ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ ===== to " + board);
+		log.info("글?�성~~~~?�ㅋ?�ㅋ?�ㅋ?�ㅋ?�ㅋ?�ㅋ?�ㅋ?�ㅋ?�ㅋ ===== to " + board);
 		
 		mapper.insertSelectKey(board);
 		
@@ -50,6 +50,8 @@ public class BoardServiceImpl implements BoardService {
 //		BoardAttachVO boardAttachVO = new BoardAttachVO();
 //		boardAttachVO = attachMapper.findByB_number(board.getB_number());
 		
+		
+		mapper.setBoardImage(board.getB_number());
 	}
 
 	@Override
@@ -58,7 +60,7 @@ public class BoardServiceImpl implements BoardService {
 		return mapper.read(b_number);
 	}
 
-	// 첨부 file과 게시글의 수정이 함께 이루어지도록 Transactional 적용
+	// 첨�? file�? 게시글?? ?�정?? ?�께 ?�루?��??�록 Transactional ?�용
 	@Transactional
 	@Override
 	public boolean modify(BoardVO board) {
@@ -73,24 +75,24 @@ public class BoardServiceImpl implements BoardService {
 			});
 		}
 		return modifyResult;
-		// 첨부file은 수정이 아닌, 기존의 file data를 삭제하고 새로운 file을 upload
-		// 하는 식으로 수행된다
+		// 첨�?file?� ?�정?? ?�닌, 기존?? file data�? ??��?�고 ?�로?? file?? upload
+		// ?�는 ?�으�? ?�행?�다
 		
 		// return mapper.update(board) == 1;
-		// 수정이 정상적으로 이루어 지면 true 값이 return됨
-		// (mapper.update()에서 1을 반환함)
+		// ?�정?? ?�상?�으�? ?�루?? 지�? true 값이 return??
+		// (mapper.update()?�서 1?? 반환??)
 	}
 
-	// 게시글과 file이 같이 삭제되도록 Transaction 적용
+	// 게시글�? file?? 같이 ??��?�도�? Transaction ?�용
 	@Transactional
 	@Override
-	public boolean remove(Long bno) {
-		log.info("remove ===== Remove entry " + bno);
-		attachMapper.deleteAll(bno);
-		// 첨부된 file 일괄 삭제
-		return mapper.delete(bno) == 1;
-		// 수정이 정상적으로 이루어 지면 true 값이 return됨
-		// (mapper.delete()에서 1을 반환함)
+	public boolean remove(Long b_number) {
+		log.info("remove ===== Remove entry " + b_number);
+		attachMapper.deleteAll(b_number);
+		// 첨�??? file ?�괄 ??��
+		return mapper.delete(b_number) == 1;
+		// ?�정?? ?�상?�으�? ?�루?? 지�? true 값이 return??
+		// (mapper.delete()?�서 1?? 반환??)
 	}
 
 	/*
@@ -114,9 +116,9 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<BoardAttachVO> getAttachList(Long bno) {
-		log.info("get Attach list in ===== [bno]" + bno);
-		return attachMapper.findByB_number(bno);
+	public List<BoardAttachVO> getAttachList(Long b_number) {
+		log.info("get Attach list in ===== [b_number]" + b_number);
+		return attachMapper.findByB_number(b_number);
 	}
 
 	@Override
@@ -129,4 +131,16 @@ public class BoardServiceImpl implements BoardService {
 	public void setBoardImage(Long b_number, String image) {
 		mapper.setBoardImage(b_number, image);
 	}
+	
+	@Override
+	public String getU_nameFromU_Email(String u_email) {
+		log.info("get U_name from U_email");
+		return mapper.getU_nameFromU_Email(u_email);
+	}
+
+	@Override
+	public void setBoardImage(Long b_number) {
+		mapper.setBoardImage(b_number);
+	}
+	
 }

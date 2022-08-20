@@ -9,63 +9,63 @@
 <%@include file="../includes/header.jsp"%>
 
 <style>
-		.uploadResult {
-		   width: 100%;
-		   background-color: #F5F5F5;
-		}
-		
-		.uploadResult ul {
-		   display: flex;
-		   flex-flow: row;
-		   justify-content: center;
-		   align-items: center;
-		}
-		
-		.uploadResult ul li {
-		   list-style: none;
-		   padding: 10px;
-		}
-		
-		.uploadResult ul li img.icon {
-		   width: 100px;
-		}
-		
-		.uploadResult ul li img.thumbnail {
-		   width: 100px;
-		}
-		.btn-icon {
-			margin-left: 5%;
-		}
+      .uploadResult {
+         width: 100%;
+         background-color: #F5F5F5;
+      }
+      
+      .uploadResult ul {
+         display: flex;
+         flex-flow: row;
+         justify-content: center;
+         align-items: center;
+      }
+      
+      .uploadResult ul li {
+         list-style: none;
+         padding: 10px;
+      }
+      
+      .uploadResult ul li img.icon {
+         width: 100px;
+      }
+      
+      .uploadResult ul li img.thumbnail {
+         width: 100px;
+      }
+      .btn-icon {
+         margin-left: 5%;
+      }
 </style>
 <style>
-		.bigPictureWrapper {
-			position: absolute;
-			display: none;
-			justify-content: center;
-			align-items: center;
-			top:0%;
-			left:0%;
-			width:100%;
-			height:100%;
-			background-color: #F5F5F5; 
-			 background:rgba(255,255,255,0.5);
-			z-index: 100;
-			margin: 0;
-		}
-		
-		.bigPicture {
-			position: relative;
-			display:flex;
-			justify-content: center;
-			align-items: center;
-			/*overflow: hidden;*/
-		}
-		
-		.bigPicture img {
-			width: 600px;
-			/*object-fit: contain;*/
-			cursor: pointer;
-		}
+      .bigPictureWrapper {
+         position: absolute;
+         display: none;
+         justify-content: center;
+         align-items: center;
+         top:0%;
+         left:0%;
+         width:100%;
+         height:100%;
+         background-color: #F5F5F5; 
+          background:rgba(255,255,255,0.5);
+         z-index: 100;
+         margin: 0;
+      }
+      
+      .bigPicture {
+         position: relative;
+         display:flex;
+         justify-content: center;
+         align-items: center;
+         /*overflow: hidden;*/
+      }
+      
+      .bigPicture img {
+         width: 600px;
+         /*object-fit: contain;*/
+         cursor: pointer;
+      }
 </style>
 
 <div class="row">
@@ -85,7 +85,7 @@
       <div class="panel-body">
 
         <form role="form" action="${context}/board/register" method="post">
-        <!-- Page714 CSRF Tokenì„ hidden inputìœ¼ë¡œ ì¶”ê°€í•¨ -->
+        <!-- Page714 CSRF Token?? hidden input?¼ë¡œ ì¶”ê??? -->
 <%--         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> --%>
         
           <div class="form-group">
@@ -100,6 +100,12 @@
           <div class="form-group">
             <label>Writer</label> 
           	<!-- Added value and ro for log in feature -->
+          	<!--
+            <input class="form-control" name='writer'>
+            -->
+            <input class="form-control" name='writer' value='<sec:authentication property="principal.username" />' readonly="readonly">
+          	<!-- Added value and ro for log in feature -->
+             <!-- Added value and ro for log in feature -->
             <input class="form-control" name='u_email'>
 <%--             <input class="form-control" name='writer' value='<sec:authentication property="principal.username" />' readonly="readonly"> --%>
           </div>
@@ -119,30 +125,30 @@
 
 <!-- file upload form -->
 <div class="row">
-	<div class="col-lg-12">
-		<div class="panel panel-default">
-		
-		  <div class="panel-heading">File Attach</div>
-		  <!-- /.panel-heading -->
-		  <div class="panel-body">
-		    <div class="form-group uploadDiv">
-		    	<label for="formFile" class="form-label">Select file to upload</label>
-		        <input id="formFile" type="file" name='uploadFile' multiple>
-		    </div>
-		    
-		    <div class='uploadResult'> 
-		      <ul>
-		      
-		      </ul>
-		    </div>
-		    
-		    
-		  </div>
-		  <!--  end panel-body -->
-		</div>
-		<!--  end panel-body -->
-	</div>
-	<!-- col-lg-12 -->
+   <div class="col-lg-12">
+      <div class="panel panel-default">
+      
+        <div class="panel-heading">File Attach</div>
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+          <div class="form-group uploadDiv">
+             <label for="formFile" class="form-label">Select file to upload</label>
+              <input id="formFile" type="file" name='uploadFile' multiple>
+          </div>
+          
+          <div class='uploadResult'> 
+            <ul>
+            
+            </ul>
+          </div>
+          
+          
+        </div>
+        <!--  end panel-body -->
+      </div>
+      <!--  end panel-body -->
+   </div>
+   <!-- col-lg-12 -->
 </div>
 <!-- /.row -->
 
@@ -173,15 +179,15 @@
 				str += "<input type='hidden' name='attachList[" + i + "].uuid' value='" + jobj.data("uuid") + "'>";
 				str += "<input type='hidden' name='attachList[" + i + "].uploadPath' value='" + jobj.data("path") + "'>";
 				str += "<input type='hidden' name='attachList[" + i + "].fileType' value='" + jobj.data("type") + "'>";
-				// fileì„ ì „ì†¡í•  ë•Œì— typeì´ë‚˜ uuidì™€ ê°™ì€ ì •ë³´ë¥¼ í•¨ê»˜ ì „ë‹¬í•˜ê¸° ìœ„í•œ
-				// hidden input tagë¥¼ ì¶”ê°€
+				// file?? ?„ì†¡?? ?Œì— type?´ë‚˜ uuid?€ ê°™ì? ?•ë³´ë¥? ?¨ê»˜ ?„ë‹¬?˜ê¸° ?„í•œ
+				// hidden input tagë¥? ì¶”ê?
 			}); // uploadResult ul li.each func
 			console.log(str);
 			formObj.append(str).submit();
 		}); // submit button on click
 		
 		var regex = new RegExp("(.*?)\.(exe|sh|zip|alz|7z|rar)$");
-		// ë³´ì•ˆìƒì˜ ì´ìœ ë¡œ ì²¨ë¶€íŒŒì¼ì˜ í™•ì¥ìë¥¼ ì œí•œ
+		// ë³´ì•ˆ?ì˜ ?´ìœ ë¡? ì²¨ë??Œì¼?? ?•ì¥?ë? ?œí•œ
 		var maxSize = 5242880; // 5MB
 		
 		function checkExtension(fileName, fileSize) {
@@ -190,15 +196,15 @@
 				return false;
 			}
 			if(regex.test(fileName)){
-				// RegEx(ì •ê·œí‘œí˜„ì‹)ìœ¼ë¡œ fileì˜ ì´ë¦„ì„ ê²€ì¦
+				// RegEx(?•ê·œ?œí˜„??)?¼ë¡œ file?? ?´ë¦„?? ê²€ì¦?
 				alert("Invalid type");
 				return false;
 			}
 			return true;
 		};
 		
-		// Page 721 : CSRF tokenì„ Headerì— ì „ë‹¬í•˜ê¸° ìœ„í•˜ì—¬ ë³€ìˆ˜ì„ ì–¸. ajax
-		// ì—ì„œ data ì „ë‹¬ ì‹œ tokenê³¼ headernameì„ í•¨ê»˜ ì „ë‹¬í•˜ê²Œ ëœë‹¤
+		// Page 721 : CSRF token?? Header?? ?„ë‹¬?˜ê¸° ?„í•˜?? ë³€?˜ì„ ??. ajax
+		// ?ì„œ data ?„ë‹¬ ?? tokenê³? headername?? ?¨ê»˜ ?„ë‹¬?˜ê²Œ ?œë‹¤
 		var csrfHeaderName ="${_csrf.headerName}"; 
 		var csrfTokenValue="${_csrf.token}";
 		
@@ -219,10 +225,10 @@
 				url: '/uploadAjaxAction',
 				processData: false, 
 				contentType: false,
-// 				beforeSend: function(xhr){
-// 					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-// 				},
-				// csrf tokenì„ data ì „ì†¡ ì „ì— headerë¡œ ì „ì†¡
+				beforeSend: function(xhr){
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
+				// csrf token?? data ?„ì†¡ ?„ì— headerë¡? ?„ì†¡
 				data: formData,
 				type: 'POST',
 				dataType:'json',
@@ -248,7 +254,7 @@
 					var fileCallPath = encodeURIComponent(obj.uploadPath + "/sthmb_" + obj.uuid + "_" + obj.fileName);
 					
 					// str += "<li><div>";
-					// Page563 : ì²¨ë¶€ file ì •ë³´ë¥¼ tagë¡œ í•¨ê»˜ ì „ë‹¬
+					// Page563 : ì²¨ë? file ?•ë³´ë¥? tagë¡? ?¨ê»˜ ?„ë‹¬
 					str += "<li data-path='" + obj.uploadPath + "' data-uuid='" + obj.uuid + "' data-filename='" + obj.fileName + "' data-type='" + obj.image + "' ><div>";
 					str += "<span> "+ obj.fileName + "</span>";
 					str += "<button type='button' data-file=\'" + fileCallPath + "\' data-type='image' class='btn btn-warning btn-circle btn-icon'><i class='fa fa-times'></i></button><br>";
@@ -259,7 +265,155 @@
 					var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
 					
 					// str += "<li><div>";
-					// Page563 : ì²¨ë¶€ file ì •ë³´ë¥¼ tagë¡œ í•¨ê»˜ ì „ë‹¬
+					// Page563 : ì²¨ë? file ?•ë³´ë¥? tagë¡? ?¨ê»˜ ?„ë‹¬
+					str += "<li data-path='" + obj.uploadPath + "' data-uuid='" + obj.uuid + "' data-filename='" + obj.fileName + "' data-type='" + obj.image + "' ><div>";
+					str += "<span> " + obj.fileName + "</span>";
+					str += "<button type='button' data-file=\'" + fileCallPath + "\' data-type='file' class='btn btn-warning btn-circle btn-icon'><i class='fa fa-times'></i></button><br>";
+					str += "<img class='icon' src='/resources/img/folder.png'></a>";
+					str += "</div></li>";
+				}
+	  		}); // uploadResultArr.each
+			uploadUL.append(str);
+		} // showUploadResult func
+		
+		// delete btn handle
+		$(".uploadResult").on("click", "button", function(e){
+			
+			console.log("delete file");
+			
+			var targetFile = $(this).data("file");
+			var type = $(this).data("type");
+			
+			var targetLi = $(this).closest("li");
+			
+			$.ajax({
+				url: '/deleteFile',
+				beforeSend: function(xhr){
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
+				// csrf token?? data ?„ì†¡ ?„ì— headerë¡? ?„ì†¡
+				data: {fileName: targetFile, type:type},
+				dataType:'text',
+				type: 'POST',
+				success: function(result){
+					alert(result);
+					
+					targetLi.remove();
+					// ListItem?? ?? œ?˜ì—¬ ?…ë¡œ?œí•œ file?? ë³´ì´ì§€ ?Šë„ë¡? ??
+				}
+			}); //$.ajax
+		}); // uploadResult.onclick func
+		
+	}); // document ready
+	// file upload handle
+	$(document).ready(function(e){
+		var formObj = $("form[role='form']");
+		
+		$("button[type='submit']").on("click", function(e){
+			e.preventDefault();
+			console.log("Submit Button Clicked");
+			
+			// Page564 
+			var str = "";
+			   
+			$(".uploadResult ul li").each(function(i, obj){
+				var jobj = $(obj);
+				
+				console.dir(jobj);
+				console.log("===========================");
+				console.log(jobj.data("filename"));
+				
+				str += "<input type='hidden' name='attachList[" + i + "].fileName' value='" + jobj.data("filename") + "'>";
+				str += "<input type='hidden' name='attachList[" + i + "].uuid' value='" + jobj.data("uuid") + "'>";
+				str += "<input type='hidden' name='attachList[" + i + "].uploadPath' value='" + jobj.data("path") + "'>";
+				str += "<input type='hidden' name='attachList[" + i + "].fileType' value='" + jobj.data("type") + "'>";
+				// file?? ?„ì†¡?? ?Œì— type?´ë‚˜ uuid?€ ê°™ì? ?•ë³´ë¥? ?¨ê»˜ ?„ë‹¬?˜ê¸° ?„í•œ
+				// hidden input tagë¥? ì¶”ê?
+			}); // uploadResult ul li.each func
+			console.log(str);
+			formObj.append(str).submit();
+		}); // submit button on click
+		
+		var regex = new RegExp("(.*?)\.(exe|sh|zip|alz|7z|rar)$");
+		// ë³´ì•ˆ?ì˜ ?´ìœ ë¡? ì²¨ë??Œì¼?? ?•ì¥?ë? ?œí•œ
+		var maxSize = 5242880; // 5MB
+		
+		function checkExtension(fileName, fileSize) {
+			if(fileSize >= maxSize) {
+				alert("Exeeded max size");
+				return false;
+			}
+			if(regex.test(fileName)){
+				// RegEx(?•ê·œ?œí˜„??)?¼ë¡œ file?? ?´ë¦„?? ê²€ì¦?
+				alert("Invalid type");
+				return false;
+			}
+			return true;
+		};
+		
+		// Page 721 : CSRF token?? Header?? ?„ë‹¬?˜ê¸° ?„í•˜?? ë³€?˜ì„ ??. ajax
+		// ?ì„œ data ?„ë‹¬ ?? tokenê³? headername?? ?¨ê»˜ ?„ë‹¬?˜ê²Œ ?œë‹¤
+		var csrfHeaderName ="${_csrf.headerName}"; 
+		var csrfTokenValue="${_csrf.token}";
+		
+		$("input[type='file']").change(function(e){
+			
+			var formData = new FormData();
+			var inputFile = $("input[name='uploadFile']");
+			var files = inputFile[0].files;
+			
+			for(var i = 0; i < files.length; i++){
+			
+				if(!checkExtension(files[i].name, files[i].size) ){
+					return false;
+				}
+				formData.append("uploadFile", files[i]);
+			}
+			$.ajax({
+				url: '/uploadAjaxAction',
+				processData: false, 
+				contentType: false,
+// 				beforeSend: function(xhr){
+// 					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+// 				},
+				// csrf token?? data ?„ì†¡ ?„ì— headerë¡? ?„ì†¡
+				data: formData,
+				type: 'POST',
+				dataType:'json',
+				success: function(result){
+					console.log(result);
+					showUploadResult(result);
+				}
+			}); // ajax
+		 }); // input.change
+		 
+		function showUploadResult(uploadResultArr){
+			if(!uploadResultArr || uploadResultArr.length == 0){
+				return;
+			}
+			 
+			var uploadUL = $(".uploadResult ul");
+			
+			var str = "";
+			
+			$(uploadResultArr).each(function(i, obj){
+				// true : image
+				if(obj.image){
+					var fileCallPath = encodeURIComponent(obj.uploadPath + "/sthmb_" + obj.uuid + "_" + obj.fileName);
+					
+					// str += "<li><div>";
+					// Page563 : ì²¨ë? file ?•ë³´ë¥? tagë¡? ?¨ê»˜ ?„ë‹¬
+					str += "<li data-path='" + obj.uploadPath + "' data-uuid='" + obj.uuid + "' data-filename='" + obj.fileName + "' data-type='" + obj.image + "' ><div>";
+					str += "<span> "+ obj.fileName + "</span>";
+					str += "<button type='button' data-file=\'" + fileCallPath + "\' data-type='image' class='btn btn-warning btn-circle btn-icon'><i class='fa fa-times'></i></button><br>";
+					str += "<img class='thumbnail' src='/display?fileName=" + fileCallPath + "'>";
+					str += "</div></li>";
+				} else {
+					var fileCallPath = encodeURIComponent(obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName);            
+					var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
+					
+					// str += "<li><div>";
+					// Page563 : ì²¨ë? file ?•ë³´ë¥? tagë¡? ?¨ê»˜ ?„ë‹¬
 					str += "<li data-path='" + obj.uploadPath + "' data-uuid='" + obj.uuid + "' data-filename='" + obj.fileName + "' data-type='" + obj.image + "' ><div>";
 					str += "<span> " + obj.fileName + "</span>";
 					str += "<button type='button' data-file=\'" + fileCallPath + "\' data-type='file' class='btn btn-warning btn-circle btn-icon'><i class='fa fa-times'></i></button><br>";
@@ -285,7 +439,7 @@
 // 				beforeSend: function(xhr){
 // 					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 // 				},
-				// csrf tokenì„ data ì „ì†¡ ì „ì— headerë¡œ ì „ì†¡
+				// csrf token?? data ?„ì†¡ ?„ì— headerë¡? ?„ì†¡
 				data: {fileName: targetFile, type:type},
 				dataType:'text',
 				type: 'POST',
@@ -293,12 +447,162 @@
 					alert(result);
 					
 					targetLi.remove();
-					// ListItemì„ ì‚­ì œí•˜ì—¬ ì—…ë¡œë“œí•œ fileì´ ë³´ì´ì§€ ì•Šë„ë¡ í•¨
+					// ListItem?? ?? œ?˜ì—¬ ?…ë¡œ?œí•œ file?? ë³´ì´ì§€ ?Šë„ë¡? ??
 				}
 			}); //$.ajax
 		}); // uploadResult.onclick func
 		
 	}); // document ready
+   // file upload handle
+   $(document).ready(function(e){
+      var formObj = $("form[role='form']");
+      
+      $("button[type='submit']").on("click", function(e){
+         e.preventDefault();
+         console.log("Submit Button Clicked");
+         
+         // Page564 
+         var str = "";
+            
+         $(".uploadResult ul li").each(function(i, obj){
+            var jobj = $(obj);
+            
+            console.dir(jobj);
+            console.log("===========================");
+            console.log(jobj.data("filename"));
+            
+            str += "<input type='hidden' name='attachList[" + i + "].b_fileName' value='" + jobj.data("filename") + "'>";
+            str += "<input type='hidden' name='attachList[" + i + "].b_uuid' value='" + jobj.data("uuid") + "'>";
+            str += "<input type='hidden' name='attachList[" + i + "].b_uploadPath' value='" + jobj.data("path") + "'>";
+            // str += "<input type='hidden' name='attachList[" + i + "].fileType' value='" + jobj.data("b_type") + "'>";
+            // file?? ?„ì†¡?? ?Œì— type?´ë‚˜ uuid?€ ê°™ì? ?•ë³´ë¥? ?¨ê»˜ ?„ë‹¬?˜ê¸° ?„í•œ
+            // hidden input tagë¥? ì¶”ê?
+         }); // uploadResult ul li.each func
+         console.log(str);
+         formObj.append(str).submit();
+      }); // submit button on click
+      
+      var regex = new RegExp("(.*?)\.(jpg|jpeg|gif|png|bmp|webp)$");
+      // ë³´ì•ˆ?ì˜ ?´ìœ ë¡? ì²¨ë??Œì¼?? ?•ì¥?ë? ?œí•œ
+      var maxSize = 5242880; // 5MB
+      
+      function checkExtension(fileName, fileSize) {
+         if(fileSize >= (maxSize * 4)) { // Up to 20MB
+            alert("?…ë¡œ?? ?Œì¼?€ 20MBë¥? ì´ˆê³¼?? ?? ?†ìŠµ?ˆë‹¤");
+            return false;
+         }
+         if(!regex.test(fileName)){
+            // RegEx(?•ê·œ?œí˜„??)?¼ë¡œ file?? ?´ë¦„?? ê²€ì¦?
+            alert("?¬ë°”ë¥´ì? ?Šì? ? í˜•?? ?Œì¼?…ë‹ˆ??");
+            return false;
+         }
+         return true;
+      };
+      
+      // Page 721 : CSRF token?? Header?? ?„ë‹¬?˜ê¸° ?„í•˜?? ë³€?˜ì„ ??. ajax
+      // ?ì„œ data ?„ë‹¬ ?? tokenê³? headername?? ?¨ê»˜ ?„ë‹¬?˜ê²Œ ?œë‹¤
+      var csrfHeaderName ="${_csrf.headerName}"; 
+      var csrfTokenValue="${_csrf.token}";
+      
+      $("input[type='file']").change(function(e){
+         
+         var formData = new FormData();
+         var inputFile = $("input[name='uploadFile']");
+         var files = inputFile[0].files;
+         
+         for(var i = 0; i < files.length; i++){
+         
+            if(!checkExtension(files[i].name, files[i].size) ){
+               return false;
+            }
+            formData.append("uploadFile", files[i]);
+         }
+         $.ajax({
+            url: '/uploadAjaxAction',
+            processData: false, 
+            contentType: false,
+//             beforeSend: function(xhr){
+//                xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+//             },
+            // csrf token?? data ?„ì†¡ ?„ì— headerë¡? ?„ì†¡
+            data: formData,
+            type: 'POST',
+            dataType:'json',
+            success: function(result){
+               console.log(result);
+               showUploadResult(result);
+            }
+         }); // ajax
+       }); // input.change
+       
+      function showUploadResult(uploadResultArr){
+         if(!uploadResultArr || uploadResultArr.length == 0){
+            return;
+         }
+          
+         var uploadUL = $(".uploadResult ul");
+         
+         var str = "";
+         
+         $(uploadResultArr).each(function(i, obj){
+            // true : image
+            //if(obj.image){
+               var fileCallPath = encodeURIComponent(obj.b_uploadPath + "/sthmb_" + obj.b_uuid + "_" + obj.b_fileName);
+               
+               // str += "<li><div>";
+               // Page563 : ì²¨ë? file ?•ë³´ë¥? tagë¡? ?¨ê»˜ ?„ë‹¬
+               str += "<li data-path='" + obj.b_uploadPath + "' data-uuid='" + obj.b_uuid + "' data-filename='" + obj.b_fileName + "' ><div>";
+               str += "<span> "+ obj.b_fileName + "</span>";
+               str += "<button type='button' data-file=\'" + fileCallPath + "\' class='btn btn-warning btn-circle btn-icon'><i class='fa fa-times'></i></button><br>";
+               str += "<img class='thumbnail' src='/display?fileName=" + fileCallPath + "'>";
+               str += "</div></li>";
+               /*
+            } else {
+               var fileCallPath = encodeURIComponent(obj.b_uploadPath + "/" + obj.b_uuid + "_" + obj.b_fileName);            
+               var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
+               
+               // str += "<li><div>";
+               // Page563 : ì²¨ë? file ?•ë³´ë¥? tagë¡? ?¨ê»˜ ?„ë‹¬
+               str += "<li data-path='" + obj.b_uploadPath + "' data-uuid='" + obj.b_uuid + "' data-filename='" + obj.b_fileName + "' data-type='" + obj.b_image + "' ><div>";
+               str += "<span> " + obj.b_fileName + "</span>";
+               str += "<button type='button' data-file=\'" + fileCallPath + "\' data-type='file' class='btn btn-warning btn-circle btn-icon'><i class='fa fa-times'></i></button><br>";
+               str += "<img class='icon' src='/resources/img/folder.png'></a>";
+               str += "</div></li>";
+            }
+         	*/
+           }); // uploadResultArr.each
+         uploadUL.append(str);
+      } // showUploadResult func
+      
+      // delete btn handle
+      $(".uploadResult").on("click", "button", function(e){
+         
+         console.log("delete file");
+         
+         var targetFile = $(this).data("file");
+         var type = $(this).data("type");
+         
+         var targetLi = $(this).closest("li");
+         
+         $.ajax({
+            url: '/deleteFile',
+//             beforeSend: function(xhr){
+//                xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+//             },
+            // csrf token?? data ?„ì†¡ ?„ì— headerë¡? ?„ì†¡
+            data: {fileName: targetFile, type:type},
+            dataType:'text',
+            type: 'POST',
+            success: function(result){
+               alert(result);
+               
+               targetLi.remove();
+               // ListItem?? ?? œ?˜ì—¬ ?…ë¡œ?œí•œ file?? ë³´ì´ì§€ ?Šë„ë¡? ??
+            }
+         }); //$.ajax
+      }); // uploadResult.onclick func
+      
+   }); // document ready
 </script>
 
 <%@include file="../includes/footer.jsp"%>

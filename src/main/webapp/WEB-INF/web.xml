@@ -3,7 +3,7 @@
    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
    id="WebApp_ID" version="3.1">
-<!-- Page 490 Web.xml을 활용하는 경우 -->
+<!-- Page 490 Web.xml?? ?�용?�는 경우 -->
 
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>
@@ -35,11 +35,11 @@
 	        <max-request-size>41943040</max-request-size><!-- 40MB -->
         	<file-size-threshold>20971520</file-size-threshold> <!-- 20MB -->
 		</multipart-config>
-		<!-- Page 491 web.xml의 servlet tag 내에 multipart-config 추가 -->
-		<!-- 특정 size의 memory 사용 : file-size-threshold -->
-		<!-- web.xml의 설정은 Tomcat server의 설정이고, Spring에서 upload 처리는
-		MultipartResolver type의 객체를 servlet-context.xml을 통해 
-		bean으로 등록해야 한다 -->
+		<!-- Page 491 web.xml?? servlet tag ?�에 multipart-config 추�? -->
+		<!-- ?�정 size?? memory ?�용 : file-size-threshold -->
+		<!-- web.xml?? ?�정?� Tomcat server?? ?�정?�고, Spring?�서 upload 처리??
+		MultipartResolver type?? 객체�? servlet-context.xml?? ?�해 
+		bean?�로 ?�록?�야 ?�다 -->
 	</servlet>
 		
 	<servlet-mapping>
@@ -69,9 +69,18 @@
 <!--       <filter-name>springSecurityFilterChain</filter-name> -->
 <!--       <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class> -->
 <!--    </filter> -->
-   
+   <!-- 
+   <filter-mapping>
+      <filter-name>springSecurityFilterChain</filter-name>
+      <url-pattern>/*</url-pattern>
+   </filter-mapping>
 <!--    <filter-mapping> -->
 <!--       <filter-name>springSecurityFilterChain</filter-name> -->
 <!--       <url-pattern>/*</url-pattern> -->
 <!--    </filter-mapping> -->
+   <filter-mapping>
+      <filter-name>springSecurityFilterChain</filter-name>
+      <url-pattern>/*</url-pattern>
+   </filter-mapping>
+   -->
 </web-app>

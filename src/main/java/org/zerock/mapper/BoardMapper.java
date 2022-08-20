@@ -17,4 +17,5 @@ public interface BoardMapper {
 	
 	public String getU_nameFromU_Email(String u_email);
 	public void setBoardImage(Long b_number, String image);
+	public void setBoardImage(Long b_number);
 }

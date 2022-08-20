@@ -5,50 +5,56 @@
 <c:set var ="context"><%=request.getContextPath()%></c:set>
 
 <%@include file="../includes/header.jsp" %>
-
+<style>
+	#title {
+		font-size: 2rem;
+	}
+	#date {
+		font-size: 0.5rem;
+	}
+</style>
+<div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Tables</h1>
+                    <h1>/r/Radit</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="panel panel-default">
-                    	<!-- Added New entry button -->
-                        <div class="panel-heading">
-                            Board List Page
-                            <button id="regBtn" class="btn btn-default btn-xs pull-right" type="button" onclick="location.href='${context}/board/register'">Register New Entry</button>
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <table width="100%" class="table table-striped table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>#번호</th>
-                                        <th>제목</th>
-                                        <th>작성자</th>
-                                        <th>작성일</th>
-                                        <th>수정일</th>
-                                    </tr>
-                                </thead>
-                                <c:forEach items="${list}" var="board">
+                    <button id="regBtn" class="btn btn-secondary btn-sm float-end mb-3 me-1" type="button" onclick="location.href='${context}/board/register'">Register New Entry</button>
+                </div>
+                <!-- /.panel-heading -->
+                        <c:forEach items="${list}" var="board">
+                        <div class="container p-3" id="custom-cards">
+                        	<div class="row align-items-stretch g-4">
+                        		<div class="card h-100 overflow-hidden rounded-4 shadow-lg">
                                 <!-- BoardController.java의 37행 참고. model에 추가한 'list' attribute를 불러 온 것 -->
-                                	<tr>
-                                		<td><c:out value="${board.b_number}" /></td>
-                                		<td>
+                                	<div class="card-content position-relative">
+                                		<p style="display : none;"><c:out value="${board.b_number}" /></p>
+                                		<p id="title" class="fw-bold mt-3 mb-2 ms-5">
                                 			<!-- Added .move -->
-                                			<a class="move" href='<c:out value="${board.b_number}" />'>
+                                			<a class="move" href='<c:out value="${board.b_number}" />' style="text-decoration: none;">
                                 				<c:out value="${board.b_title}" />
                                 			</a>
-                                		</td>
-                               			<td><c:out value="${board.u_email}" /></td>
-                                		<td><fmt:formatDate pattern="yyyy/MM/dd" value="${board.b_regDate}"/></td>
-                                		<td><fmt:formatDate pattern="yyyy/MM/dd" value="${board.b_updateDate}"/></td>
-                                	</tr>
-                                </c:forEach>
-                            </table>
+                                		</p>
+                                		
+                                		<c:if test= "${not empty board.b_img}">
+                                		
+                                			<img id="thmbImg" src='/display?fileName=<c:out value="${board.b_img}" />'/>
+                                		
+                                		</c:if>
+                                		
+                               			<p class="text-end"><c:out value="${board.u_email}" /></p>
+                               			<p class="ms-2"><c:out value="${board.b_text}" /></p>
+                                		<p id="date" class="text-end text-muted"><fmt:formatDate pattern="yyyy/MM/dd" value="${board.b_regDate}"/></p>
+                                		<p id="date" class="text-end text-muted"><fmt:formatDate pattern="yyyy/MM/dd" value="${board.b_updateDate}"/></p>
+                                	</div>
+                                </div>
+                            </div>
+                        </div>
+                        </c:forEach>
                             <!-- /.table-responsive -->
                             
                             <div class="row">
@@ -105,27 +111,35 @@
 					        	<input type="hidden" name="keyword" value="<c:out value='${pageMaker.cri.keyword}'/>">
 					        </form>
                             
-                            <%--
+                            
                             <!-- Button trigger modal -->
-                            <div class="pull-left">
-                            	<div class="col-lg-12">
-		                            <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-		                                Modal Test Button
-		                            </button>
-	                            </div>
-                            </div>
+							<button type="button" id="modalToggle" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+							  Launch demo modal
+							</button>
                             <!-- FOR TEST ONLY delete this button when publish -->
-                            --%>
+                            
                             
                             <!-- Modal -->
-				            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				            <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
             					<div class="modal-dialog">
 					        		<div class="modal-content">
 					                	<div class="modal-header">
-						                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                   						</div>
-					                <div class="modal-body">처리가 완료되었습니다.</div>
+						                <div class="modal-body">
+						                <%-- 
+											<%@include file="get.jsp" %>
+										--%>
+										<div class="b_Modal">
+										<!-- 
+											<p id="title"></p>
+											<p>Content (text, img, video)</p>
+											<p>Author (board.u_email)</p>
+											<p id="date">regDate</p>
+											<p id="date">updateDate</p>
+										-->
+										</div>
 						                <div class="modal-footer">
 						                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 						                    <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
@@ -144,21 +158,55 @@
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
-            
+</div>
+<%--
+<script type="text/javascript">
+	(function (){
+		var thmbImgSrc = $('#thmbImg').attr("src")
+		var thmbSplit = thmbImgSrc.substring(thmbImgSrc.lastIndexOf('=') + 1);
+		console.log(thmbSplit);
+		var thmbEncode = encodeURIComponent(thmbSplit);
+		console.log(thmbEncode);
+	
+		$('#thmbImg').setAttribute('src', '/display?fileName=' + thmbEncode);
+	})();
+</script>
+--%>
 <script type="text/javascript">
    	// 새로운 게시물 번호는 Board Controller의 addFlashAttribute()
    	// method로 저장되었기 때문에 한번도 사용된 적이 없다면 사용자가 
    	// "/board/list"를 호출하거나 새로고침을 통해 호출하는 경우 내용을 갖지 않게
    	// 됨. addFlashAttribute() method로는 일회성 data만 생성하므로
    	// 이를 이용해 경고창이나 modal등을 보여주는 방식으로 처리할 수 있음
+		var imgSelector = document.querySelectorAll("#thmbImg");
+		
 	$(document).ready(function() {
+			
+		console.log(thmbEncode);
+		for (var i = 0; i < imgSelector.length; i++) {
+			var thmbImgSrc = imgSelector[i].getAttribute("src")
+		
+			var thmbSplit = thmbImgSrc.substring(thmbImgSrc.lastIndexOf('=') + 1);
+		
+			var thmbUploadPath = thmbSplit.split(('/'));
+			
+			console.log(thmbUploadPath[1]);
+			
+			var thmbEncode = encodeURIComponent(thmbSplit);
+			var thmbEncodeU = encodeURIComponent(thmbUploadPath[0]);
+			var thmbEncodeF = thmbUploadPath[1];
+			
+			console.log(imgSelector[i]);
+			imgSelector[i].setAttribute('src', '/display?fileName=' + thmbEncodeU + "%2Fsthmb_" + thmbEncodeF);
+		};
+		
 		var ctx = getContextPath();
 		
 		function getContextPath() {
 			return sessionStorage.getItem("contextpath");
 		};
 		// header.jsp 최하단 (385행) 참고. JS에서 contextpath 사용하는 법
-		
+		/*
 		var result = "<c:out value='${result}' />";
 		// BoardController의  addAttribute() method로 추가된 result
 		
@@ -184,6 +232,12 @@
 //			self.location = ctx + "/board/register";
 //		})
 		// ${context} 사용하기 위해 inline으로 처리함. 21행 참고
+		*/
+		
+		var modalTrigger = $("#modalToggle")
+		
+		var b_modal = $(".b_Modal") 
+		
 		
 		var actionForm = $("#actionForm");
 		$(".paginate_button a").on("click", function(e) {
@@ -193,11 +247,39 @@
 			actionForm.submit(); // actionForm을 commit하여 기능 작동하도록 함
 		});
 		
+		// Get content from Modal WIP
+		
 		$('.move').on("click", function(e) {
 			e.preventDefault();
-			actionForm.append("<input type='hidden' name='bno' value='" + $(this).attr("href") + "'>");
-			actionForm.attr("action", ctx + "/board/get");
+			$.getJSON("/board/getModal", {b_number: $(this).attr("href")}, function(arr){
+				console.log(arr);
+				
+				var str = "";
+			    
+				$(arr).each(function(i, entry){
+						
+						str += "<p>" + entry.b_number + "</p>";
+						str += "<p>" + entry.b_email + "</p>";
+						str += "<p>" + entry.b_title + "</p>";
+						str += "<p>" + entry.b_text + "</p>";
+						str += "<p>" + entry.b_img + "</p>";
+						str += "<p>" + entry.b_video + "</p>";
+						str += "<p>" + entry.b_regDate + "</p>";
+						str += "<p>" + entry.b_updateDate + "</p>";
+				});
+				
+				$("div.getModal").html(str);
+			    
+			}); // getjson
+			b_modal.modal("show");
+			
+			// Get content from Modal WIP
+			
+			/*
+			actionForm.append("<input type='hidden' name='b_number' value='" + $(this).attr("href") + "'>");
+			actionForm.attr("action", ctx + "/board/getModal");
 			actionForm.submit();
+			*/
 		});
 		
 		var searchForm = $("#searchForm");
