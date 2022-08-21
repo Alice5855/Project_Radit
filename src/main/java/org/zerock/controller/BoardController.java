@@ -151,6 +151,7 @@ public class BoardController {
 	@ResponseBody
 	public ResponseEntity<BoardVO> getModal(Long b_number) {
 		log.info("getModal ===== " + b_number);
+		
 		return new ResponseEntity<BoardVO>(service.get(b_number), HttpStatus.OK);
 	}
 
