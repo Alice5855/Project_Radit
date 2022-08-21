@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.zerock.domain.MemberVO;
+import org.zerock.domain.UserVO;
 
 import lombok.Getter;
 
@@ -17,19 +18,19 @@ public class CustomUser extends User {
 
 	private static final long serialVersionUID = 1L;
 	
-	private MemberVO member;
+	private UserVO user;
 	
 	// constructor
-	public CustomUser(MemberVO vo) {
-		super(vo.getUserid(), vo.getUserpw(), vo.getAuthList().stream()
-				.map(auth -> new SimpleGrantedAuthority(auth.getAuth()))
+	public CustomUser(UserVO user) {
+		super(user.getU_Email(), user.getU_pw(), user.getU_Auth().stream()
+				.map(auth -> new SimpleGrantedAuthority(auth.getU_Auth()))
 				.collect(Collectors.toList()));
-		this.member = vo;
+		this.user = user;
 	}
 	// MemberVO를 param으로 전달하여 부모 class인 User의 생성자에 맞추기 위해 
 	// GrantedAuthority 객체로 stream()과 map()을 활용하여 type 변환
 	
-	public CustomUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
-		super(username, password, authorities);
+	public CustomUser(String u_Email, String u_pw, Collection<? extends GrantedAuthority> authorities) {
+		super(u_Email, u_pw, authorities);
 	}
 }
