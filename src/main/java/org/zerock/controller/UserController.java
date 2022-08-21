@@ -36,7 +36,7 @@ public class UserController {
 		// adding file upload feature
 		
 		userService.regist(user);
-		return null;
+		return "redirect:/board/list";
 	}
 	
 	@PostMapping("/update")
