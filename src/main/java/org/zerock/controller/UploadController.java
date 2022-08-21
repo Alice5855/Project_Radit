@@ -172,19 +172,6 @@ public class UploadController {
 	    return new ResponseEntity<List<AttachFileDTO>>(list, HttpStatus.OK);
     } // uploadAjaxPost
 	
-	/*
-	// file type이 image인지를 검증
-	private boolean checkImageType(File file) {
-		try {
-			String contentType = Files.probeContentType(file.toPath());
-			return contentType.startsWith("image");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-	*/
-	
 	// Page 526 Thumbnail data transfer
 	@GetMapping("/display")
 	@ResponseBody
@@ -207,75 +194,6 @@ public class UploadController {
 		}
 		return result;
 	}
-	// file name을 기준으로 thumbnail data를 byte[] type으로 전송.
-	// MIME Type을 전송한 file type과 맞추기 위해 probeContentType() method로
-	// HttpHeader에 file과 맞는 MIME type을 전송하도록 함
-	/*
-	// Page531 첨부 파일 다운로드
-	// org.springframework.core.io.Resource type을 활용하여 간단하게 handle
-	// application/octet-stream : file을 다운로드 할 수 있는 MIME type
-	@GetMapping(value="/download", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	@ResponseBody
-	public ResponseEntity<Resource> downloadFile(@RequestHeader("User-Agent") String userAgent, String fileName) {
-		log.info("downloaded file ===== " + fileName);
-		Resource resource = new FileSystemResource("C:/Uploaded/" + fileName);
-		
-		if(resource.exists() == false) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		// 입력된 resource가 없을 경우 status 반환
-		
-		log.info("resource ===== " + resource);
-		
-		String resourceName = resource.getFilename();
-		
-		String resourceOriginalName = resourceName.substring(resourceName.indexOf("_") + 1);
-		// Page539 remove UUID
-		HttpHeaders headers = new HttpHeaders();
-		
-		try {
-			String downloadName = null;
-			
-			if(userAgent.contains("Trident")) {
-				log.info("RIP IE");
-				downloadName = URLEncoder.encode(resourceOriginalName, "UTF-8").replaceAll("\\+", " ");
-			} else if(userAgent.contains("Edge")) {
-				// we don't need it Edge uses chromium engine
-				log.info("Edge browser uses chromium engine so we totally don't need this code");
-				downloadName = URLEncoder.encode(resourceOriginalName, "UTF-8");
-			} else {
-				// how you be sure it is not gecko but chrome
-				log.info("Chromium or Gecko or Webkit even");
-				downloadName = new String(resourceOriginalName.getBytes("UTF-8"), "ISO-8859-1");
-			}
-			// bottom line we don't need this since other than Trident
-			// there is no problem of encode type
-			// ...and IE is dead so
-			// it does not even detect edge as edge so this whole code
-			// is good as dead with IE
-			// also you gotta encode the fuggin query string too like
-			// wtf am i even suppose to do with this shitty browser
-			// thank god IE died
-			log.info("resourceOriginalName ===== " + resourceOriginalName);
-			log.info("downloadName ===== " + downloadName);
-			// INFO : org.zerock.controller.UploadController - resourceOriginalName ===== 테스트.txt
-			// INFO : org.zerock.controller.UploadController - downloadName ===== íì¤í¸.txt
-			// i don't get why it shows not encoded text but downloads
-			// the file perfectly fine
-			// maybe it suppose to be like this in chromium idk
-			headers.add("Content-Disposition", "attachment; filename=" + downloadName);
-			// header의 Content-Disposition을 이용하여  UTF-8 type으로 이름을 저장
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		
-		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
-	}
-	*/
-	// @RequestHeader("User-Agent") String userAgent 추가 된 code의 경우 
-	// IE 호환을 위한 code, 다시 말해 필요가 없는 code다
-	// no seriously IE is now dead as shit
 	
 	@GetMapping(value="/download", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	@ResponseBody
@@ -296,14 +214,8 @@ public class UploadController {
 		
 		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
 	}
-	
-	
-	// Page548 Request에서 전달되는 parameter의 이름, 종류를 파악하여 Response 
-	// handle. image인 경우 browser에서 전송되는 file 이름인 UUID + "_" + 
-	// file name file과 thumbnail("sthmb_" + ...)을 함께 삭제해준다
-	// (try문의 nested if문)
-	
-	// page724 첨부파일의 등록, 삭제(post)는 로그인한 사용자만 가능하도록 제한 
+
+
 	// @PreAuthorize("isAuthenticated()")
 	@PostMapping("/deleteFile")
 	@ResponseBody
@@ -315,12 +227,11 @@ public class UploadController {
 		try {
 			file = new File("C:\\Uploaded\\" + URLDecoder.decode(fileName, "UTF-8"));
 			file.delete();
-			if (type.equals("image")) {
-				String largeFileName = file.getAbsolutePath().replace("sthmb_", "");
-				log.info("largeFileName : " + largeFileName);
-				file = new File(largeFileName);
-				file.delete();
-			}
+			
+			String largeFileName = file.getAbsolutePath().replace("sthmb_", "");
+			log.info("largeFileName : " + largeFileName);
+			file = new File(largeFileName);
+			file.delete();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);

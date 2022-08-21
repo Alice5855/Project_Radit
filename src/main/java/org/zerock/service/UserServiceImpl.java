@@ -1,6 +1,7 @@
 package org.zerock.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.zerock.domain.UserVO;
@@ -19,7 +20,8 @@ public class UserServiceImpl implements UserService {
 	private UserMapper usermapper;
 	private AuthMapper authmapper;
 	@Setter(onMethod_ = @Autowired)
-	private PasswordEncoder pwEncoder;
+	private BCryptPasswordEncoder pwEncoder;
+	
 	
 	public void regist(UserVO user) {
 		log.info("USER ===== " + user);

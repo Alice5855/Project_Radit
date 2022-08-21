@@ -51,6 +51,37 @@
     		margin-top: 15%;
     		z-index: 3;
     	}
+    	
+    	.imgWrapper{
+    		width: 125px;
+    		background-color: #646383;
+    	}
+    	.imgWrapper img{
+    		width: 100%;
+			object-fit: cover;
+    	}
+    	.hTitleBox{
+    		width: 90%;
+		    margin: 1em auto;
+		    height: 300px;
+		    margin-bottom: 1%;
+		    
+    	}
+    	.hTitle{
+    		height: 100%;
+			background-image: url(/resources/img/carina_nebula.jpg);
+			background-size: 100%;
+			-moz-box-shadow: 1px 2px 3px rgba(0,0,0,.5);
+			-webkit-box-shadow: 1px 2px 3px rgba(0,0,0,.5);
+			box-shadow: 1px 2px 3px rgba(0,0,0,.5);
+    	}
+    	.hTitle h1{
+    		font-weight: bold;
+    		font-size: 3.5rem;
+    		padding-top: 3%;
+    		padding-left: 4%;
+    		color: white;
+    	}
     </style>
 
 </head>
@@ -90,7 +121,7 @@
 				  		<option value="Non-Binary">Non-Binary
 				  	
 				  	</select>
-				</p>				
+				</p>
 				<p>
 					ProfileImage : <br />
 					<input id="Profile_box" name="u_profile_path" value="${Param.u_profile_path}">
@@ -106,12 +137,14 @@
 	 
 	 </div>
 
-    <header class="py-3 mb-3 border-bottom">
-		<div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1fr 2fr;">
-			<div class="dropdown">
+    <header class="py-3 mb-3 border-bottom align-items-center">
+		<div class="container-fluid d-grid" style="grid-template-columns: 1fr 2fr;">
+			<div class="ms-3">
 				<a href="/board/list" class="d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none" aria-expanded="false">
 					<!-- Logo -->
-					<svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+					<div class="imgWrapper rounded">
+						<img src="${Context}/resources/img/logoh.png" alt="Logo">
+					</div>
 				</a>
 			</div>
 			
@@ -122,67 +155,77 @@
 					<input type="search" class="form-control" placeholder="Search..." aria-label="Search">
 				</form>
 				-->
-				<form class="me-3" id="searchForm" action="${context}/board/list" method="get">
-           			<select name="type" class="form-select">
+				<form class="row me-3" style="width: 80%;" id="searchForm" action="${context}/board/list" method="get">
+           			<select name="type" class="form-select" style="width: 20% !important;">
            				<option value="" <c:out value="${pageMaker.cri.type == null ? 'selected' : ''}"/>> </option>
-           				<option value="T" <c:out value="${pageMaker.cri.type eq 'T' ? 'selected' : ''}"/>>Title</option>
-           				<option value="C" <c:out value="${pageMaker.cri.type eq 'C' ? 'selected' : ''}"/>>Context</option>
-           				<option value="W" <c:out value="${pageMaker.cri.type eq 'W' ? 'selected' : ''}"/>>Author</option>
-           				<option value="TC" <c:out value="${pageMaker.cri.type eq 'TC' ? 'selected' : ''}"/>>Title, Context</option>
-           				<option value="TW" <c:out value="${pageMaker.cri.type eq 'TW' ? 'selected' : ''}"/>>Title, Author</option>
-           				<option value="CW" <c:out value="${pageMaker.cri.type eq 'CW' ? 'selected' : ''}"/>>Context, Author</option>
-           				<option value="TWC" <c:out value="${pageMaker.cri.type eq 'TWC' ? 'selected' : ''}"/>>Title, Context, Author</option>
+           				<option value="T" <c:out value="${pageMaker.cri.type eq 'T' ? 'selected' : ''}"/>>제목</option>
+           				<option value="C" <c:out value="${pageMaker.cri.type eq 'C' ? 'selected' : ''}"/>>내용</option>
+           				<option value="W" <c:out value="${pageMaker.cri.type eq 'W' ? 'selected' : ''}"/>>글쓴이</option>
+           				<option value="TC" <c:out value="${pageMaker.cri.type eq 'TC' ? 'selected' : ''}"/>>제목, 내용</option>
+           				<option value="TW" <c:out value="${pageMaker.cri.type eq 'TW' ? 'selected' : ''}"/>>제목, 글쓴이</option>
+           				<option value="CW" <c:out value="${pageMaker.cri.type eq 'CW' ? 'selected' : ''}"/>>내용, 글쓴이</option>
+           				<option value="TWC" <c:out value="${pageMaker.cri.type eq 'TWC' ? 'selected' : ''}"/>>제목, 내용, 글쓴이</option>
            			</select>
-           			<input class="form-control" type="text" name="keyword" value="<c:out value='${pageMaker.cri.keyword}'/>" />
+           			<input class="form-control" style="width: 45% !important;" type="text" name="keyword" value="<c:out value='${pageMaker.cri.keyword}'/>" />
            			<input type="hidden" name="pageNum" value="<c:out value='${pageMaker.cri.pageNum}'/>" />
            			<input type="hidden" name="amount" value="<c:out value='${pageMaker.cri.amount}'/>" />
-           			<button class="btn btn-primary">Search</button>
+           			<button class="btn btn-secondary" style="width: 15% !important">검색</button>
            		</form>
            		
-				<div class="flex-shrink-0 dropdown">
+				<div class="dropdown">
 					<!-- Profile picture -->
 					<a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 						<img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
 					</a>
 					<ul class="dropdown-menu text-small shadow">
 						<!-- c:if not logged in -->
-						<li><a class="dropdown-item signIn" href="#">Sign in</a></li>
-						<li><a class="dropdown-item signUp" href="#">Sign up</a></li>
+						<li><a class="dropdown-item signIn" href="#">로그인</a></li>
+						<li><a class="dropdown-item signUp" href="#">회원가입</a></li>
 						<!-- c:if logged in -->
-						<li><a class="dropdown-item userUpdate" href="#">UserSettings</a></li>
 						<li><hr class="dropdown-divider"></li>
-						<li><a class="dropdown-item SignOut" href="#">Sign out</a></li>
+						<li><a class="dropdown-item userUpdate" href="#">설정</a></li>
+						<li><a class="dropdown-item SignOut" href="#">로그아웃</a></li>
 					</ul>
 				</div>
 			</div>
 		</div>
 	</header>
 	
-<%-- we *NEED* this
-<ul class="dropdown-menu dropdown-user">
-	<li>
-		<a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-    </li>
-    <li>
-    	<a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-    </li>
-    <li class="divider"></li>
-	<sec:authorize access="isAuthenticated()">
-	<li>
-		<a href="/customLogout"><i class="fa fa-sign-out fa-fw"></i>
-	    Logout</a>
-	</li>
-	</sec:authorize>
-	
-	<sec:authorize access="isAnonymous()">
-	<li>
-		<a href="/customLogin"><i class="fa fa-sign-out fa-fw"></i>
-	    Login</a>
-	</li>
-	</sec:authorize>
-</ul>
-<!-- /.dropdown-user -->
---%>
+	<%-- we *NEED* this
+	<ul class="dropdown-menu dropdown-user">
+		<li>
+			<a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+	    </li>
+	    <li>
+	    	<a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+	    </li>
+	    <li class="divider"></li>
+		<sec:authorize access="isAuthenticated()">
+		<li>
+			<a href="/customLogout"><i class="fa fa-sign-out fa-fw"></i>
+		    Logout</a>
+		</li>
+		</sec:authorize>
+		
+		<sec:authorize access="isAnonymous()">
+		<li>
+			<a href="/customLogin"><i class="fa fa-sign-out fa-fw"></i>
+		    Login</a>
+		</li>
+		</sec:authorize>
+	</ul>
+	<!-- /.dropdown-user -->
+	--%>
+
+	<div class="container-fluid">
+	    <div class="col-lg-12 hTitleBox">
+	    	<div class="hTitle rounded">
+	        	<h1>/r/Radit</h1>
+	        </div>
+	    </div>
+	    <!-- /.col-lg-12 -->
+	</div>
+	<!-- /.row -->
 
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>

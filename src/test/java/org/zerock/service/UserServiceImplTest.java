@@ -26,15 +26,10 @@ import lombok.extern.log4j.Log4j;
 public class UserServiceImplTest {
    
    @Setter(onMethod_ = @Autowired)
-   private PasswordEncoder pwEncoder;
-   
-   @Setter(onMethod_ = @Autowired)
    private DataSource ds;
    
    @Setter(onMethod_ = @Autowired)
    private UserService userService;
-   
-   
    
    
    @Test
@@ -42,9 +37,9 @@ public class UserServiceImplTest {
 //      log.info("시작");
       UserVO user = new UserVO();
 //      log.info("중간");
-      user.setU_Email("test2@mailhost.com");
-      user.setU_Name("test2");
-      user.setU_pw("test2");
+      user.setU_Email("test1@mailhost.com");
+      user.setU_Name("test1");
+      user.setU_pw("test1");
       user.setU_Address("Apache");
       user.setU_gender("Attack-Helicopter");
       user.setU_profile_path("SadPepe.gif");

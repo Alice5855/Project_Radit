@@ -85,26 +85,28 @@
       <div class="panel-body">
 
         <form role="form" action="${context}/board/register" method="post">
-        <!-- Page714 CSRF Token을 hidden input으로 추가함 -->
-<%--         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> --%>
-        
-          <div class="form-group">
-            <label>Title</label> <input class="form-control" name='b_title'>
-          </div>
-
-          <div class="form-group">
-            <label>Text area</label>
-            <textarea class="form-control" rows="3" name='b_text'></textarea>
-          </div>
-
-          <div class="form-group">
-            <label>Writer</label> 
-             <!-- Added value and ro for log in feature -->
-            <input class="form-control" name='u_email'>
-<%--             <input class="form-control" name='writer' value='<sec:authentication property="principal.username" />' readonly="readonly"> --%>
-          </div>
-          <button type="submit" class="btn btn-default">Submit</button>
-          <button type="reset" class="btn btn-default" onclick="javascript:history.go(-1);">Cancel</button>
+	        <!-- Page714 CSRF Token을 hidden input으로 추가함 -->
+	        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+	        
+	        <div class="form-group">
+				<label>Title</label> <input class="form-control" name='b_title'>
+			</div>
+	
+			<div class="form-group">
+				<label>Text area</label>
+				<textarea class="form-control" rows="3" name='b_text'></textarea>
+			</div>
+	
+			<div class="form-group">
+				<label>Writer</label> 
+	            <!-- Added value and ro for log in feature -->
+	            <!--
+	            <input class="form-control" name='u_email'>
+	            -->
+	            <input class="form-control" name='u_email' value='<sec:authentication property="principal.username" />' readonly="readonly">
+			</div>
+			<button type="submit" class="btn btn-default">Submit</button>
+			<button type="reset" class="btn btn-default" onclick="javascript:history.go(-1);">Cancel</button>
         </form>
 
       </div>
@@ -172,9 +174,6 @@
             str += "<input type='hidden' name='attachList[" + i + "].b_fileName' value='" + jobj.data("filename") + "'>";
             str += "<input type='hidden' name='attachList[" + i + "].b_uuid' value='" + jobj.data("uuid") + "'>";
             str += "<input type='hidden' name='attachList[" + i + "].b_uploadPath' value='" + jobj.data("path") + "'>";
-            // str += "<input type='hidden' name='attachList[" + i + "].fileType' value='" + jobj.data("b_type") + "'>";
-            // file을 전송할 때에 type이나 uuid와 같은 정보를 함께 전달하기 위한
-            // hidden input tag를 추가
          }); // uploadResult ul li.each func
          console.log(str);
          formObj.append(str).submit();
@@ -219,9 +218,9 @@
             url: '/uploadAjaxAction',
             processData: false, 
             contentType: false,
-//             beforeSend: function(xhr){
-//                xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-//             },
+            beforeSend: function(xhr){
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+            },
             // csrf token을 data 전송 전에 header로 전송
             data: formData,
             type: 'POST',
@@ -243,33 +242,14 @@
          var str = "";
          
          $(uploadResultArr).each(function(i, obj){
-            // true : image
-            //if(obj.image){
-            	var filePath = obj.b_uploadPath + "/sthmb_" + obj.b_uuid + "_" + obj.b_fileName;
-            	var fileLink = filePath.replace(new RegExp(/\\/g),"/");
-				// var fileCallPath = encodeURIComponent(fileLink);
-				
-				// str += "<li><div>";
-				// Page563 : 첨부 file 정보를 tag로 함께 전달
-				str += "<li data-path='" + obj.b_uploadPath + "' data-uuid='" + obj.b_uuid + "' data-filename='" + obj.b_fileName + "' ><div>";
-				str += "<span> "+ obj.b_fileName + "</span>";
-				str += "<button type='button' data-file=\'" + fileLink + "\' class='btn btn-warning btn-circle btn-icon'><i class='fa fa-times'></i></button><br>";
-				str += "<img class='thumbnail' src='/display?fileName=" + fileLink + "'>";
-				str += "</div></li>";
-               /*
-            } else {
-               var fileCallPath = encodeURIComponent(obj.b_uploadPath + "/" + obj.b_uuid + "_" + obj.b_fileName);            
-               var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
-               
-               // str += "<li><div>";
-               // Page563 : 첨부 file 정보를 tag로 함께 전달
-               str += "<li data-path='" + obj.b_uploadPath + "' data-uuid='" + obj.b_uuid + "' data-filename='" + obj.b_fileName + "' data-type='" + obj.b_image + "' ><div>";
-               str += "<span> " + obj.b_fileName + "</span>";
-               str += "<button type='button' data-file=\'" + fileCallPath + "\' data-type='file' class='btn btn-warning btn-circle btn-icon'><i class='fa fa-times'></i></button><br>";
-               str += "<img class='icon' src='/resources/img/folder.png'></a>";
-               str += "</div></li>";
-            }
-         	*/
+           	var filePath = obj.b_uploadPath + "/sthmb_" + obj.b_uuid + "_" + obj.b_fileName;
+           	var fileLink = filePath.replace(new RegExp(/\\/g),"/");
+			
+			str += "<li data-path='" + obj.b_uploadPath + "' data-uuid='" + obj.b_uuid + "' data-filename='" + obj.b_fileName + "' ><div>";
+			str += "<span> "+ obj.b_fileName + "</span>";
+			str += "<button type='button' data-file=\'" + fileLink + "\' class='btn btn-secondary'><i class='bi bi-x-circle'></i></button><br>";
+			str += "<img class='thumbnail' src='/display?fileName=" + fileLink + "'>";
+			str += "</div></li>";
            }); // uploadResultArr.each
          uploadUL.append(str);
       } // showUploadResult func
@@ -280,17 +260,17 @@
          console.log("delete file");
          
          var targetFile = $(this).data("file");
-         var type = $(this).data("type");
+         // var type = $(this).data("type");
          
          var targetLi = $(this).closest("li");
          
          $.ajax({
             url: '/deleteFile',
-//             beforeSend: function(xhr){
-//                xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-//             },
+            beforeSend: function(xhr){
+               xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+            },
             // csrf token을 data 전송 전에 header로 전송
-            data: {fileName: targetFile, type:type},
+            data: {fileName: targetFile},
             dataType:'text',
             type: 'POST',
             success: function(result){
