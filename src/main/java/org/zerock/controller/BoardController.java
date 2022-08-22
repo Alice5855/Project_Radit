@@ -1,6 +1,5 @@
 package org.zerock.controller;
 
-import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -10,7 +9,6 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -164,6 +162,25 @@ public class BoardController {
 		log.info("get or modify ===== " + b_number);
 		m.addAttribute("board", service.get(b_number));
 	}
+<<<<<<< HEAD
+=======
+	
+	
+	// Get content from Modal WIP
+	
+	// *TESTING* Json mapping for get from modal
+	@GetMapping(value="/getModal", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public ResponseEntity<BoardVO> getModal(Long b_number) {
+		log.info("getModal ===== " + b_number);
+		
+		return new ResponseEntity<BoardVO>(service.get(b_number), HttpStatus.OK);
+	}
+
+	// Get content from Modal WIP
+	
+	
+>>>>>>> 233283eb66073c4dad79b5184e1040c9dff4d52c
 	// BoardController의 get() method에는 b_number 값을 명시적으로 처리하는
 	// @RequestParam을 이용함(파라미터명과 변수명을 기준으로 동작하기 때문에 생략 가능)
 	// view로 게시물을 전달하기 위하여 Model을 Parameter로 지정

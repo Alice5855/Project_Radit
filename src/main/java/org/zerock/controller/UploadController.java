@@ -3,7 +3,6 @@ package org.zerock.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,13 +16,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.zerock.domain.AttachFileDTO;
@@ -149,7 +146,23 @@ public class UploadController {
 				attachDTO.setB_uuid(uuid.toString());
 				attachDTO.setB_uploadPath(getFolder());
 				// Added (page517)
+				log.info(attachDTO.getB_uploadPath());
 				
+				FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "sthmb_" + uploadFileName));
+				
+				Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 400, 400);
+				// createThumbnail(InputStream, OutputStream, width, height)
+				// 100 x 100 size 'sthmb_filename' 의 thumbnail file 생성
+				 
+				thumbnail.close();
+				
+				String uploadLink = attachDTO.getB_uploadPath().toString().replaceAll("\\+", "/");
+				attachDTO.setB_uploadPath(uploadLink);
+				
+				
+				log.info("uploadLink ===== " + attachDTO.getB_uploadPath());
+				
+<<<<<<< HEAD
 				// Image type인지를 검증
 				//if (checkImageType(saveFile)) {
 					
@@ -161,11 +174,14 @@ public class UploadController {
 					 
 					thumbnail.close();
 				//}
+=======
+>>>>>>> 233283eb66073c4dad79b5184e1040c9dff4d52c
 				list.add(attachDTO);
 				// Added (page517)
 			} catch (Exception e) {
 				log.error(e.getMessage());
 			} // catch
+		    
 	    } // for
 	    return new ResponseEntity<List<AttachFileDTO>>(list, HttpStatus.OK);
     } // uploadAjaxPost
@@ -208,7 +224,7 @@ public class UploadController {
 	// file name을 기준으로 thumbnail data를 byte[] type으로 전송.
 	// MIME Type을 전송한 file type과 맞추기 위해 probeContentType() method로
 	// HttpHeader에 file과 맞는 MIME type을 전송하도록 함
-	
+	/*
 	// Page531 첨부 파일 다운로드
 	// org.springframework.core.io.Resource type을 활용하여 간단하게 handle
 	// application/octet-stream : file을 다운로드 할 수 있는 MIME type
@@ -267,12 +283,14 @@ public class UploadController {
 			e.printStackTrace();
 		}
 		
+		
 		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
 	}
+	*/
 	// @RequestHeader("User-Agent") String userAgent 추가 된 code의 경우 
 	// IE 호환을 위한 code, 다시 말해 필요가 없는 code다
 	// no seriously IE is now dead as shit
-	/* pref
+	
 	@GetMapping(value="/download", produces=MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	@ResponseBody
 	public ResponseEntity<Resource> downloadFile(String fileName) {
@@ -292,7 +310,7 @@ public class UploadController {
 		
 		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
 	}
-	 */
+	
 	
 	// Page548 Request에서 전달되는 parameter의 이름, 종류를 파악하여 Response 
 	// handle. image인 경우 browser에서 전송되는 file 이름인 UUID + "_" + 

@@ -6,7 +6,11 @@
 
 	<insert id="insert">
 		insert into ATTACH_TABLE (b_uuid, b_uploadpath, b_filename, b_number)
+<<<<<<< .merge_file_a07248
 		values (#{b_uuid}, #{b_uploadPath}, #{b_fileName}, #{b_number} )
+=======
+		values (#{b_uuid}, replace(#{b_uploadPath}, '\', '/'), #{b_fileName}, #{b_number})
+>>>>>>> .merge_file_a09988
 	</insert>
 
 	<delete id="delete">

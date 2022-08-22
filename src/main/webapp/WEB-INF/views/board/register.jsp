@@ -245,15 +245,17 @@
          $(uploadResultArr).each(function(i, obj){
             // true : image
             //if(obj.image){
-               var fileCallPath = encodeURIComponent(obj.b_uploadPath + "/sthmb_" + obj.b_uuid + "_" + obj.b_fileName);
-               
-               // str += "<li><div>";
-               // Page563 : 첨부 file 정보를 tag로 함께 전달
-               str += "<li data-path='" + obj.b_uploadPath + "' data-uuid='" + obj.b_uuid + "' data-filename='" + obj.b_fileName + "' ><div>";
-               str += "<span> "+ obj.b_fileName + "</span>";
-               str += "<button type='button' data-file=\'" + fileCallPath + "\' class='btn btn-warning btn-circle btn-icon'><i class='fa fa-times'></i></button><br>";
-               str += "<img class='thumbnail' src='/display?fileName=" + fileCallPath + "'>";
-               str += "</div></li>";
+            	var filePath = obj.b_uploadPath + "/sthmb_" + obj.b_uuid + "_" + obj.b_fileName;
+            	var fileLink = filePath.replace(new RegExp(/\\/g),"/");
+				// var fileCallPath = encodeURIComponent(fileLink);
+				
+				// str += "<li><div>";
+				// Page563 : 첨부 file 정보를 tag로 함께 전달
+				str += "<li data-path='" + obj.b_uploadPath + "' data-uuid='" + obj.b_uuid + "' data-filename='" + obj.b_fileName + "' ><div>";
+				str += "<span> "+ obj.b_fileName + "</span>";
+				str += "<button type='button' data-file=\'" + fileLink + "\' class='btn btn-warning btn-circle btn-icon'><i class='fa fa-times'></i></button><br>";
+				str += "<img class='thumbnail' src='/display?fileName=" + fileLink + "'>";
+				str += "</div></li>";
                /*
             } else {
                var fileCallPath = encodeURIComponent(obj.b_uploadPath + "/" + obj.b_uuid + "_" + obj.b_fileName);            
