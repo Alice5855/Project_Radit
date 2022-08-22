@@ -43,21 +43,13 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-<<<<<<< HEAD
     <style type="text/css">
-=======
-	<style type="text/css">
->>>>>>> 233283eb66073c4dad79b5184e1040c9dff4d52c
     	#SignUPModal{
     		display:none;
     		position: fixed;
     		margin-left: 50%;
     		margin-top: 15%;
-<<<<<<< HEAD
     		
-=======
-    		z-index: 3;
->>>>>>> 233283eb66073c4dad79b5184e1040c9dff4d52c
     	}
     </style>
 
@@ -115,59 +107,10 @@
 	 </div>
 	 
 
-	<section id="SignUPModal">
-		<form action="/user/regist" method="post">
-				<p>
-					Email : <br />
-<%-- 					<input id="title_box" type="text" name="u_Email" value="${Param.u_Email}">  --%>
-					<input type="email" placeholder="Email" name="u_Email" id="mail" maxlength="30" value="${Param.u_Email}">
-					<div id="error_mail" class="result-email result-check"></div>
-					
-				</p>
-				<p>
-					NickName : <br />
-						<input id="Name_box" name="u_Name" value="${Param.u_Name}">
-				</p>				
-				<p>
-					Password : <br />
-					<input id="Password_box" type="password" name="u_pw" value="${Param.u_pw}">
-				</p>				
-				<p>
-					Address : <br />
-<%-- 					<input id="Address_box" name="u_Address" value="${Param.u_Address}"> --%>
-						<input type="text" id="address_kakao" name="u_Address" readonly ="readonly" value="${Param.u_Address}"/>
-						<input id="Address_box" name="u_Address" value="${Param.u_Address}" placeholder="better address">
-						
-				</p>				
-				<p>
-					Gender : <br />
-<%-- 				<input id="Gender_box" name="u_gender" value="${Param.u_gender}"> --%>
-				  	<select name= "u_gender">
-				  		<option value="Male">Male
-				  		<option value="Female">Female
-				  		<option value="Non-Binary">Non-Binary
-				  	
-				  	</select>
-				</p>				
-				<p>
-					ProfileImage : <br />
-					<input id="Profile_box" name="u_profile_path" value="${Param.u_profile_path}">
-				</p>				
-							
-				<button type="submit">회원가입</button>
-				<button type="button" class="ModalClose" onclick="">취소</button>		
-		
-		</form>
-		
-	 </section>
-	 <div id="ModalBG">
-	 
-	 </div>
-
     <header class="py-3 mb-3 border-bottom">
 		<div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1fr 2fr;">
 			<div class="dropdown">
-				<a href="/board/list" class="d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none" aria-expanded="false">
+				<a href="#" class="d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none" aria-expanded="false">
 					<!-- Logo -->
 					<svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
 				</a>
@@ -175,28 +118,10 @@
 			
 			<div class="d-flex align-items-center">
 				<!-- Search form -->
-				<!--
 				<form class="w-100 me-3" role="search">
 					<input type="search" class="form-control" placeholder="Search..." aria-label="Search">
 				</form>
-				-->
-				<form class="me-3" id="searchForm" action="${context}/board/list" method="get">
-           			<select name="type" class="form-select">
-           				<option value="" <c:out value="${pageMaker.cri.type == null ? 'selected' : ''}"/>> </option>
-           				<option value="T" <c:out value="${pageMaker.cri.type eq 'T' ? 'selected' : ''}"/>>Title</option>
-           				<option value="C" <c:out value="${pageMaker.cri.type eq 'C' ? 'selected' : ''}"/>>Context</option>
-           				<option value="W" <c:out value="${pageMaker.cri.type eq 'W' ? 'selected' : ''}"/>>Author</option>
-           				<option value="TC" <c:out value="${pageMaker.cri.type eq 'TC' ? 'selected' : ''}"/>>Title, Context</option>
-           				<option value="TW" <c:out value="${pageMaker.cri.type eq 'TW' ? 'selected' : ''}"/>>Title, Author</option>
-           				<option value="CW" <c:out value="${pageMaker.cri.type eq 'CW' ? 'selected' : ''}"/>>Context, Author</option>
-           				<option value="TWC" <c:out value="${pageMaker.cri.type eq 'TWC' ? 'selected' : ''}"/>>Title, Context, Author</option>
-           			</select>
-           			<input class="form-control" type="text" name="keyword" value="<c:out value='${pageMaker.cri.keyword}'/>" />
-           			<input type="hidden" name="pageNum" value="<c:out value='${pageMaker.cri.pageNum}'/>" />
-           			<input type="hidden" name="amount" value="<c:out value='${pageMaker.cri.amount}'/>" />
-           			<button class="btn btn-primary">Search</button>
-           		</form>
-           		
+				
 				<div class="flex-shrink-0 dropdown">
 					<!-- Profile picture -->
 					<a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -266,10 +191,6 @@ $(".ModalClose").on("click" , function () {
 
 
 
-<<<<<<< HEAD
 </script>
 
 
-=======
-</script>
->>>>>>> 233283eb66073c4dad79b5184e1040c9dff4d52c

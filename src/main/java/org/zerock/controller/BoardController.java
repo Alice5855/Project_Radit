@@ -3,12 +3,12 @@ package org.zerock.controller;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,7 +52,7 @@ public class BoardController {
 	 * 		m.addAttribute("list", service.getList());
 	 * }
 	 */
-	
+	/*
 	@GetMapping("/list")
 	public void list(Criteria cri, Model m) {
 		log.info("list ===== " + cri);
@@ -63,13 +63,31 @@ public class BoardController {
 		// pageMaker라는 이름의 pageDTO 객체를 Model의 속성으로 추가
 		// 교재 page 324
 	}
+	*/
+	@GetMapping("/list")
+	public void list(Criteria cri, Model m) {
+	    List<BoardVO> boardVOList = new ArrayList<BoardVO>();
+	    boardVOList = service.getList(cri);
+	    for (BoardVO boardVO : boardVOList) {
+	    	boardVO.setU_email(getBoardWriter(boardVO));
+	    }
+	    m.addAttribute("list", boardVOList);
+		int total = service.getTotal(cri);
+		log.info("total ===== " + total);
+		m.addAttribute("pageMaker", new PageDTO(cri, total));
+    }
+    
+    public String getBoardWriter(BoardVO boardVO) {
+
+		return service.getU_nameFromU_Email(boardVO.getU_email());
+	}
 	
 	// 첨부 파일 list를 읽어오기 위한 method
 	@GetMapping(value="/getAttachList", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public ResponseEntity<List<BoardAttachVO>> getAttachList(Long bno) {
-		log.info("getAttachList ===== " + bno);
-		return new ResponseEntity<List<BoardAttachVO>>(service.getAttachList(bno), HttpStatus.OK);
+	public ResponseEntity<List<BoardAttachVO>> getAttachList(Long b_number) {
+		log.info("getAttachList ===== " + b_number);
+		return new ResponseEntity<List<BoardAttachVO>>(service.getAttachList(b_number), HttpStatus.OK);
 	}
 	
 	// Page712 added need of authentication
@@ -78,6 +96,8 @@ public class BoardController {
 	@PostMapping("/register")
 	public String register(BoardVO board, RedirectAttributes ratt) {
 		log.info("register ===== " + board);
+		
+		
 		// adding file upload feature
 		if (board.getAttachList() != null) {
 			board.getAttachList().forEach(attach -> log.info(attach));
@@ -92,7 +112,7 @@ public class BoardController {
 	public String register(BoardVO board, RedirectAttributes ratt) {
 		log.info("register ===== " + board);
 		service.register(board);
-		ratt.addFlashAttribute("result", board.getBno());
+		ratt.addFlashAttribute("result", board.getb_number());
 		return "redirect:/board/list";
 	}
 	 */
@@ -109,18 +129,34 @@ public class BoardController {
 	 * C(reate)R(ead)U(pdate)D(elete)중 R만이 Get방식으로 수행
 	 * modify 할 게시글을 불러오기 위해 get method에 modify mapping을 추가
 	 * @GetMapping("/get")
-	 * public void get(@RequestParam("bno") Long bno, Model m) ...
+	 * public void get(@RequestParam("b_number") Long b_number, Model m) ...
 	 */
 	@GetMapping({"/get", "/modify"})
 	public void get(@RequestParam("b_number") Long b_number, @ModelAttribute("cri") Criteria cri, Model m) {
 		// @ModelAttribute : 자동으로 모델에 데이터를 지정한 이름으로 담아줌
 		// 어노테이션 없이도 parameter는 객체를 통해 전달이 되지만 명시적 지정을 위해
 		// 어노테이션을 사용
-		// log.info("get ===== " + bno);
+		// log.info("get ===== " + b_number);
 		log.info("get or modify ===== " + b_number);
 		m.addAttribute("board", service.get(b_number));
 	}
-	// BoardController의 get() method에는 bno 값을 명시적으로 처리하는
+	
+	
+	// Get content from Modal WIP
+	
+	// *TESTING* Json mapping for get from modal
+	@GetMapping(value="/getModal", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public ResponseEntity<BoardVO> getModal(Long b_number) {
+		log.info("getModal ===== " + b_number);
+		
+		return new ResponseEntity<BoardVO>(service.get(b_number), HttpStatus.OK);
+	}
+
+	// Get content from Modal WIP
+	
+	
+	// BoardController의 get() method에는 b_number 값을 명시적으로 처리하는
 	// @RequestParam을 이용함(파라미터명과 변수명을 기준으로 동작하기 때문에 생략 가능)
 	// view로 게시물을 전달하기 위하여 Model을 Parameter로 지정
 	
@@ -167,6 +203,7 @@ public class BoardController {
 		if (service.remove(b_number)) {
 			deleteFiles(attachList);
 			// Added(page581)
+			
 			
 			ratt.addFlashAttribute("result", "success");
 		}

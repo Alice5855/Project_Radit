@@ -38,8 +38,12 @@ public class UserController {
 		log.info("회원가입 ===== " + user);
 		// adding file upload feature
 		userService.regist(user);
+<<<<<<< HEAD
 		
 		return "/board/list";
+=======
+		return "redirect:/board/list";
+>>>>>>> 233283eb66073c4dad79b5184e1040c9dff4d52c
 	}
 	
 	@PostMapping("/update")
@@ -58,11 +62,13 @@ public class UserController {
 		
 		userService.deleteAccount(user.getU_Email());
 		return "/board/list";
-		// Criteria에 새로 생성한 method 사용(page 581)
 	}
 	
+<<<<<<< HEAD
 
 	
 
 	
+=======
+>>>>>>> 233283eb66073c4dad79b5184e1040c9dff4d52c
 }

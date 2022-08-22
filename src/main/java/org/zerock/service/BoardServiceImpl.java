@@ -44,12 +44,18 @@ public class BoardServiceImpl implements BoardService {
 			attach.setB_number(board.getB_number());
 			attachMapper.insert(attach);
 		});
+		
+		mapper.setBoardImage(board.getB_number());
 	}
 
 	@Override
 	public BoardVO get(Long b_number) {
 		log.info("get ===== " + b_number + " from board");
-		return mapper.read(b_number);
+		
+		BoardVO bvo = mapper.read(b_number);
+		bvo.setU_email(getU_nameFromU_Email(bvo.getU_email()));
+		
+		return bvo;
 	}
 
 	// 첨부 file과 게시글의 수정이 함께 이루어지도록 Transactional 적용
@@ -78,11 +84,11 @@ public class BoardServiceImpl implements BoardService {
 	// 게시글과 file이 같이 삭제되도록 Transaction 적용
 	@Transactional
 	@Override
-	public boolean remove(Long bno) {
-		log.info("remove ===== Remove entry " + bno);
-		attachMapper.deleteAll(bno);
+	public boolean remove(Long b_number) {
+		log.info("remove ===== Remove entry " + b_number);
+		attachMapper.deleteAll(b_number);
 		// 첨부된 file 일괄 삭제
-		return mapper.delete(bno) == 1;
+		return mapper.delete(b_number) == 1;
 		// 수정이 정상적으로 이루어 지면 true 값이 return됨
 		// (mapper.delete()에서 1을 반환함)
 	}
@@ -108,9 +114,21 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<BoardAttachVO> getAttachList(Long bno) {
-		log.info("get Attach list in ===== [bno]" + bno);
-		return attachMapper.findByB_number(bno);
+	public List<BoardAttachVO> getAttachList(Long b_number) {
+		log.info("get Attach list in ===== [b_number]" + b_number);
+		return attachMapper.findByB_number(b_number);
 	}
 
+	
+	@Override
+	public String getU_nameFromU_Email(String u_email) {
+		log.info("get U_name from U_email");
+		return mapper.getU_nameFromU_Email(u_email);
+	}
+
+	@Override
+	public void setBoardImage(Long b_number) {
+		mapper.setBoardImage(b_number);
+	}
+	
 }

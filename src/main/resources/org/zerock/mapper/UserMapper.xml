@@ -46,9 +46,12 @@
 		  user_table mem LEFT OUTER JOIN u_auth_table u_Auth on mem.u_Email = u_Auth.u_Email 
 		WHERE mem.u_Email = #{u_Email} 
   </select>
+<<<<<<< HEAD
 	
 
 	
 	
+=======
+>>>>>>> 233283eb66073c4dad79b5184e1040c9dff4d52c
 	
 </mapper>

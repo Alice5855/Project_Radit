@@ -6,7 +6,7 @@
 
 	<insert id="insert">
 		insert into ATTACH_TABLE (b_uuid, b_uploadpath, b_filename, b_number)
-		values (#{b_uuid}, #{b_uploadPath}, #{b_fileName}, #{b_number} )
+		values (#{b_uuid}, replace(#{b_uploadPath}, '\', '/'), #{b_fileName}, #{b_number})
 	</insert>
 
 	<delete id="delete">
@@ -32,4 +32,5 @@
 		select * from ATTACH_TABLE where b_uploadpath = to_char(sysdate -1 ,'yyyy\mm\dd')
 
 	</select>
+	
 </mapper>

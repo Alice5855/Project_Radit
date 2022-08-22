@@ -1,11 +1,14 @@
 package org.zerock.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.zerock.domain.UserVO;
 import org.zerock.mapper.AuthMapper;
 import org.zerock.mapper.UserMapper;
 
 import lombok.AllArgsConstructor;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
@@ -15,6 +18,7 @@ public class UserServiceImpl implements UserService {
 	
 	private UserMapper usermapper;
 	private AuthMapper authmapper;
+<<<<<<< HEAD
 	
 	public void regist(UserVO user) {
 		log.info(user + " 로그 찍어보기 ");
@@ -27,8 +31,23 @@ public class UserServiceImpl implements UserService {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
+=======
+	@Setter(onMethod_ = @Autowired)
+	private PasswordEncoder pwEncoder;
 	
+	public void regist(UserVO user) {
+		log.info("USER ===== " + user);
+		String enpw = user.getU_pw();
+		user.setU_pw(pwEncoder.encode(enpw));
+		usermapper.regist(user);
+>>>>>>> 233283eb66073c4dad79b5184e1040c9dff4d52c
+		
+		try {
+			usermapper.read(user.getU_Email());
+			authmapper.authInsert(user.getU_Email());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
