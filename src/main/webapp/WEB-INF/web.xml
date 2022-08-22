@@ -3,7 +3,6 @@
    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
    id="WebApp_ID" version="3.1">
-<!-- Page 490 Web.xml?? ?œìš©?˜ëŠ” ê²½ìš° -->
 
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>
@@ -35,11 +34,6 @@
 	        <max-request-size>41943040</max-request-size><!-- 40MB -->
         	<file-size-threshold>20971520</file-size-threshold> <!-- 20MB -->
 		</multipart-config>
-		<!-- Page 491 web.xml?? servlet tag ?´ì— multipart-config ì¶”ê? -->
-		<!-- ?¹ì • size?? memory ?¬ìš© : file-size-threshold -->
-		<!-- web.xml?? ?¤ì •?€ Tomcat server?? ?¤ì •?´ê³ , Spring?ì„œ upload ì²˜ë¦¬??
-		MultipartResolver type?? ê°ì²´ë¥? servlet-context.xml?? ?µí•´ 
-		bean?¼ë¡œ ?±ë¡?´ì•¼ ?œë‹¤ -->
 	</servlet>
 		
 	<servlet-mapping>
@@ -64,23 +58,15 @@
    </filter-mapping>
    <!-- *MUST* be on top of filter -->
    
-   <!-- Spring Security Filter -->
+<!--    Spring Security Filter -->
 <!--    <filter> -->
 <!--       <filter-name>springSecurityFilterChain</filter-name> -->
 <!--       <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class> -->
 <!--    </filter> -->
-   <!-- 
-   <filter-mapping>
-      <filter-name>springSecurityFilterChain</filter-name>
-      <url-pattern>/*</url-pattern>
-   </filter-mapping>
+   
 <!--    <filter-mapping> -->
 <!--       <filter-name>springSecurityFilterChain</filter-name> -->
 <!--       <url-pattern>/*</url-pattern> -->
 <!--    </filter-mapping> -->
-   <filter-mapping>
-      <filter-name>springSecurityFilterChain</filter-name>
-      <url-pattern>/*</url-pattern>
-   </filter-mapping>
-   -->
+
 </web-app>

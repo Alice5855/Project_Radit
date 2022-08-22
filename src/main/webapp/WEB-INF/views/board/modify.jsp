@@ -128,7 +128,7 @@
 					</div>
 					
 					<!-- author가 로그인 된 userid와 일치하는 경우에만 Modify 되도록 함 -->
-					<sec:authentication property="principal" var="pinfo"/>
+<%-- 					<sec:authentication property="principal" var="pinfo"/> --%>
 
 			        <sec:authorize access="isAuthenticated()">
 				        <c:if test="${pinfo.username eq board.writer}">

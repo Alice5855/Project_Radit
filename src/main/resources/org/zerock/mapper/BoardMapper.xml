@@ -26,8 +26,6 @@
 	
 	
 	<insert id="insert">
-		insert into BOARD_TABLE(b_number, b_title, b_text, u_email, b_regDate, b_updateDate) values(BOARD_SEQ.nextval, #{b_title}, #{b_text}, #{u_email}, sysdate, sysdate)
-		insert into BOARD_TABLE(b_number, b_title, b_text, u_email, b_regDate, b_updateDate) values(board_seq.nextval, #{b_title}, #{b_text}, #{u_email}, sysdate, sysdate)
 		insert into BOARD_TABLE(b_number, b_title, b_text, u_email, b_regDate, b_updateDate) 
 		values(BOARD_SEQ.nextval, #{b_title}, #{b_text}, #{u_email}, sysdate, sysdate)
 	</insert>
@@ -64,21 +62,6 @@
 	
 	<select id="getListPaging" resultType="org.zerock.domain.BoardVO">
 		<![CDATA[
-			select b_number, b_title, b_text, u_email, b_regDate, b_updateDate from 
-			(select /*+ index_desc(BOARD_TABLE pk_board_b_number) */ 
-			rownum rn, b_number, b_title, b_text, u_email, b_regdate, b_updatedate 
-			from BOARD_TABLE
-			where
-		]]>
- 	 <![CDATA[
-         select b_number, b_title, b_text, u_email, b_regDate, b_updateDate from 
-         (select /*+ index_desc(BOARD_TABLE pk_board_b_number) */ 
-         rownum rn, b_number, b_title, b_text, u_email, b_regdate, b_updatedate 
-         from BOARD_TABLE
-         where
-      ]]>
-
-		<![CDATA[
 			select b_number, b_title, b_text, u_email, b_regDate, b_updateDate, b_img from 
 			(select /*+ index_desc(BOARD_TABLE pk_board_b_number) */ 
 			rownum rn, b_number, b_title, b_text, u_email, b_regdate, b_updatedate, b_img 
@@ -99,13 +82,6 @@
 			select u_name from user_table where u_email=#{u_email}
 		]]>
 	</select>
-	
-	<update id="setBoardImage">
-		<![CDATA[
-			update Board_table set b_image = #{image} where b_number = ${b_number}
-		]]>
-	</update>
-	
 
 	<update id="setBoardImage">
 		<![CDATA[

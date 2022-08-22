@@ -85,7 +85,7 @@
       <div class="panel-body">
 
         <form role="form" action="${context}/board/register" method="post">
-        <!-- Page714 CSRF Token?? hidden input?¼ë¡œ ì¶”ê??? -->
+        <!-- Page714 CSRF Token?? hidden input?ï¿½ë¡œ ì¶”ï¿½??? -->
 <%--         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> --%>
         
           <div class="form-group">
@@ -103,7 +103,7 @@
           	<!--
             <input class="form-control" name='writer'>
             -->
-            <input class="form-control" name='writer' value='<sec:authentication property="principal.username" />' readonly="readonly">
+<%--             <input class="form-control" name='writer' value='<sec:authentication property="principal.username" />' readonly="readonly"> --%>
           	<!-- Added value and ro for log in feature -->
              <!-- Added value and ro for log in feature -->
             <input class="form-control" name='u_email'>
@@ -179,15 +179,15 @@
 				str += "<input type='hidden' name='attachList[" + i + "].uuid' value='" + jobj.data("uuid") + "'>";
 				str += "<input type='hidden' name='attachList[" + i + "].uploadPath' value='" + jobj.data("path") + "'>";
 				str += "<input type='hidden' name='attachList[" + i + "].fileType' value='" + jobj.data("type") + "'>";
-				// file?? ?„ì†¡?? ?Œì— type?´ë‚˜ uuid?€ ê°™ì? ?•ë³´ë¥? ?¨ê»˜ ?„ë‹¬?˜ê¸° ?„í•œ
-				// hidden input tagë¥? ì¶”ê?
+				// file?? ?ï¿½ì†¡?? ?ï¿½ì— type?ï¿½ë‚˜ uuid?ï¿½ ê°™ï¿½? ?ï¿½ë³´ï¿½? ?ï¿½ê»˜ ?ï¿½ë‹¬?ï¿½ê¸° ?ï¿½í•œ
+				// hidden input tagï¿½? ì¶”ï¿½?
 			}); // uploadResult ul li.each func
 			console.log(str);
 			formObj.append(str).submit();
 		}); // submit button on click
 		
 		var regex = new RegExp("(.*?)\.(exe|sh|zip|alz|7z|rar)$");
-		// ë³´ì•ˆ?ì˜ ?´ìœ ë¡? ì²¨ë??Œì¼?? ?•ì¥?ë? ?œí•œ
+		// ë³´ì•ˆ?ï¿½ì˜ ?ï¿½ìœ ï¿½? ì²¨ï¿½??ï¿½ì¼?? ?ï¿½ì¥?ï¿½ï¿½? ?ï¿½í•œ
 		var maxSize = 5242880; // 5MB
 		
 		function checkExtension(fileName, fileSize) {
@@ -196,15 +196,15 @@
 				return false;
 			}
 			if(regex.test(fileName)){
-				// RegEx(?•ê·œ?œí˜„??)?¼ë¡œ file?? ?´ë¦„?? ê²€ì¦?
+				// RegEx(?ï¿½ê·œ?ï¿½í˜„??)?ï¿½ë¡œ file?? ?ï¿½ë¦„?? ê²€ï¿½?
 				alert("Invalid type");
 				return false;
 			}
 			return true;
 		};
 		
-		// Page 721 : CSRF token?? Header?? ?„ë‹¬?˜ê¸° ?„í•˜?? ë³€?˜ì„ ??. ajax
-		// ?ì„œ data ?„ë‹¬ ?? tokenê³? headername?? ?¨ê»˜ ?„ë‹¬?˜ê²Œ ?œë‹¤
+		// Page 721 : CSRF token?? Header?? ?ï¿½ë‹¬?ï¿½ê¸° ?ï¿½í•˜?? ë³€?ï¿½ì„ ??. ajax
+		// ?ï¿½ì„œ data ?ï¿½ë‹¬ ?? tokenï¿½? headername?? ?ï¿½ê»˜ ?ï¿½ë‹¬?ï¿½ê²Œ ?ï¿½ë‹¤
 		var csrfHeaderName ="${_csrf.headerName}"; 
 		var csrfTokenValue="${_csrf.token}";
 		
@@ -228,7 +228,7 @@
 				beforeSend: function(xhr){
 					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 				},
-				// csrf token?? data ?„ì†¡ ?„ì— headerë¡? ?„ì†¡
+				// csrf token?? data ?ï¿½ì†¡ ?ï¿½ì— headerï¿½? ?ï¿½ì†¡
 				data: formData,
 				type: 'POST',
 				dataType:'json',
@@ -254,7 +254,7 @@
 					var fileCallPath = encodeURIComponent(obj.uploadPath + "/sthmb_" + obj.uuid + "_" + obj.fileName);
 					
 					// str += "<li><div>";
-					// Page563 : ì²¨ë? file ?•ë³´ë¥? tagë¡? ?¨ê»˜ ?„ë‹¬
+					// Page563 : ì²¨ï¿½? file ?ï¿½ë³´ï¿½? tagï¿½? ?ï¿½ê»˜ ?ï¿½ë‹¬
 					str += "<li data-path='" + obj.uploadPath + "' data-uuid='" + obj.uuid + "' data-filename='" + obj.fileName + "' data-type='" + obj.image + "' ><div>";
 					str += "<span> "+ obj.fileName + "</span>";
 					str += "<button type='button' data-file=\'" + fileCallPath + "\' data-type='image' class='btn btn-warning btn-circle btn-icon'><i class='fa fa-times'></i></button><br>";
@@ -265,7 +265,7 @@
 					var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
 					
 					// str += "<li><div>";
-					// Page563 : ì²¨ë? file ?•ë³´ë¥? tagë¡? ?¨ê»˜ ?„ë‹¬
+					// Page563 : ì²¨ï¿½? file ?ï¿½ë³´ï¿½? tagï¿½? ?ï¿½ê»˜ ?ï¿½ë‹¬
 					str += "<li data-path='" + obj.uploadPath + "' data-uuid='" + obj.uuid + "' data-filename='" + obj.fileName + "' data-type='" + obj.image + "' ><div>";
 					str += "<span> " + obj.fileName + "</span>";
 					str += "<button type='button' data-file=\'" + fileCallPath + "\' data-type='file' class='btn btn-warning btn-circle btn-icon'><i class='fa fa-times'></i></button><br>";
@@ -291,7 +291,7 @@
 				beforeSend: function(xhr){
 					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 				},
-				// csrf token?? data ?„ì†¡ ?„ì— headerë¡? ?„ì†¡
+				// csrf token?? data ?ï¿½ì†¡ ?ï¿½ì— headerï¿½? ?ï¿½ì†¡
 				data: {fileName: targetFile, type:type},
 				dataType:'text',
 				type: 'POST',
@@ -299,7 +299,7 @@
 					alert(result);
 					
 					targetLi.remove();
-					// ListItem?? ?? œ?˜ì—¬ ?…ë¡œ?œí•œ file?? ë³´ì´ì§€ ?Šë„ë¡? ??
+					// ListItem?? ??ï¿½ï¿½?ï¿½ì—¬ ?ï¿½ë¡œ?ï¿½í•œ file?? ë³´ì´ì§€ ?ï¿½ë„ï¿½? ??
 				}
 			}); //$.ajax
 		}); // uploadResult.onclick func
@@ -327,15 +327,15 @@
 				str += "<input type='hidden' name='attachList[" + i + "].uuid' value='" + jobj.data("uuid") + "'>";
 				str += "<input type='hidden' name='attachList[" + i + "].uploadPath' value='" + jobj.data("path") + "'>";
 				str += "<input type='hidden' name='attachList[" + i + "].fileType' value='" + jobj.data("type") + "'>";
-				// file?? ?„ì†¡?? ?Œì— type?´ë‚˜ uuid?€ ê°™ì? ?•ë³´ë¥? ?¨ê»˜ ?„ë‹¬?˜ê¸° ?„í•œ
-				// hidden input tagë¥? ì¶”ê?
+				// file?? ?ï¿½ì†¡?? ?ï¿½ì— type?ï¿½ë‚˜ uuid?ï¿½ ê°™ï¿½? ?ï¿½ë³´ï¿½? ?ï¿½ê»˜ ?ï¿½ë‹¬?ï¿½ê¸° ?ï¿½í•œ
+				// hidden input tagï¿½? ì¶”ï¿½?
 			}); // uploadResult ul li.each func
 			console.log(str);
 			formObj.append(str).submit();
 		}); // submit button on click
 		
 		var regex = new RegExp("(.*?)\.(exe|sh|zip|alz|7z|rar)$");
-		// ë³´ì•ˆ?ì˜ ?´ìœ ë¡? ì²¨ë??Œì¼?? ?•ì¥?ë? ?œí•œ
+		// ë³´ì•ˆ?ï¿½ì˜ ?ï¿½ìœ ï¿½? ì²¨ï¿½??ï¿½ì¼?? ?ï¿½ì¥?ï¿½ï¿½? ?ï¿½í•œ
 		var maxSize = 5242880; // 5MB
 		
 		function checkExtension(fileName, fileSize) {
@@ -344,15 +344,15 @@
 				return false;
 			}
 			if(regex.test(fileName)){
-				// RegEx(?•ê·œ?œí˜„??)?¼ë¡œ file?? ?´ë¦„?? ê²€ì¦?
+				// RegEx(?ï¿½ê·œ?ï¿½í˜„??)?ï¿½ë¡œ file?? ?ï¿½ë¦„?? ê²€ï¿½?
 				alert("Invalid type");
 				return false;
 			}
 			return true;
 		};
 		
-		// Page 721 : CSRF token?? Header?? ?„ë‹¬?˜ê¸° ?„í•˜?? ë³€?˜ì„ ??. ajax
-		// ?ì„œ data ?„ë‹¬ ?? tokenê³? headername?? ?¨ê»˜ ?„ë‹¬?˜ê²Œ ?œë‹¤
+		// Page 721 : CSRF token?? Header?? ?ï¿½ë‹¬?ï¿½ê¸° ?ï¿½í•˜?? ë³€?ï¿½ì„ ??. ajax
+		// ?ï¿½ì„œ data ?ï¿½ë‹¬ ?? tokenï¿½? headername?? ?ï¿½ê»˜ ?ï¿½ë‹¬?ï¿½ê²Œ ?ï¿½ë‹¤
 		var csrfHeaderName ="${_csrf.headerName}"; 
 		var csrfTokenValue="${_csrf.token}";
 		
@@ -376,7 +376,7 @@
 // 				beforeSend: function(xhr){
 // 					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 // 				},
-				// csrf token?? data ?„ì†¡ ?„ì— headerë¡? ?„ì†¡
+				// csrf token?? data ?ï¿½ì†¡ ?ï¿½ì— headerï¿½? ?ï¿½ì†¡
 				data: formData,
 				type: 'POST',
 				dataType:'json',
@@ -402,7 +402,7 @@
 					var fileCallPath = encodeURIComponent(obj.uploadPath + "/sthmb_" + obj.uuid + "_" + obj.fileName);
 					
 					// str += "<li><div>";
-					// Page563 : ì²¨ë? file ?•ë³´ë¥? tagë¡? ?¨ê»˜ ?„ë‹¬
+					// Page563 : ì²¨ï¿½? file ?ï¿½ë³´ï¿½? tagï¿½? ?ï¿½ê»˜ ?ï¿½ë‹¬
 					str += "<li data-path='" + obj.uploadPath + "' data-uuid='" + obj.uuid + "' data-filename='" + obj.fileName + "' data-type='" + obj.image + "' ><div>";
 					str += "<span> "+ obj.fileName + "</span>";
 					str += "<button type='button' data-file=\'" + fileCallPath + "\' data-type='image' class='btn btn-warning btn-circle btn-icon'><i class='fa fa-times'></i></button><br>";
@@ -413,7 +413,7 @@
 					var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
 					
 					// str += "<li><div>";
-					// Page563 : ì²¨ë? file ?•ë³´ë¥? tagë¡? ?¨ê»˜ ?„ë‹¬
+					// Page563 : ì²¨ï¿½? file ?ï¿½ë³´ï¿½? tagï¿½? ?ï¿½ê»˜ ?ï¿½ë‹¬
 					str += "<li data-path='" + obj.uploadPath + "' data-uuid='" + obj.uuid + "' data-filename='" + obj.fileName + "' data-type='" + obj.image + "' ><div>";
 					str += "<span> " + obj.fileName + "</span>";
 					str += "<button type='button' data-file=\'" + fileCallPath + "\' data-type='file' class='btn btn-warning btn-circle btn-icon'><i class='fa fa-times'></i></button><br>";
@@ -439,7 +439,7 @@
 // 				beforeSend: function(xhr){
 // 					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 // 				},
-				// csrf token?? data ?„ì†¡ ?„ì— headerë¡? ?„ì†¡
+				// csrf token?? data ?ï¿½ì†¡ ?ï¿½ì— headerï¿½? ?ï¿½ì†¡
 				data: {fileName: targetFile, type:type},
 				dataType:'text',
 				type: 'POST',
@@ -447,7 +447,7 @@
 					alert(result);
 					
 					targetLi.remove();
-					// ListItem?? ?? œ?˜ì—¬ ?…ë¡œ?œí•œ file?? ë³´ì´ì§€ ?Šë„ë¡? ??
+					// ListItem?? ??ï¿½ï¿½?ï¿½ì—¬ ?ï¿½ë¡œ?ï¿½í•œ file?? ë³´ì´ì§€ ?ï¿½ë„ï¿½? ??
 				}
 			}); //$.ajax
 		}); // uploadResult.onclick func
@@ -475,32 +475,32 @@
             str += "<input type='hidden' name='attachList[" + i + "].b_uuid' value='" + jobj.data("uuid") + "'>";
             str += "<input type='hidden' name='attachList[" + i + "].b_uploadPath' value='" + jobj.data("path") + "'>";
             // str += "<input type='hidden' name='attachList[" + i + "].fileType' value='" + jobj.data("b_type") + "'>";
-            // file?? ?„ì†¡?? ?Œì— type?´ë‚˜ uuid?€ ê°™ì? ?•ë³´ë¥? ?¨ê»˜ ?„ë‹¬?˜ê¸° ?„í•œ
-            // hidden input tagë¥? ì¶”ê?
+            // file?? ?ï¿½ì†¡?? ?ï¿½ì— type?ï¿½ë‚˜ uuid?ï¿½ ê°™ï¿½? ?ï¿½ë³´ï¿½? ?ï¿½ê»˜ ?ï¿½ë‹¬?ï¿½ê¸° ?ï¿½í•œ
+            // hidden input tagï¿½? ì¶”ï¿½?
          }); // uploadResult ul li.each func
          console.log(str);
          formObj.append(str).submit();
       }); // submit button on click
       
       var regex = new RegExp("(.*?)\.(jpg|jpeg|gif|png|bmp|webp)$");
-      // ë³´ì•ˆ?ì˜ ?´ìœ ë¡? ì²¨ë??Œì¼?? ?•ì¥?ë? ?œí•œ
+      // ë³´ì•ˆ?ï¿½ì˜ ?ï¿½ìœ ï¿½? ì²¨ï¿½??ï¿½ì¼?? ?ï¿½ì¥?ï¿½ï¿½? ?ï¿½í•œ
       var maxSize = 5242880; // 5MB
       
       function checkExtension(fileName, fileSize) {
          if(fileSize >= (maxSize * 4)) { // Up to 20MB
-            alert("?…ë¡œ?? ?Œì¼?€ 20MBë¥? ì´ˆê³¼?? ?? ?†ìŠµ?ˆë‹¤");
+            alert("?ï¿½ë¡œ?? ?ï¿½ì¼?ï¿½ 20MBï¿½? ì´ˆê³¼?? ?? ?ï¿½ìŠµ?ï¿½ë‹¤");
             return false;
          }
          if(!regex.test(fileName)){
-            // RegEx(?•ê·œ?œí˜„??)?¼ë¡œ file?? ?´ë¦„?? ê²€ì¦?
-            alert("?¬ë°”ë¥´ì? ?Šì? ? í˜•?? ?Œì¼?…ë‹ˆ??");
+            // RegEx(?ï¿½ê·œ?ï¿½í˜„??)?ï¿½ë¡œ file?? ?ï¿½ë¦„?? ê²€ï¿½?
+            alert("?ï¿½ë°”ë¥´ï¿½? ?ï¿½ï¿½? ?ï¿½í˜•?? ?ï¿½ì¼?ï¿½ë‹ˆ??");
             return false;
          }
          return true;
       };
       
-      // Page 721 : CSRF token?? Header?? ?„ë‹¬?˜ê¸° ?„í•˜?? ë³€?˜ì„ ??. ajax
-      // ?ì„œ data ?„ë‹¬ ?? tokenê³? headername?? ?¨ê»˜ ?„ë‹¬?˜ê²Œ ?œë‹¤
+      // Page 721 : CSRF token?? Header?? ?ï¿½ë‹¬?ï¿½ê¸° ?ï¿½í•˜?? ë³€?ï¿½ì„ ??. ajax
+      // ?ï¿½ì„œ data ?ï¿½ë‹¬ ?? tokenï¿½? headername?? ?ï¿½ê»˜ ?ï¿½ë‹¬?ï¿½ê²Œ ?ï¿½ë‹¤
       var csrfHeaderName ="${_csrf.headerName}"; 
       var csrfTokenValue="${_csrf.token}";
       
@@ -524,7 +524,7 @@
 //             beforeSend: function(xhr){
 //                xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 //             },
-            // csrf token?? data ?„ì†¡ ?„ì— headerë¡? ?„ì†¡
+            // csrf token?? data ?ï¿½ì†¡ ?ï¿½ì— headerï¿½? ?ï¿½ì†¡
             data: formData,
             type: 'POST',
             dataType:'json',
@@ -550,7 +550,7 @@
                var fileCallPath = encodeURIComponent(obj.b_uploadPath + "/sthmb_" + obj.b_uuid + "_" + obj.b_fileName);
                
                // str += "<li><div>";
-               // Page563 : ì²¨ë? file ?•ë³´ë¥? tagë¡? ?¨ê»˜ ?„ë‹¬
+               // Page563 : ì²¨ï¿½? file ?ï¿½ë³´ï¿½? tagï¿½? ?ï¿½ê»˜ ?ï¿½ë‹¬
                str += "<li data-path='" + obj.b_uploadPath + "' data-uuid='" + obj.b_uuid + "' data-filename='" + obj.b_fileName + "' ><div>";
                str += "<span> "+ obj.b_fileName + "</span>";
                str += "<button type='button' data-file=\'" + fileCallPath + "\' class='btn btn-warning btn-circle btn-icon'><i class='fa fa-times'></i></button><br>";
@@ -562,7 +562,7 @@
                var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
                
                // str += "<li><div>";
-               // Page563 : ì²¨ë? file ?•ë³´ë¥? tagë¡? ?¨ê»˜ ?„ë‹¬
+               // Page563 : ì²¨ï¿½? file ?ï¿½ë³´ï¿½? tagï¿½? ?ï¿½ê»˜ ?ï¿½ë‹¬
                str += "<li data-path='" + obj.b_uploadPath + "' data-uuid='" + obj.b_uuid + "' data-filename='" + obj.b_fileName + "' data-type='" + obj.b_image + "' ><div>";
                str += "<span> " + obj.b_fileName + "</span>";
                str += "<button type='button' data-file=\'" + fileCallPath + "\' data-type='file' class='btn btn-warning btn-circle btn-icon'><i class='fa fa-times'></i></button><br>";
@@ -589,7 +589,7 @@
 //             beforeSend: function(xhr){
 //                xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 //             },
-            // csrf token?? data ?„ì†¡ ?„ì— headerë¡? ?„ì†¡
+            // csrf token?? data ?ï¿½ì†¡ ?ï¿½ì— headerï¿½? ?ï¿½ì†¡
             data: {fileName: targetFile, type:type},
             dataType:'text',
             type: 'POST',
@@ -597,7 +597,7 @@
                alert(result);
                
                targetLi.remove();
-               // ListItem?? ?? œ?˜ì—¬ ?…ë¡œ?œí•œ file?? ë³´ì´ì§€ ?Šë„ë¡? ??
+               // ListItem?? ??ï¿½ï¿½?ï¿½ì—¬ ?ï¿½ë¡œ?ï¿½í•œ file?? ë³´ì´ì§€ ?ï¿½ë„ï¿½? ??
             }
          }); //$.ajax
       }); // uploadResult.onclick func
