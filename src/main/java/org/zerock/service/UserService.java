@@ -1,8 +1,6 @@
 package org.zerock.service;
 
-import org.springframework.stereotype.Service;
 import org.zerock.domain.UserVO;
-
 
 public interface UserService {
 	
@@ -14,6 +12,4 @@ public interface UserService {
 	
 	public UserVO getINFO(String u_Email);
 	
-	public boolean AuthUpdate(UserVO user);
-
 }

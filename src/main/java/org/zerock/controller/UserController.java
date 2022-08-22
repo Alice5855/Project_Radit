@@ -36,7 +36,7 @@ public class UserController {
 		// adding file upload feature
 		
 		userService.regist(user);
-		return null;
+		return "redirect:/board/list";
 	}
 	
 	@PostMapping("/update")
@@ -55,19 +55,6 @@ public class UserController {
 		
 		userService.deleteAccount(user.getU_Email());
 		return "/board/list";
-		// Criteria에 새로 생성한 method 사용(page 581)
 	}
-	
-	@PostMapping("/Auth")
-	public String AuthUpdate(UserVO user) {
-		log.info("권한 부여");
-		userService.AuthUpdate(user);
-		
-		return "/board/list";
-	}
-	
-	
-	
-	
 	
 }

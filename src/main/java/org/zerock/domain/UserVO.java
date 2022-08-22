@@ -1,5 +1,7 @@
 package org.zerock.domain;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -13,6 +15,6 @@ public class UserVO {
 	private String u_profile_path;
 	
 	//권한
-	private String u_Auth;
+	private List<AuthVO> u_Auth;
 
 }

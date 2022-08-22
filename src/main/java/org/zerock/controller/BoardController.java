@@ -1,6 +1,5 @@
 package org.zerock.controller;
 
-import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -47,25 +46,6 @@ public class BoardController {
 	public void register() {
 	}
 	
-	/* before paging
-	 * @GetMapping("/list")
-	 * public void list(Model m) {
-	 * 		log.info("list");
-	 * 		m.addAttribute("list", service.getList());
-	 * }
-	 */
-	/*
-	@GetMapping("/list")
-	public void list(Criteria cri, Model m) {
-		log.info("list ===== " + cri);
-		m.addAttribute("list", service.getList(cri));
-		int total = service.getTotal(cri);
-		log.info("total ===== " + total);
-		m.addAttribute("pageMaker", new PageDTO(cri, total));
-		// pageMaker라는 이름의 pageDTO 객체를 Model의 속성으로 추가
-		// 교재 page 324
-	}
-	*/
 	@GetMapping("/list")
 	public void list(Criteria cri, Model m) {
 	    List<BoardVO> boardVOList = new ArrayList<BoardVO>();
@@ -94,7 +74,7 @@ public class BoardController {
 	
 	// Page712 added need of authentication
 	// Only Logged in user can access
-	//@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/register")
 	public String register(BoardVO board, RedirectAttributes ratt) {
 		log.info("register ===== " + board);
@@ -108,23 +88,6 @@ public class BoardController {
 		ratt.addFlashAttribute("result", board.getB_number());
 		return "redirect:/board/list";
 	}
-	
-	/* before file upload feature added
-	@PostMapping("/register")
-	public String register(BoardVO board, RedirectAttributes ratt) {
-		log.info("register ===== " + board);
-		service.register(board);
-		ratt.addFlashAttribute("result", board.getb_number());
-		return "redirect:/board/list";
-	}
-	 */
-	/*
-	 * RedirectAttributes에 result를 전달하고 "redirect: " 접두어를 사용하여
-	 * response.sendRedirect()를 spring mvc에서 처리하게 함
-	 * RedirectAttributes 객체는 addFlashAttribute() method에 일회성
-	 * data를 HttpSession에 보관하여 브라우저에 전달함
-	 */
-	
 	
 	/* 조회시 등록과 유사하게 BoardController를 이용해 처리할 수 있음. 특별한 경우를
 	 * 제하면 조회는 Get 방식을 사용함
@@ -143,28 +106,21 @@ public class BoardController {
 		m.addAttribute("board", service.get(b_number));
 	}
 	
-	
-	// Get content from Modal WIP
-	
-	// *TESTING* Json mapping for get from modal
+	// Modal로 vo를 전달하기 위하여 JSON으로 data를 전송. List.jsp에서 
+	// JS의 $.GetJSON을 활용하여 data를 Modal에 HTML 형태로 Parse
+	// 하여 글 내용을 표시함.
 	@GetMapping(value="/getModal", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseEntity<BoardVO> getModal(Long b_number) {
 		log.info("getModal ===== " + b_number);
+		
 		return new ResponseEntity<BoardVO>(service.get(b_number), HttpStatus.OK);
 	}
 
-	// Get content from Modal WIP
-	
-	
-	// BoardController의 get() method에는 b_number 값을 명시적으로 처리하는
-	// @RequestParam을 이용함(파라미터명과 변수명을 기준으로 동작하기 때문에 생략 가능)
-	// view로 게시물을 전달하기 위하여 Model을 Parameter로 지정
-	
 	// Page712 added need of authentication
 	// Only if author of entry is username can access to modify
 	// #board.writer : BoardVO(board)의 writer를 명시하여 검증절차
-	// @PreAuthorize("principal.username == #board.writer")
+	// @PreAuthorize("principal.u_email == #board.u_email")
 	// update의 경우 BoardVO parameter로 내용을 설정하고 BoardService를 호출
 	@PostMapping("/modify")
 	public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri, RedirectAttributes ratt) {
@@ -186,12 +142,10 @@ public class BoardController {
 	// Page712 added need of authentication
 	// Only if author of entry is username can access to remove
 	// Parameter로 writer를 받아 검증절차
-	// @PreAuthorize("principal.username == #writer")
+	// @PreAuthorize("principal.u_email == #u_email")
 	// remove()로 삭제 처리 한 후 RedirectAttributes로 list페이지로 이동시킴
 	@PostMapping("/remove")
-	// public String remove(@RequestParam("u_email") String u_email, @RequestParam("b_number") Long b_number, @ModelAttribute("cri") Criteria cri, RedirectAttributes ratt) {
-	// Gotta use this code *AFTER* security added
-	public String remove(@RequestParam("b_number") Long b_number, @ModelAttribute("cri") Criteria cri, RedirectAttributes ratt) {
+	public String remove(@RequestParam("u_email") String u_email, @RequestParam("b_number") Long b_number, @ModelAttribute("cri") Criteria cri, RedirectAttributes ratt) {
 		// RequestParam은 view의 form data가 submit될 때에 전송된 data의 key값을
 		// 기준으로 value값을 받아오는 것. @RequestParam("writer")의 writer는
 		// form-data의 writer와 맞아야 하고, @PreAuthorize에서 검증을 위한 #writer

@@ -14,8 +14,8 @@
 					value="oracle.jdbc.driver.OracleDriver" />
 				<property name="url"
 					value="JDBC:oracle:thin:@localhost:1521:orcl" />
-				<property name="username" value="spring_iamport" />
-				<property name="password" value="spring_iamport" />
+				<property name="username" value="mini_admin" />
+				<property name="password" value="mini_admin" />
 			</dataSource>
 		</environment>
 	</environments>

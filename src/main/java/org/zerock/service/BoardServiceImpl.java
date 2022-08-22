@@ -57,7 +57,12 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public BoardVO get(Long b_number) {
 		log.info("get ===== " + b_number + " from board");
-		return mapper.read(b_number);
+		
+		BoardVO bvo = mapper.read(b_number);
+		bvo.setU_email(getU_nameFromU_Email(bvo.getU_email()));
+		// get service에서 u_email을 u_name으로 변환하여 vo를 생성하도록 함. 게시글에 작성자를 u_name으로 표시하기 위함
+		
+		return bvo;
 	}
 
 	// 첨�? file�? 게시글?? ?�정?? ?�께 ?�루?��??�록 Transactional ?�용
@@ -95,14 +100,6 @@ public class BoardServiceImpl implements BoardService {
 		// (mapper.delete()?�서 1?? 반환??)
 	}
 
-	/*
-	@Override
-	public List<BoardVO> getList(Criteria cri) {
-		log.info("getList ===== Entry List from board" + cri);
-		return mapper.getList();
-	}
-	*/
-	
 	@Override
 	public List<BoardVO> getList(Criteria cri) {
 		log.info("getList ===== Entry List from board with paging " + cri);

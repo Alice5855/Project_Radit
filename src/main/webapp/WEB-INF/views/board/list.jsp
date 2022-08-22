@@ -12,22 +12,29 @@
 	#date {
 		font-size: 0.5rem;
 	}
+	.mImgWrapper{
+		width: 40%;
+		max-height: 40%;
+	}
+	.mImgWrapper img{
+		width: 100%;
+		object-fit: cover;
+	}
+	.modal-dialog{
+		max-width: 70% !important;
+	}
+	#regBtn{
+		margin-right: 5% !important;
+	}
 </style>
-<div class="container-fluid">
+	<div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1>/r/Radit</h1>
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
-            <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <button id="regBtn" class="btn btn-secondary btn-sm float-end mb-3 me-1" type="button" onclick="location.href='${context}/board/register'">Register New Entry</button>
+                    <button id="regBtn" class="btn btn-secondary btn-sm float-end mb-3 me-1" type="button" onclick="location.href='${context}/board/register'">새 글 작성</button>
                 </div>
                 <!-- /.panel-heading -->
                         <c:forEach items="${list}" var="board">
-                        <div class="container p-3" id="custom-cards">
+                        <div class="container" style="width:80% !important; margin-bottom: 10%;" id="custom-cards">
                         	<div class="row align-items-stretch g-4">
                         		<div class="card h-100 overflow-hidden rounded-4 shadow-lg">
                                 <!-- BoardController.java의 37행 참고. model에 추가한 'list' attribute를 불러 온 것 -->
@@ -40,7 +47,7 @@
                                 			</a>
                                 		</p>
                                 		
-                                		<c:if test= "${not empty board.b_img}">
+                                		<c:if test= '${not empty board.b_img}'>
                                 		
                                 			<img id="thmbImg" src='/display?fileName=<c:out value="${board.b_img}" />'/>
                                 		
@@ -55,50 +62,29 @@
                             </div>
                         </div>
                         </c:forEach>
-                            <!-- /.table-responsive -->
                             
-                            <div class="row">
-                            	<div class="col-lg-12">
-                            		<form id="searchForm" action="${context}/board/list" method="get">
-                            			<select name="type">
-                            				<option value="" <c:out value="${pageMaker.cri.type == null ? 'selected' : ''}"/>> </option>
-                            				<option value="T" <c:out value="${pageMaker.cri.type eq 'T' ? 'selected' : ''}"/>>Title</option>
-                            				<option value="C" <c:out value="${pageMaker.cri.type eq 'C' ? 'selected' : ''}"/>>Context</option>
-                            				<option value="W" <c:out value="${pageMaker.cri.type eq 'W' ? 'selected' : ''}"/>>Author</option>
-                            				<option value="TC" <c:out value="${pageMaker.cri.type eq 'TC' ? 'selected' : ''}"/>>Title, Context</option>
-                            				<option value="TW" <c:out value="${pageMaker.cri.type eq 'TW' ? 'selected' : ''}"/>>Title, Author</option>
-                            				<option value="CW" <c:out value="${pageMaker.cri.type eq 'CW' ? 'selected' : ''}"/>>Context, Author</option>
-                            				<option value="TWC" <c:out value="${pageMaker.cri.type eq 'TWC' ? 'selected' : ''}"/>>Title, Context, Author</option>
-                            			</select>
-                            			<input type="text" name="keyword" value="<c:out value='${pageMaker.cri.keyword}'/>" />
-                            			<input type="hidden" name="pageNum" value="<c:out value='${pageMaker.cri.pageNum}'/>" />
-                            			<input type="hidden" name="amount" value="<c:out value='${pageMaker.cri.amount}'/>" />
-                            			<button class="btn btn-primary">Search</button>
-                            		</form>
-                            	</div>
-                            </div>
                             <!-- pageNum가 parameter로 유지되어야 함.
                             	검색 버튼 클릭 시 1페이지로 이동
                             	한글data를 get method로 넘길 때 문제가 발생할 수 있음 -->
                             
                             <!-- Pagination -->
-                            <div class='pull-right'>
+                            <div class='text-center'>
                             	<div class="col-lg-12">
 									<ul class="pagination">
 										<c:if test="${pageMaker.prev}">
-											<li class="paginate_button previous"><a href="${pageMaker.startPage - 1}">Previous</a></li>
+											<li class="paginate-item previous"><a class="page-link" href="${pageMaker.startPage - 1}">Previous</a></li>
 										</c:if>
 										
 										<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-											<li class="paginate_button ${pageMaker.cri.pageNum == num ? 'active' : ''} ">
+											<li class="paginate-item ${pageMaker.cri.pageNum == num ? 'active' : ''} ">
 											<%-- MAKE THE CODE ACTUALLY READABLE N SHIT THIS IS IMPORTANT N SHIT --%>
-											<a href="${num}">${num}</a>
+											<a class="page-link" href="${num}">${num}</a>
 											<%-- <a href="${context}/board/list?pageNum=${num}"> this works no problem but okay --%>
 										</li>
 										</c:forEach>
 										
 										<c:if test="${pageMaker.next}">
-											<li class="paginate_button next"><a href="${pageMaker.endPage + 1}">Next</a></li>
+											<li class="paginate-item next"><a class="page-link" href="${pageMaker.endPage + 1}">Next</a></li>
 										</c:if>
 							   		</ul>
 						   		</div>
@@ -111,38 +97,32 @@
 					        	<input type="hidden" name="keyword" value="<c:out value='${pageMaker.cri.keyword}'/>">
 					        </form>
                             
-                            
+                            <%--
                             <!-- Button trigger modal -->
-							<button type="button" id="modalToggle" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+							<button type="button" id="modalToggle" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#b_Modal">
 							  Launch demo modal
 							</button>
                             <!-- FOR TEST ONLY delete this button when publish -->
-                            
+                            --%>
                             
                             <!-- Modal -->
-				            <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+				            <div class="modal fade" id="b_Modal" tabindex="-1" aria-labelledby="b_ModalLabel" aria-hidden="true">
             					<div class="modal-dialog">
 					        		<div class="modal-content">
 					                	<div class="modal-header">
+						                    <h4 class="modal-title" id="b_ModalLabel">게시글 열람</h4>
 						                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                   						</div>
 						                <div class="modal-body">
 						                <%-- 
 											<%@include file="get.jsp" %>
 										--%>
-										<div class="b_Modal">
-										<!-- 
-											<p id="title"></p>
-											<p>Content (text, img, video)</p>
-											<p>Author (board.u_email)</p>
-											<p id="date">regDate</p>
-											<p id="date">updateDate</p>
-										-->
+										<div class="b_Modal_Content">
+											
 										</div>
 						                <div class="modal-footer">
-						                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						                    <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+						                    <button type="button" class="btn btn-primary b_ModalModify" data-dismiss="modal">글 수정</button>
+						                    <button type="button" class="btn btn-default b_ModalClose" data-dismiss="modal">닫기</button>
 					               		</div>
 				               		</div>
 				               		<!-- /.modal-content -->
@@ -158,31 +138,19 @@
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
-</div>
-<%--
-<script type="text/javascript">
-	(function (){
-		var thmbImgSrc = $('#thmbImg').attr("src")
-		var thmbSplit = thmbImgSrc.substring(thmbImgSrc.lastIndexOf('=') + 1);
-		console.log(thmbSplit);
-		var thmbEncode = encodeURIComponent(thmbSplit);
-		console.log(thmbEncode);
-	
-		$('#thmbImg').setAttribute('src', '/display?fileName=' + thmbEncode);
-	})();
-</script>
---%>
+	</div>
+
 <script type="text/javascript">
    	// 새로운 게시물 번호는 Board Controller의 addFlashAttribute()
    	// method로 저장되었기 때문에 한번도 사용된 적이 없다면 사용자가 
    	// "/board/list"를 호출하거나 새로고침을 통해 호출하는 경우 내용을 갖지 않게
    	// 됨. addFlashAttribute() method로는 일회성 data만 생성하므로
    	// 이를 이용해 경고창이나 modal등을 보여주는 방식으로 처리할 수 있음
-		var imgSelector = document.querySelectorAll("#thmbImg");
+   	
+	var imgSelector = document.querySelectorAll("#thmbImg");
 		
 	$(document).ready(function() {
-			
-		console.log(thmbEncode);
+		
 		for (var i = 0; i < imgSelector.length; i++) {
 			var thmbImgSrc = imgSelector[i].getAttribute("src")
 		
@@ -190,15 +158,16 @@
 		
 			var thmbUploadPath = thmbSplit.split(('/'));
 			
-			console.log(thmbUploadPath[1]);
+			console.log(thmbUploadPath[0]);
+			console.log(thmbUploadPath[3]);
 			
-			var thmbEncode = encodeURIComponent(thmbSplit);
-			var thmbEncodeU = encodeURIComponent(thmbUploadPath[0]);
-			var thmbEncodeF = thmbUploadPath[1];
+			var thmbEncodeU = thmbUploadPath[0] + '/' + thmbUploadPath[1] + '/' + thmbUploadPath[2];
+			var thmbEncodeF = thmbUploadPath[3];
 			
 			console.log(imgSelector[i]);
-			imgSelector[i].setAttribute('src', '/display?fileName=' + thmbEncodeU + "%2Fsthmb_" + thmbEncodeF);
+			imgSelector[i].setAttribute('src', '/display?fileName=' + thmbEncodeU + "/sthmb_" + thmbEncodeF);
 		};
+		
 		
 		var ctx = getContextPath();
 		
@@ -206,41 +175,14 @@
 			return sessionStorage.getItem("contextpath");
 		};
 		// header.jsp 최하단 (385행) 참고. JS에서 contextpath 사용하는 법
-		/*
-		var result = "<c:out value='${result}' />";
-		// BoardController의  addAttribute() method로 추가된 result
-		
-		checkModal(result);
-		
-		history.replaceState({}, null, null);
-		
-		function checkModal(result) {
-			if (result === '' || history.state) {
-				return;
-			}
-			if (parseInt(result) > 0) {
-				$(".modal-body").html("게시글 " + parseInt(result) + "번이 등록 되었습니다")
-			}
-			
-			$("#myModal").modal("show");
-		}
-		// #myModal에 'show'가 호출되면 modal창을 표시. 게시글을 작성하면
-		// list로 redirection 될 때 modal 표시를 해줌
-		
-		// #regBtn에 등록 기능 추가
-//		$('#regBtn').on("click", function(){
-//			self.location = ctx + "/board/register";
-//		})
-		// ${context} 사용하기 위해 inline으로 처리함. 21행 참고
-		*/
 		
 		var modalTrigger = $("#modalToggle")
 		
-		var b_modal = $(".b_Modal") 
+		var b_modal = $("#b_Modal") 
 		
 		
 		var actionForm = $("#actionForm");
-		$(".paginate_button a").on("click", function(e) {
+		$("a.page-link").on("click", function(e) {
 			e.preventDefault();
 			console.log('click');
 			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
@@ -248,6 +190,17 @@
 		});
 		
 		// Get content from Modal WIP
+		
+		function dateConvert(date){
+			var cDate = new Date(date);
+			
+			var year = cDate.getFullYear();
+			var month = cDate.getMonth() + 1;
+			var day = cDate.getDate();
+			
+			var fDate = year + "/" + month + "/" + day;
+			return fDate;
+		}
 		
 		$('.move').on("click", function(e) {
 			e.preventDefault();
@@ -257,39 +210,57 @@
 				var str = "";
 			    
 				$(arr).each(function(i, entry){
-						
-						str += "<p>" + entry.b_number + "</p>";
-						str += "<p>" + entry.b_email + "</p>";
-						str += "<p>" + entry.b_title + "</p>";
-						str += "<p>" + entry.b_text + "</p>";
-						str += "<p>" + entry.b_img + "</p>";
-						str += "<p>" + entry.b_video + "</p>";
-						str += "<p>" + entry.b_regDate + "</p>";
-						str += "<p>" + entry.b_updateDate + "</p>";
+					
+					var cRDate = dateConvert(entry.b_regDate);
+					var cUDate = dateConvert(entry.b_updateDate);
+					
+					
+					str += "<p class='mNumber'> b_number : " + entry.b_number + "</p>";
+					str += "<p class='mEmail'> u_email : " + entry.u_email + "</p>";
+					str += "<p class='mTitle'> b_title : " + entry.b_title + "</p>";
+					str += "<p class='mText'> b_text : " + entry.b_text + "</p>";
+					if (entry.b_img != null) {
+						str += "<div class='mImgWrapper'>";
+						str += "<p class='mImg'> b_img : <img id='modalImg' src='/display?fileName=" + entry.b_img + "'/></p>";
+						str += "</div>";
+					}
+					if (entry.b_video != null) {
+						str += "<p class='mVideo'> b_video : " + entry.b_video + "</p>";
+					}
+					str += "<p class='mRegDate'> b_regDate : " + cRDate + "</p>";
+					str += "<p class='mUpdateDate'> b_updateDate : " + cUDate + "</p>";
+					
+					var aNumber = '<c:out value="${entry.b_number}" />';
+					str += "<a class='modify' href='" + aNumber + "' hidden='hidden'></a>";
+					// might be useful for modify? is this even working?
 				});
 				
-				$("div.getModal").html(str);
+				$(".b_Modal_Content").html(str);
+				
 			    
 			}); // getjson
 			b_modal.modal("show");
-			
-			// Get content from Modal WIP
-			
-			/*
-			actionForm.append("<input type='hidden' name='b_number' value='" + $(this).attr("href") + "'>");
-			actionForm.attr("action", ctx + "/board/getModal");
-			actionForm.submit();
-			*/
 		});
+		
+		
+		$('.b_ModalClose').on("click", function(e){
+			e.preventDefault();
+			b_modal.modal("hide");
+		})
+		
+		$('.b_ModalModify').on("click", function(e){
+			// gotta do something here
+		})
+		
 		
 		var searchForm = $("#searchForm");
 		$("#searchForm button").on("click", function(e) {
 			if (!searchForm.find('option:selected').val()) {
-				alert("Invalid search option");
+				alert("검색 조건을 선택해주세요");
 				return false;
 			}
 			if (!searchForm.find('input[name="keyword"]').val()) {
-				alert("Invalid keyword");
+				alert("검색어를 입력하세요");
 				return false;
 			}
 			

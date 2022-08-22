@@ -1,10 +1,15 @@
 package org.zerock.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.zerock.domain.UserVO;
+import org.zerock.mapper.AuthMapper;
 import org.zerock.mapper.UserMapper;
 
 import lombok.AllArgsConstructor;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
@@ -13,12 +18,23 @@ import lombok.extern.log4j.Log4j;
 public class UserServiceImpl implements UserService {
 	
 	private UserMapper usermapper;
+	private AuthMapper authmapper;
+	@Setter(onMethod_ = @Autowired)
+	private BCryptPasswordEncoder pwEncoder;
+	
 	
 	public void regist(UserVO user) {
-		log.info(user + " 로그 찍어보기 ");
-		usermapper.regist(user);;
+		log.info("USER ===== " + user);
+		String enpw = user.getU_pw();
+		user.setU_pw(pwEncoder.encode(enpw));
+		usermapper.regist(user);
 		
-	
+		try {
+			usermapper.read(user.getU_Email());
+			authmapper.authInsert(user.getU_Email());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -41,12 +57,7 @@ public class UserServiceImpl implements UserService {
 		return usermapper.deleteAccount(u_Email) == 1;
 	}
 
-	@Override
-	public boolean AuthUpdate(UserVO user) {
-		log.info("권한 부여" + user);
-		boolean AuthResult = usermapper.AuthUpdate(user) == 1;
-		return AuthResult;
-	}
+
 
 
 
