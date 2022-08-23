@@ -21,7 +21,6 @@ public class UserServiceImpl implements UserService {
 	@Setter(onMethod_ = @Autowired)
 	private BCryptPasswordEncoder pwEncoder;
 	
-	
 	public void regist(UserVO user) {
 		log.info("USER ===== " + user);
 		String enpw = user.getU_pw();
@@ -45,6 +44,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean update(UserVO user) {
 		log.info(user + "수정하기");
+		String enpw = user.getU_pw();
+		user.setU_pw(pwEncoder.encode(enpw));
 		boolean modifyResult =  usermapper.update(user) == 1;
 		return modifyResult;
 	}
@@ -52,8 +53,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean deleteAccount(String u_Email) {
 		log.info(u_Email + "삭제수구븜");
+			
+		return usermapper.deleteAccount(u_Email) == 1; 
 		
-		return usermapper.deleteAccount(u_Email) == 1;
 	}
+
 
 }

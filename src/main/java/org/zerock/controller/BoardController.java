@@ -3,6 +3,7 @@ package org.zerock.controller;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ import org.zerock.domain.BoardVO;
 import org.zerock.domain.Criteria;
 import org.zerock.domain.PageDTO;
 import org.zerock.domain.UserVO;
-import org.zerock.mapper.BoardMapper;
+import org.zerock.mapper.UserMapper;
 import org.zerock.service.BoardService;
 
 import lombok.AllArgsConstructor;
@@ -40,7 +41,7 @@ public class BoardController {
 	// 생성하지 않았을 경우 @Setter(onMethod_ = {@Autowired})로 처리함
 	private BoardService service;
 	
-	private BoardMapper bmap;
+	private UserMapper usermapper;
 	
 	// register 입력 page와 등록 처리
 	// 등록 작업은 post method를 사용하나 get method로 입력 page를 '읽어올 수
@@ -213,4 +214,14 @@ public class BoardController {
 		}); // forEach
 	}
 	// java.nio.file package의 Path를 이용하여 처리
+	
+	@RequestMapping("/userUpdate.do") 
+	public String userUpdateForm(Principal principal, Model model) {
+		log.info("userid ===== " + principal.getName());
+		String userid = principal.getName();
+		UserVO user = usermapper.read(userid);
+		model.addAttribute("user", user);
+		
+		return "userUpdate";
+	}
 }

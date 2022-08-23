@@ -39,6 +39,10 @@
 		.btn-icon {
 			margin-left: 5%;
 		}
+		.form-group {
+      	margin-bottom: 1rem;
+      	margin-top: 1rem;
+      }
 </style>
 <style>
 		.bigPictureWrapper {
@@ -69,18 +73,18 @@
 			cursor: pointer;
 		}
 </style>
-
-<div class="row">
-  <div class="col-lg-12">
-    <h1 class="page-header">글 수정</h1>
-  </div>
-  <!-- /.col-lg-12 -->
-</div>
-<!-- /.row -->
-
-<div class="row">
-	<div class="col-lg-12">
-		<div class="panel panel-default">
+<div class="container-fluid">
+	<div class="row">
+	  <div class="col-lg-12">
+	    <h1 class="page-header">글 수정</h1>
+	  </div>
+	  <!-- /.col-lg-12 -->
+	</div>
+	<!-- /.row -->
+	
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
 		
 				<form role="form" action="${context}/board/modify" method="post">
 				<!-- Page719 CSRF Token을 hidden input으로 추가함 -->
@@ -110,7 +114,7 @@
 					
 					<div class="form-group">
 					  <label>글쓴이</label>
-					  <input class="form-control" name='u_email' value='<c:out value="${board.u_email}" />' disabled readonly">            
+					  <input class="form-control" name='u_email' value='<c:out value="${board.u_email}" />' readonly>            
 					</div>
 					
 					<div class="form-group">
@@ -124,18 +128,18 @@
 					</div>
 					
 					<!-- author가 로그인 된 userid와 일치하는 경우에만 Modify 되도록 함 -->
-					<%--
+					
 					<sec:authentication property="principal" var="pinfo"/>
 
 			        <sec:authorize access="isAuthenticated()">
 				        <c:if test="${pinfo.username eq board.u_email}">
-				        --%>
+				        
 							<button type="submit" data-oper='modify' class="btn btn-secondary">수정</button>
 							<button type="submit" data-oper='remove' class="btn btn-danger">삭제</button>
-							<%--
+							
 						</c:if>
 			        </sec:authorize>
-			        --%>
+			        
 					<button type="submit" data-oper='list' class="btn btn-info">리스트</button>
 				</form>
 	
@@ -155,15 +159,13 @@
 	</div>
 </div>
 
-<div class="row">
+<div class="row container-fluid">
 	<div class="col-lg-12">
 		<div class="panel panel-default">
-
-			<div class="panel-heading">Files</div>
-			<!-- /.panel-heading -->
-			<div class="panel-body">
+			<div class="">
 				<div class="form-group uploadDiv">
-					<input type="file" name='uploadFile' multiple="multiple">
+					<label for="formFile" class="form-label">이미지 하나를 선택하세요</label>
+					<input id="formFile" type="file" name='uploadFile' class="form-control" accept="image/*">
 				</div>
         
 				<div class='uploadResult'> 
@@ -201,22 +203,6 @@
 			} else if(operation === 'list'){
 				//move to list
 				formObj.attr("action", "/board/list").attr("method","get");
-				/*
-				var pageNumTag = $("input[name='pageNum']").clone();
-				var amountTag = $("input[name='amount']").clone();
-				var keywordTag = $("input[name='keyword']").clone();
-				var typeTag = $("input[name='type']").clone();    
-				
-				
-				formObj.empty();
-				
-				formObj.append(pageNumTag);
-				formObj.append(amountTag);
-				formObj.append(keywordTag);
-				formObj.append(typeTag);
-				
-				console.log(formObj);
-				*/
 			  
 			} else if(operation === 'modify'){
 			    

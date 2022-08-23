@@ -44,12 +44,39 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 	<style type="text/css">
-    	#SignUPModal{
+    	.ModalOn{
     		display:none;
     		position: fixed;
-    		margin-left: 50%;
-    		margin-top: 15%;
+    		top:50%;
+    		left:50%;
     		z-index: 3;
+    	}
+    	
+    	#SignUPModal{
+    		position: fixed;
+    		top: 0;
+    		left: 0;
+    		bottom: 0;
+    		right: 0;
+    		background: rgba(0,0,0,0.8);
+    	}
+    	.ModalStyle{
+    		position: absolute;
+		   	top: calc(50vh - 200px);
+		    left: calc(50vw - 200px);
+		    background-color: white;
+		    display: block; 
+		    border-radius: 10px;
+		    width: 400px;
+		    height: 450px;
+    	}
+    	@media(max-width:720px){
+    		.ModalStyle{
+    			top: calc(50vh - 200px);
+		   		left: calc(50vw - 200px);
+    			width: 70%;
+    			margin-left: 20%;
+    		}
     	}
     	
     	.imgWrapper{
@@ -88,56 +115,60 @@
 
 <body>
 
-	<section id="SignUPModal">
-		<form action="/user/regist" method="post">
-			<p>
-				Email : <br />
-<%-- 				<input id="title_box" type="text" name="u_Email" value="${Param.u_Email}">  --%>
-				<input type="email" placeholder="Email" name="u_Email" id="mail" maxlength="30" value="${Param.u_Email}">
-				<div id="error_mail" class="result-email result-check"></div>
+	<section id="SignUPModal" class="ModalOff ModalOn">
+		<form action="/user/regist" method="post" class="ModalStyle">
 				
-			</p>
-			<p>
-				NickName : <br />
-				<input id="Name_box" name="u_Name" value="${Param.u_Name}">
-			</p>				
-			<p>
-				Password : <br />
-				<input id="Password_box" type="password" name="u_pw" value="${Param.u_pw}">
-			</p>				
-			<p>
-				Address : <br />
-<%-- 				<input id="Address_box" name="u_Address" value="${Param.u_Address}"> --%>
-				<input type="text" id="address_kakao" name="u_Address" readonly ="readonly" value="${Param.u_Address}"/>
-				<input id="Address_box" name="u_Address" value="${Param.u_Address}" placeholder="better address">
+					이메일 : <br />
+<%-- 					<input id="title_box" type="text" name="u_Email" value="${Param.u_Email}">  --%>
+					<input type="email" placeholder="Email" name="u_Email" id="mail" maxlength="30"  required="required">
+					<div id="error_mail" class="result-email result-check"></div>
 					
-			</p>				
-			<p>
-				Gender : <br />
+				
+				<p>
+					닉네임 : <br />
+						<input id="Name_box" name="u_Name"  required="required">
+				</p>				
+				<p>
+					비밀번호 : <br />
+					<input id="Password_box" type="password" name="u_pw"  required="required">
+				</p>				
+				<p>
+					주소 : <br />
+<%-- 					<input id="Address_box" name="u_Address" value="${Param.u_Address}"> --%>
+						<input type="text" id="address_kakao" name="u_Address" readonly ="readonly" value="${Param.u_Address}" required="required"/>
+						<input id="Address_box" name="u_Address" required="required" placeholder="상세 주소">
+						
+				</p>				
+				<p>
+					성별 : <br />
 <%-- 				<input id="Gender_box" name="u_gender" value="${Param.u_gender}"> --%>
-			  	<select name= "u_gender">
-			  	<option value="Male">Male
-			  	<option value="Female">Female
-			  	<option value="Non-Binary">Non-Binary
-			  	<option value="Attack-Helicopter">Attack-Helicopter
-			  	
-			  	</select>
-			</p>
-			<p>
-				ProfileImage : <br />
-				<input id="Profile_box" name="u_profile_path" value="${Param.u_profile_path}">
-			</p>
-			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-			<button type="submit">회원가입</button>
-			<button type="button" class="ModalClose" onclick="">취소</button>	
-
+				  	<select name= "u_gender" required="required">
+				  		<option value="Male">Male
+				  		<option value="Female">Female
+				  		<option value="Non-Binary">Non-Binary
+				  		<option value="Attack-Helicopter">Attack-Helicopter
+				  	
+				  	</select>
+				</p>				
+				<p>
+					프로필이미지 : <br />
+					<select name= "u_profile_path" required="required">
+				  		<option value="Image1">이미지1
+				  		<option value="Image2">이미지2
+				  		<option value="Image3">이미지3
+				  	
+			  		</select>
+				</p>
+				<input type="hidden" name="${_csrf.parameterName}"
+								value="${_csrf.token}" />				
+							
+				<button type="submit">회원가입</button>
+				<button type="button" class="ModalClose" onclick="">취소</button>		
+		
 		</form>
 		
 	 </section>
-	 <div id="ModalBG">
 	 
-	 </div>
-
     <header class="py-3 mb-3 border-bottom">
 		<div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1fr 2fr;">
 			<div class="col-4">
@@ -175,43 +206,17 @@
 					</a>
 					<ul class="dropdown-menu text-small shadow">
 						<!-- c:if not logged in -->
-						<li><a class="dropdown-item signIn" href="#">로그인</a></li>
+						<li><a class="dropdown-item signIn" href="/customLogin">로그인</a></li>
 						<li><a class="dropdown-item signUp" href="#">회원가입</a></li>
 						<!-- c:if logged in -->
 						<li><hr class="dropdown-divider"></li>
-						<li><a class="dropdown-item userUpdate" href="#">설정</a></li>
-						<li><a class="dropdown-item SignOut" href="#">로그아웃</a></li>
+						<li><a class="dropdown-item userUpdate" href="userUpdate.do">설정</a></li>
+						<li><a class="dropdown-item SignOut" href="/customLogout">로그아웃</a></li>
 					</ul>
 				</div>
 			</div>
 		</div>
 	</header>
-	
-	<%-- we *NEED* this
-	<ul class="dropdown-menu dropdown-user">
-		<li>
-			<a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-	    </li>
-	    <li>
-	    	<a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-	    </li>
-	    <li class="divider"></li>
-		<sec:authorize access="isAuthenticated()">
-		<li>
-			<a href="/customLogout"><i class="fa fa-sign-out fa-fw"></i>
-		    Logout</a>
-		</li>
-		</sec:authorize>
-		
-		<sec:authorize access="isAnonymous()">
-		<li>
-			<a href="/customLogin"><i class="fa fa-sign-out fa-fw"></i>
-		    Login</a>
-		</li>
-		</sec:authorize>
-	</ul>
-	<!-- /.dropdown-user -->
-	--%>
 
 	<div class="container-fluid">
 	    <div class="col-lg-12 hTitleBox">
@@ -241,6 +246,14 @@
 		$("#SignUPModal").css("display", "none")
 		
 	});
+	
+	$(".userUpdate").on("click", function () {
+		$("#updateModal").css("display", "block")
+
+	});
+
+	var modalModBtn = $("#modalModBtn");
+	var userUpdateBtn = $(".userUpdate");
 	
 	if($(location).attr('href').startsWith('http://localhost:8089/board/list')){
 		$("#searchForm").css("display", "flex");

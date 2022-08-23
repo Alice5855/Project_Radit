@@ -88,9 +88,9 @@
                             	한글data를 get method로 넘길 때 문제가 발생할 수 있음 -->
                             
                             <!-- Pagination -->
-                            <div class="d-flex">
+                            <div class="d-flex justify-content-center text-center">
                             	<div class="col-lg-12">
-									<ul class="pagination justify-content-center text-center">
+									<ul class="pagination">
 										<c:if test="${pageMaker.prev}">
 											<li class="paginate-item previous"><a class="page-link" href="${pageMaker.startPage - 1}">Previous</a></li>
 										</c:if>

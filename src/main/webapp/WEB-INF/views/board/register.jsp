@@ -99,9 +99,8 @@
 				</div>
 		
 				<div class="form-group">
-					<label>글쓴이</label> 
-		            <input class="form-control" name='u_email' value='<sec:authentication property="principal.username" />' disabled readonly>
-		            
+					<label>글쓴이</label>
+		            <input class="form-control" name='u_email' value='<sec:authentication property="principal.username" />' readonly>
 				</div>
 				<div class="form-group">
 					<button type="submit" class="btn btn-secondary">등록</button>
@@ -118,7 +117,7 @@
 	  <!-- end panel -->
 	
 	<!-- file upload form -->
-	<div class="row">
+	<div class="row container-fluid">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
 				<div class="">
@@ -211,10 +210,6 @@
 				return false;
 			}
 			
-			if(parseInt(files[i].files.length) > 1){
-				alert("하나의 이미지만 업로드 할 수 있습니다");
-				return false;
-			}
 			
 			formData.append("uploadFile", files[i]);
 			

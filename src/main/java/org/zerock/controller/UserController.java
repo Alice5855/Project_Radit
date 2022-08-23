@@ -14,47 +14,45 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 @RequestMapping("/user/*") 
 public class UserController {
-	
-	private UserService userService;
-	
-//	@GetMapping("/regist")
-//	public void register() {
-//	}
-	
-//	@PostMapping("/regist")
-//	public String regist(UserVO user, RedirectAttributes ratt) {
-//		log.info("회원가입 ===== " + user);
-//		// adding file upload feature
-//		
-//		userService.regist(user);
-//		ratt.addFlashAttribute("result", user.getU_Email());
-//		return "redirect:/board/list";
-//	}
-	@PostMapping("/regist")
-	public String regist(UserVO user) {
-		log.info("회원가입 ===== " + user);
-		// adding file upload feature
-		
-		userService.regist(user);
-		return "redirect:/board/list";
-	}
-	
-	@PostMapping("/update")
-	public String update(UserVO user) {
-		log.info("회원정보 수정");
-		userService.update(user);
-		
-		return "/board/list";
-		
-	}
-	
-	@PostMapping("/deleteAccount")
-	public String deleteAccount(UserVO user) {
-		
-		log.info("remove ===== " + user);
-		
-		userService.deleteAccount(user.getU_Email());
-		return "/board/list";
-	}
-	
+   
+   private UserService userService;
+
+   @PostMapping("/regist")
+   public String regist(UserVO user) {
+      log.info("회원가입 ===== " + user);
+      userService.regist(user);
+      return "redirect:/board/list";
+   }
+   
+   @PostMapping("/update")
+   public String update(UserVO user) {
+      log.info("회원정보 수정");
+      userService.update(user);
+      
+      
+      log.info(user);
+      
+      
+      return "redirect:/board/list";
+      
+   }
+   
+   
+   
+   @PostMapping("/deleteAccount")
+   public String deleteAccount(UserVO user) {
+      
+      log.info("remove ===== " + user);
+      
+      userService.deleteAccount(user.getU_Email());
+      return "redirect:/board/list";
+   }
+   
+   
+
+
+   
+   
+   
+   
 }
