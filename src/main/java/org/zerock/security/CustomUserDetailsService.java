@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.zerock.domain.MemberVO;
 import org.zerock.domain.UserVO;
-import org.zerock.mapper.MemberMapper;
 import org.zerock.mapper.UserMapper;
 import org.zerock.security.domain.CustomUser;
 

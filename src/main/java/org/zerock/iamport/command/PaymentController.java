@@ -31,9 +31,4 @@ public class PaymentController {
 	public void paymentDone(@RequestBody PaymentVO vo) {
 		paymentService.insertPaymentSuccess(vo);
 	}
-	
-	@RequestMapping(value= {"/goMain.do", "/"})
-	public ModelAndView goMain() {
-		return new ModelAndView("index");
-	}
 }

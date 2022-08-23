@@ -62,7 +62,7 @@
 									</label>
 								</div>
 								<!-- Change this to a button or input when using this as a form -->
-								<a href="index.html" class="btn btn-lg btn-success btn-block">Login</a>
+								<a href="/board/list" class="btn btn-lg btn-success btn-block">Login</a>
 							</fieldset>
 							<input type="hidden" name="${_csrf.parameterName}"
 								value="${_csrf.token}" />
@@ -76,37 +76,34 @@
 
 
 
-	<!-- jQuery -->
-	<script src="/resources/vendor/jquery/jquery.min.js"></script>
+<!-- jQuery -->
+<script src="/resources/vendor/jquery/jquery.min.js"></script>
 
-	<!-- Bootstrap Core JavaScript -->
-	<script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
 
-	<!-- Metis Menu Plugin JavaScript -->
-	<script src="/resources/vendor/metisMenu/metisMenu.min.js"></script>
+<!-- Metis Menu Plugin JavaScript -->
+<script src="/resources/vendor/metisMenu/metisMenu.min.js"></script>
 
-	<!-- Custom Theme JavaScript -->
-	<script src="/resources/dist/js/sb-admin-2.js"></script>
-  <script>
-  
-  
-  
-  
-  $(".btn-success").on("click", function(e){
-    
-    e.preventDefault();
-    $("form").submit();
-    
-  });
-  
-  </script>
+<!-- Custom Theme JavaScript -->
+<script src="/resources/dist/js/sb-admin-2.js"></script>
+<script>
+
+	$(".btn-success").on("click", function(e){
+	  
+	  e.preventDefault();
+	  $("form").submit();
+	  
+	});
+
+</script>
   
 <c:if test="${param.logout != null}">
-      <script>
-      $(document).ready(function(){
-      	alert("로그아웃하였습니다.");
-      });
-      </script>
+	<script>
+		$(document).ready(function(){
+			alert("로그아웃하였습니다.");
+		});
+	</script>
 </c:if>  
 
 </body>

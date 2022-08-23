@@ -49,15 +49,7 @@
 	
 	<mybatis-spring:scan base-package="org.zerock.mapper"/>
 	
-	<context:component-scan base-package="org.zerock.sample" />
 	<context:component-scan base-package="org.zerock.service" />
-	
-	<!-- Page 455. Namespaces에서 aop와 하단 line 추가함 -->
-	<context:annotation-config></context:annotation-config>
-	<context:component-scan base-package="org.zerock.aop" />
-	<!-- component-scan으로 LogAdvice가 bean으로 등록됨 -->
-	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
-	<!-- aop:aspectj-autoproxy로 LogAdvice에 설정한 @Before가 동작함 -->
 	
 	<task:annotation-driven/>
 	<!-- quartz library 사용하기 위한 task tag -->

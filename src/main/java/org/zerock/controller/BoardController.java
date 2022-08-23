@@ -23,6 +23,8 @@ import org.zerock.domain.BoardAttachVO;
 import org.zerock.domain.BoardVO;
 import org.zerock.domain.Criteria;
 import org.zerock.domain.PageDTO;
+import org.zerock.domain.UserVO;
+import org.zerock.mapper.BoardMapper;
 import org.zerock.service.BoardService;
 
 import lombok.AllArgsConstructor;
@@ -37,6 +39,8 @@ public class BoardController {
 	// @AllArgsConstructor 로 생성자를 만들고 자동으로 주입시켜줌. 생성자를 
 	// 생성하지 않았을 경우 @Setter(onMethod_ = {@Autowired})로 처리함
 	private BoardService service;
+	
+	private BoardMapper bmap;
 	
 	// register 입력 page와 등록 처리
 	// 등록 작업은 post method를 사용하나 get method로 입력 page를 '읽어올 수
@@ -79,7 +83,6 @@ public class BoardController {
 	public String register(BoardVO board, RedirectAttributes ratt) {
 		log.info("register ===== " + board);
 		
-		
 		// adding file upload feature
 		if (board.getAttachList() != null) {
 			board.getAttachList().forEach(attach -> log.info(attach));
@@ -103,7 +106,7 @@ public class BoardController {
 		// 어노테이션을 사용
 		// log.info("get ===== " + b_number);
 		log.info("get or modify ===== " + b_number);
-		m.addAttribute("board", service.get(b_number));
+		m.addAttribute("board", service.getRaw(b_number));
 	}
 	
 	// Modal로 vo를 전달하기 위하여 JSON으로 data를 전송. List.jsp에서 
@@ -120,12 +123,14 @@ public class BoardController {
 	// Page712 added need of authentication
 	// Only if author of entry is username can access to modify
 	// #board.writer : BoardVO(board)의 writer를 명시하여 검증절차
-	// @PreAuthorize("principal.u_email == #board.u_email")
+	@PreAuthorize("principal.username == #board.u_email")
 	// update의 경우 BoardVO parameter로 내용을 설정하고 BoardService를 호출
 	@PostMapping("/modify")
 	public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri, RedirectAttributes ratt) {
 		log.info("modify ===== " + board);
+		
 		if (service.modify(board)) {
+			log.info("modify successfully done");
 			ratt.addFlashAttribute("result", "success");
 		}
 		// service.modify() method는 수정 여부를 boolean type으로 처리하므로
@@ -142,7 +147,7 @@ public class BoardController {
 	// Page712 added need of authentication
 	// Only if author of entry is username can access to remove
 	// Parameter로 writer를 받아 검증절차
-	// @PreAuthorize("principal.u_email == #u_email")
+	@PreAuthorize("principal.username == #u_email")
 	// remove()로 삭제 처리 한 후 RedirectAttributes로 list페이지로 이동시킴
 	@PostMapping("/remove")
 	public String remove(@RequestParam("u_email") String u_email, @RequestParam("b_number") Long b_number, @ModelAttribute("cri") Criteria cri, RedirectAttributes ratt) {
@@ -158,7 +163,6 @@ public class BoardController {
 		if (service.remove(b_number)) {
 			deleteFiles(attachList);
 			// Added(page581)
-			
 			
 			ratt.addFlashAttribute("result", "success");
 		}

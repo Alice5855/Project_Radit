@@ -6,14 +6,20 @@
 
 <%@include file="../includes/header.jsp" %>
 <style>
+	a {
+		color: black;
+	}
+	a:hover {
+		color: black;
+	}
 	#title {
-		font-size: 2rem;
+		font-size: 2.5rem;
 	}
 	#date {
 		font-size: 0.5rem;
 	}
 	.mImgWrapper{
-		width: 40%;
+		/*width: 40%;*/
 		max-height: 40%;
 	}
 	.mImgWrapper img{
@@ -23,8 +29,23 @@
 	.modal-dialog{
 		max-width: 70% !important;
 	}
+	.b_Modal_Content {
+		padding: 3%;
+	}
 	#regBtn{
 		margin-right: 5% !important;
+	}
+	.mNumber {
+		font-size: 0.5rem;
+	}
+	.mEmail {
+		
+	}
+	.mTitle {
+		font-size: 2.5rem;
+	}
+	.mText {
+		margin-left: 5%;
 	}
 </style>
 	<div class="container-fluid">
@@ -40,23 +61,22 @@
                                 <!-- BoardController.java의 37행 참고. model에 추가한 'list' attribute를 불러 온 것 -->
                                 	<div class="card-content position-relative">
                                 		<p style="display : none;"><c:out value="${board.b_number}" /></p>
-                                		<p id="title" class="fw-bold mt-3 mb-2 ms-5">
-                                			<!-- Added .move -->
-                                			<a class="move" href='<c:out value="${board.b_number}" />' style="text-decoration: none;">
-                                				<c:out value="${board.b_title}" />
-                                			</a>
-                                		</p>
-                                		
-                                		<c:if test= '${not empty board.b_img}'>
-                                		
-                                			<img id="thmbImg" src='/display?fileName=<c:out value="${board.b_img}" />'/>
-                                		
-                                		</c:if>
-                                		
-                               			<p class="text-end"><c:out value="${board.u_email}" /></p>
-                               			<p class="ms-2"><c:out value="${board.b_text}" /></p>
-                                		<p id="date" class="text-end text-muted"><fmt:formatDate pattern="yyyy/MM/dd" value="${board.b_regDate}"/></p>
-                                		<p id="date" class="text-end text-muted"><fmt:formatDate pattern="yyyy/MM/dd" value="${board.b_updateDate}"/></p>
+                               			<a class="move" href='<c:out value="${board.b_number}" />' style="text-decoration: none;">
+	                                		<p id="title" class="fw-bold mt-3 mb-2 ms-5">
+	                                				<c:out value="${board.b_title}" />
+	                                		</p>
+	                                		
+	                                		<c:if test= '${not empty board.b_img}'>
+	                                		<div class="text-center">
+	                                			<img id="thmbImg" src='/display?fileName=<c:out value="${board.b_img}" />'/>
+                                			</div>
+	                                		</c:if>
+	                                		
+	                               			<p class="text-end"><c:out value="${board.u_email}" /></p>
+	                               			<p class="ms-3"><c:out value="${board.b_text}" /></p>
+	                                		<p id="date" class="text-end text-muted"><fmt:formatDate pattern="yyyy/MM/dd" value="${board.b_regDate}"/></p>
+	                                		<p id="date" class="text-end text-muted"><fmt:formatDate pattern="yyyy/MM/dd" value="${board.b_updateDate}"/></p>
+                                		</a>
                                 	</div>
                                 </div>
                             </div>
@@ -68,18 +88,16 @@
                             	한글data를 get method로 넘길 때 문제가 발생할 수 있음 -->
                             
                             <!-- Pagination -->
-                            <div class='text-center'>
+                            <div class="d-flex">
                             	<div class="col-lg-12">
-									<ul class="pagination">
+									<ul class="pagination justify-content-center text-center">
 										<c:if test="${pageMaker.prev}">
 											<li class="paginate-item previous"><a class="page-link" href="${pageMaker.startPage - 1}">Previous</a></li>
 										</c:if>
 										
 										<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
 											<li class="paginate-item ${pageMaker.cri.pageNum == num ? 'active' : ''} ">
-											<%-- MAKE THE CODE ACTUALLY READABLE N SHIT THIS IS IMPORTANT N SHIT --%>
 											<a class="page-link" href="${num}">${num}</a>
-											<%-- <a href="${context}/board/list?pageNum=${num}"> this works no problem but okay --%>
 										</li>
 										</c:forEach>
 										
@@ -114,11 +132,10 @@
 						                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   						</div>
 						                <div class="modal-body">
-						                <%-- 
-											<%@include file="get.jsp" %>
-										--%>
-										<div class="b_Modal_Content">
-											
+											<div class="b_Modal_Content">
+												
+											</div>
+											<div class="b_Modal_Attach">
 										</div>
 						                <div class="modal-footer">
 						                    <button type="button" class="btn btn-primary b_ModalModify" data-dismiss="modal">글 수정</button>
@@ -169,6 +186,7 @@
 		};
 		
 		
+		
 		var ctx = getContextPath();
 		
 		function getContextPath() {
@@ -204,7 +222,9 @@
 		
 		$('.move').on("click", function(e) {
 			e.preventDefault();
-			$.getJSON("/board/getModal", {b_number: $(this).attr("href")}, function(arr){
+			
+			var b_number = $(this).attr("href");
+			$.getJSON("/board/getModal", {b_number: b_number}, function(arr){
 				console.log(arr);
 				
 				var str = "";
@@ -215,28 +235,57 @@
 					var cUDate = dateConvert(entry.b_updateDate);
 					
 					
-					str += "<p class='mNumber'> b_number : " + entry.b_number + "</p>";
-					str += "<p class='mEmail'> u_email : " + entry.u_email + "</p>";
-					str += "<p class='mTitle'> b_title : " + entry.b_title + "</p>";
-					str += "<p class='mText'> b_text : " + entry.b_text + "</p>";
+					str += "<p class='mNumber text-muted'>" + entry.b_number + "</p>";
+					str += "<p class='mEmail text-end'>" + entry.u_email + "</p>";
+					str += "<p class='mTitle text-center'>" + entry.b_title + "</p>";
+					str += "<p class='mText'>" + entry.b_text + "</p>";
 					if (entry.b_img != null) {
 						str += "<div class='mImgWrapper'>";
-						str += "<p class='mImg'> b_img : <img id='modalImg' src='/display?fileName=" + entry.b_img + "'/></p>";
+						str += "<p class='mImg'><img id='modalImg' src='/display?fileName=" + entry.b_img + "'/></p>";
 						str += "</div>";
 					}
 					if (entry.b_video != null) {
-						str += "<p class='mVideo'> b_video : " + entry.b_video + "</p>";
+						str += "<p class='mVideo'>" + entry.b_video + "</p>";
 					}
-					str += "<p class='mRegDate'> b_regDate : " + cRDate + "</p>";
-					str += "<p class='mUpdateDate'> b_updateDate : " + cUDate + "</p>";
+					str += "<p class='mRegDate text-muted text-end'>" + cRDate + "</p>";
+					str += "<p class='mUpdateDate text-muted text-end'>" + cUDate + "</p>";
 					
-					var aNumber = '<c:out value="${entry.b_number}" />';
-					str += "<a class='modify' href='" + aNumber + "' hidden='hidden'></a>";
-					// might be useful for modify? is this even working?
+					
+					str += "<form id='operForm' action='${context}/board/modify' method='get'>";
+					var aNumber = entry.b_number;
+					str += "<input type='hidden' id='b_number' name='b_number' value='" + aNumber + "'>";
+					
+					var pageNum = '${pageMaker.cri.pageNum}';
+					str += "<input type='hidden' id='pageNum' name='pageNum' value='" + pageNum + "'>";
+					var amount = '${pageMaker.cri.amount}';
+					str += "<input type='hidden' id='amount' name='amount' value='" + amount + "'>";
+					var type = '${pageMaker.cri.type}';
+					str += "<input type='hidden' id='type' name='type' value='" + type + "'>";
+					var keyword = '${pageMaker.cri.keyword}';
+					str += "<input type='hidden' id='keyword' name='keyword' value='" + keyword + "'>";
+					str += "</form>";
+					
 				});
 				
 				$(".b_Modal_Content").html(str);
 				
+			    $.getJSON("/board/getAttachList", {b_number: b_number}, function(array){
+					console.log(arr);
+					
+					var str = "";
+				    
+					$(array).each(function(i, attach){
+						var fileCallPath = encodeURIComponent(attach.b_uploadPath + "/sthmb_" + attach.b_uuid + "_" + attach.b_fileName);
+						
+						str += "<li data-path='" + attach.b_uploadPath + "' data-uuid='" + attach.b_uuid + "' data-filename='" + attach.b_fileName + "' style='list-style-type: none;' ><div>";
+						// str += "<img src='/display?fileName=" + fileCallPath + "'>";
+						str += "</div>";
+						str += "</li>";
+					});
+					
+					$(".b_Modal_Attach").html(str);
+				    
+				}); // getjson
 			    
 			}); // getjson
 			b_modal.modal("show");
@@ -249,7 +298,10 @@
 		})
 		
 		$('.b_ModalModify').on("click", function(e){
+			var operForm = $("#operForm");
 			// gotta do something here
+			e.preventDefault();
+			operForm.attr("action", ctx + "/board/modify").submit();
 		})
 		
 		

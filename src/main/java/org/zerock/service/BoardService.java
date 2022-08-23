@@ -30,4 +30,6 @@ public interface BoardService {
 	
 	public String getU_nameFromU_Email(String u_email);
 	public void setBoardImage(Long b_number);
+
+	BoardVO getRaw(Long b_number);
 }

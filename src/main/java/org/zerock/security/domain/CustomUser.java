@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import org.zerock.domain.MemberVO;
 import org.zerock.domain.UserVO;
 
 import lombok.Getter;
@@ -25,6 +24,7 @@ public class CustomUser extends User {
 		super(user.getU_Email(), user.getU_pw(), user.getU_Auth().stream()
 				.map(auth -> new SimpleGrantedAuthority(auth.getU_Auth()))
 				.collect(Collectors.toList()));
+		System.out.println("===============CustomUser===============" + user);
 		this.user = user;
 	}
 	// MemberVO를 param으로 전달하여 부모 class인 User의 생성자에 맞추기 위해 
@@ -32,5 +32,6 @@ public class CustomUser extends User {
 	
 	public CustomUser(String u_Email, String u_pw, Collection<? extends GrantedAuthority> authorities) {
 		super(u_Email, u_pw, authorities);
+		System.out.println("===============CustomUser u_Email===============" + u_Email);
 	}
 }

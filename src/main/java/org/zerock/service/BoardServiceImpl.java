@@ -58,6 +58,15 @@ public class BoardServiceImpl implements BoardService {
 		
 		return bvo;
 	}
+	
+	@Override
+	public BoardVO getRaw(Long b_number) {
+		log.info("get ===== " + b_number + " from board");
+		
+		BoardVO bvo = mapper.read(b_number);
+		
+		return bvo;
+	}
 
 	// 첨부 file과 게시글의 수정이 함께 이루어지도록 Transactional 적용
 	@Transactional
@@ -66,13 +75,19 @@ public class BoardServiceImpl implements BoardService {
 		log.info("Modify ===== Modify entry " + board);
 		
 		attachMapper.deleteAll(board.getB_number());
+		
+		log.info("board u_email=====" + board.getU_email());
+		
 		boolean modifyResult = mapper.update(board) == 1;
+		
 		if (modifyResult && board.getAttachList() != null && board.getAttachList().size() > 0) {
 			board.getAttachList().forEach(attach -> {
 				attach.setB_number(board.getB_number());
 				attachMapper.insert(attach);
 			});
 		}
+		mapper.setBoardImage(board.getB_number());
+		
 		return modifyResult;
 		// 첨부file은 수정이 아닌, 기존의 file data를 삭제하고 새로운 file을 upload
 		// 하는 식으로 수행된다

@@ -6,8 +6,4 @@
 		insert into u_auth_table(u_Email) values (#{u_Email})
 	</insert>
 	
-
-	
-	
-	
 </mapper>
